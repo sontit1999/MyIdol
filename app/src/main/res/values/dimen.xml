@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="size_icon">40dp</dimen>
+    <dimen name="padding_bottom_nav">10dp</dimen>
+    <dimen name="padding_container_feature">15dp</dimen>
+    <dimen name="content_size_main">16sp</dimen>
+    <dimen name="tittle_size_main">20sp</dimen>
+</resources>
