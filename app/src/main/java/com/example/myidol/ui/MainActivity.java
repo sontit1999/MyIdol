@@ -13,7 +13,11 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.myidol.R;
 import com.example.myidol.base.BaseActivity;
 import com.example.myidol.databinding.ActivityMainBinding;
+import com.example.myidol.fragment.add.FragmentAdd;
+import com.example.myidol.fragment.favorite.FragmentFavorite;
 import com.example.myidol.fragment.home.FragmentHome;
+import com.example.myidol.fragment.hot.FragmentHot;
+import com.example.myidol.fragment.profile.FragmentProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmodel>{
@@ -48,14 +52,18 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
                         break;
                     case R.id.nav_hot:
                         Toast.makeText(MainActivity.this, "hot", Toast.LENGTH_SHORT).show();
+                        loadFragment(new FragmentHot());
                         break;
                     case R.id.nav_add:
                         Toast.makeText(MainActivity.this, "add", Toast.LENGTH_SHORT).show();
+                        loadFragment(new FragmentAdd());
                         break;
                     case R.id.nav_favorite:
                         Toast.makeText(MainActivity.this, "favorite", Toast.LENGTH_SHORT).show();
+                        loadFragment(new FragmentFavorite());
                         break;
                     case R.id.nav_user:
+                        loadFragment(new FragmentProfile());
                         Toast.makeText(MainActivity.this, "user", Toast.LENGTH_SHORT).show();
                         break;
                 }
@@ -67,7 +75,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
     public void loadFragment(Fragment fragment){
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame, fragment);
-        transaction.addToBackStack(null);
+        //transaction.addToBackStack(null);
         transaction.commit();
     }
 }

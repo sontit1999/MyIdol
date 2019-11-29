@@ -16,8 +16,12 @@ import java.util.ArrayList;
 
 public abstract class BaseAdapter<T ,VB extends ViewDataBinding> extends RecyclerView.Adapter<BaseAdapter.ViewHolder> {
     protected ArrayList<T> datalist = new ArrayList<>();
+
     public abstract int getLayoutId();
     public abstract int getIdVariable();
+    public abstract int getIdVariableOnclick();
+    public abstract CBAdapter getOnclick();
+
     public void setList(ArrayList<T> arrayList){
         this.datalist = arrayList;
         notifyDataSetChanged();
@@ -37,6 +41,7 @@ public abstract class BaseAdapter<T ,VB extends ViewDataBinding> extends Recycle
     @Override
     public void onBindViewHolder(BaseAdapter.ViewHolder holder, int position) {
         holder.setVariable(getIdVariable(),datalist.get(position));
+        holder.setClickAdapter(getIdVariableOnclick(),getOnclick());
     }
 
     class ViewHolder<T,VB extends ViewDataBinding> extends RecyclerView.ViewHolder{
@@ -46,6 +51,9 @@ public abstract class BaseAdapter<T ,VB extends ViewDataBinding> extends Recycle
             this.binding = binding;
         }
         public void setVariable(int id,T t){
+            this.binding.setVariable(id,t);
+        }
+        public void setClickAdapter(int id,CBAdapter t){
             this.binding.setVariable(id,t);
         }
     }

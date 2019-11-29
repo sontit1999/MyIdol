@@ -4,4 +4,9 @@
     <string name="menu_hot">Hot</string>
     <string name="menu_like">Favorite</string>
     <string name="menu_user">Me</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="name_author">Sơn tít</string>
+    <string name="my_speak">Gét những người nói được nhưng ko làm được :D</string>
+    <string name="email_author">Sonkoii1995@gmail.com</string>
+    <string name="describe_idol">Mô tả cảm xúc của bạn về idol :v</string>
 </resources>

@@ -13,23 +13,23 @@
         <ImageView
             android:id="@+id/iv_post"
             bind:imageUrl="@{post.linkImage}"
-            android:scaleType="fitCenter"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/containerInfor"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="0dp"/>
         <LinearLayout
             android:id="@+id/container_function"
             android:orientation="vertical"
-            android:layout_marginBottom="@dimen/size_icon"
             android:padding="@dimen/padding_container_feature"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/iv_post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <LinearLayout
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:layout_marginBottom="@dimen/padding_container_feature"
+                android:layout_marginBottom="@dimen/margin_container_feature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
@@ -46,7 +46,7 @@
             <LinearLayout
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:layout_marginBottom="@dimen/padding_container_feature"
+                android:layout_marginBottom="@dimen/margin_container_feature"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
