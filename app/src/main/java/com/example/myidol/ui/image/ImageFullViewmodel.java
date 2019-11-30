@@ -10,4 +10,5 @@ public class ImageFullViewmodel extends BaseViewmodel {
     public ImageFullViewmodel(@NonNull Application application) {
         super(application);
     }
+
 }

@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.example.myidol"
         minSdkVersion 19
-        targetSdkVersion 29
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -52,4 +52,5 @@ dependencies {
     implementation 'me.yuqirong:cardswipelayout:1.0.0'
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'com.commit451:PhotoView:1.2.4'
+    implementation 'com.gongwen:swipeback:1.0.2'
 }

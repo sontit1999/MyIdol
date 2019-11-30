@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.myidol.ui.comment.CommentViewmodel" />
+    </data>
+    <RelativeLayout
+        android:background="@color/colorblack"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_numberComment"
+            android:text="570 bình luận"
+            android:gravity="center"
+            android:padding="@dimen/padding_bottom_nav"
+            android:textColor="@color/colorwhite"
+            android:textSize="@dimen/content_size_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_comment"
+            android:layout_marginTop="@dimen/padding_bottom_nav"
+            android:layout_below="@id/tv_numberComment"
+            android:layout_width="match_parent"
+            android:layout_above="@id/viewTemp"
+            android:layout_height="0dp"/>
+        <View
+            android:id="@+id/viewTemp"
+            android:background="@color/colorgrey"
+            android:layout_above="@id/container_comment"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <LinearLayout
+            android:id="@+id/container_comment"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edt_cmt"
+                android:layout_weight="0.9"
+                android:inputType="text"
+                android:lines="1"
+                android:padding="@dimen/padding_bottom_nav"
+                android:background="@null"
+                android:textColorHint="@color/colorwhite"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/colorwhite"
+                android:hint="Thêm bình luận"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/tv_send"
+                android:src="@drawable/ic_sent"
+                android:layout_weight="0.1"
+                android:layout_width="@dimen/size_icon_sent"
+                android:layout_height="@dimen/size_icon_sent"/>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
