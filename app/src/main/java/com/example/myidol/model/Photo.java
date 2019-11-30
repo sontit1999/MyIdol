@@ -7,7 +7,9 @@ import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
 
-public class Photo {
+import java.io.Serializable;
+
+public class Photo implements Serializable {
     String linkImage;
 
     public Photo() {

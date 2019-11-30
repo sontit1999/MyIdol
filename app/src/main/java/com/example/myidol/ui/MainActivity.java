@@ -35,10 +35,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
     @Override
     public void setBindingViewmodel() {
         binding.setViewmodel(viewmodel);
-
-        // set full Activity
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // load defaut fragment
         loadFragment(new FragmentHome());
         // set listener bottom nav

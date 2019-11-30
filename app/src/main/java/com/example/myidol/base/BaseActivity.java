@@ -1,5 +1,7 @@
 package com.example.myidol.base;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -20,5 +22,12 @@ public abstract class BaseActivity<B extends ViewDataBinding,VM extends BaseView
         binding = DataBindingUtil.setContentView(this,getLayoutID());
         viewmodel = ViewModelProviders.of(this).get(getViewmodel());
         setBindingViewmodel();
+    }
+    public void gotoActivity(AppCompatActivity activity,Bundle bundle){
+        Intent intent = new Intent(this,activity.getClass());
+        if(bundle!=null){
+            intent.putExtra("bundle",bundle);
+        }
+        startActivity(intent);
     }
 }
