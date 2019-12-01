@@ -1,34 +1,71 @@
 package com.example.myidol.fragment.hot;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.myidol.adapter.IdolAdapter;
 import com.example.myidol.adapter.PhotoAdapter;
 import com.example.myidol.base.BaseViewmodel;
+import com.example.myidol.callback.RequestAPI;
+import com.example.myidol.model.APIClient;
+import com.example.myidol.model.IdolHot;
 import com.example.myidol.model.Photo;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class HotViewmodel extends BaseViewmodel {
-    PhotoAdapter adapter = new PhotoAdapter();
-    MutableLiveData<ArrayList<Photo>> arrayPhoto = new MutableLiveData<>();
+    IdolAdapter adapter = new IdolAdapter();
+    MutableLiveData<ArrayList<IdolHot>> arrayIDol = new MutableLiveData<>();
     public HotViewmodel(@NonNull Application application) {
         super(application);
     }
-    public MutableLiveData<ArrayList<Photo>> getArrayPhoto(){
-        ArrayList<Photo> arr = new ArrayList<>();
-        arr.add(new Photo("https://tinhte.cdnforo.com/store/2015/10/3525535_tuigirl-019-wangmingming-005.jpg"));
-        arr.add(new Photo("https://congngheads.com/media/images/anh-dep/bo-anh-gai-xinh-voi-ve-dep-diu-dang-goi-cam-hinh-nen-dien-thoai-gentle-beauty-sexy-photo-phone-1556641845/6.jpg"));
-        arr.add(new Photo("https://s3-ap-southeast-1.amazonaws.com/idoltv-website/wp-content/uploads/2018/10/18105554/HINH-NEN-IPHONE-X-GIRL-IDOLTV-12.jpg"));
-        arr.add(new Photo("https://phonelumi.com/wp-content/uploads/2017/01/Hinh-anh-girl-xinh-lam-hinh-nen-cho-iphone-7-26.jpg"));
-        arr.add(new Photo("https://phonelumi.com/wp-content/uploads/2017/01/Hinh-anh-girl-xinh-lam-hinh-nen-cho-iphone-7-24.jpg"));
-        arr.add(new Photo("https://1.bp.blogspot.com/-7gUhYf_KzHE/XJpBM_3T2aI/AAAAAAAAA3s/RCHsgaT__lQJ4O1lYJT0g-sGZSHiOntTwCLcBGAs/s1600/EmXinh2k__anh-hot-girl-gai-xinh-sexy-nong-bong-khoe-vong-1%2B%25283%2529.jpg"));
-        arr.add(new Photo("http://afamilycdn.com/fRhOWcbaG01Vd2ydvKbOwEYcba/Image/2016/08/ai-sexy-ho-hang-mac-ke-4-hot-girl-nay-chi-can-ngot-ngao-de-thuong-la-du_20160820081235490.jpg"));
-        arr.add(new Photo("https://2.bp.blogspot.com/-VcdSn9CLOf0/WNZ70hZa1AI/AAAAAAAABU4/O8KAfRbVjjA_pc21qGE2jLlOBpCeQiXewCEw/s1600/stock-photo-174439461.jpg"));
-        arr.add(new Photo("https://1.bp.blogspot.com/-e-BJfJKtYaA/XJpBMPJC03I/AAAAAAAAA3o/9SrsYC4nGcg-EhHcv2XaWQZkAYiHE_k5wCLcBGAs/s1600/EmXinh2k__anh-hot-girl-gai-xinh-sexy-nong-bong-khoe-vong-1%2B%25282%2529.jpg"));
-        arrayPhoto.postValue(arr);
-        return arrayPhoto;
+    public MutableLiveData<ArrayList<IdolHot>> getArrayIDol(){
+        // call api
+        Retrofit retrofit = APIClient.getClient();
+        RequestAPI callapi  = retrofit.create(RequestAPI.class);
+        Call<List<IdolHot>> call = callapi.getIdol();
+        call.enqueue(new Callback<List<IdolHot>>() {
+            @Override
+            public void onResponse(Call<List<IdolHot>> call, Response<List<IdolHot>> response) {
+                Log.d("test","số lượng: " + response.body().size());
+                arrayIDol.postValue((ArrayList<IdolHot>) response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<IdolHot>> call, Throwable t) {
+                Log.d("test",t.getMessage().toString());
+            }
+        });
+
+        return arrayIDol;
+    }
+    // get thêm idol
+    public void getmoreIdol(){
+        Retrofit retrofit = APIClient.getClient();
+        RequestAPI callapi  = retrofit.create(RequestAPI.class);
+        Call<List<IdolHot>> call = callapi.getIdol();
+        call.enqueue(new Callback<List<IdolHot>>() {
+            @Override
+            public void onResponse(Call<List<IdolHot>> call, Response<List<IdolHot>> response) {
+                Log.d("test","Lấy thêm: " + response.body().size());
+                ArrayList<IdolHot> arraycu  = arrayIDol.getValue();
+                arraycu.addAll(response.body());
+                arrayIDol.postValue(arraycu);
+            }
+
+            @Override
+            public void onFailure(Call<List<IdolHot>> call, Throwable t) {
+                Log.d("test",t.getMessage().toString());
+            }
+        });
     }
 }

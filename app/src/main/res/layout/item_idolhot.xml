@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="idol"
+            type="com.example.myidol.model.IdolHot" />
+        <variable
+            name="callback"
+            type="com.example.myidol.callback.IdolCallback" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:padding="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_photo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            bind:imageUrl="@{idol.linkphoto}"
+            android:scaleType="centerCrop"
+            android:onClick="@{()->callback.onPhotoClick(idol)}"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

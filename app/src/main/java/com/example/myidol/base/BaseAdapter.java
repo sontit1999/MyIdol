@@ -26,6 +26,9 @@ public abstract class BaseAdapter<T ,VB extends ViewDataBinding> extends Recycle
         this.datalist = arrayList;
         notifyDataSetChanged();
     }
+    public void addMore(ArrayList<T> arrayList){
+        this.datalist.addAll(arrayList);
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
