@@ -30,7 +30,7 @@ public class HotViewmodel extends BaseViewmodel {
     }
     public MutableLiveData<ArrayList<IdolHot>> getArrayIDol(){
         // call api
-        Retrofit retrofit = APIClient.getClient();
+        Retrofit retrofit = APIClient.getClient("http://sonhaui.000webhostapp.com/");
         RequestAPI callapi  = retrofit.create(RequestAPI.class);
         Call<List<IdolHot>> call = callapi.getIdol();
         call.enqueue(new Callback<List<IdolHot>>() {
@@ -50,7 +50,7 @@ public class HotViewmodel extends BaseViewmodel {
     }
     // get thêm idol
     public void getmoreIdol(){
-        Retrofit retrofit = APIClient.getClient();
+        Retrofit retrofit = APIClient.getClient("http://sonhaui.000webhostapp.com/");
         RequestAPI callapi  = retrofit.create(RequestAPI.class);
         Call<List<IdolHot>> call = callapi.getIdol();
         call.enqueue(new Callback<List<IdolHot>>() {

@@ -10,5 +10,6 @@
     <color name="colorgrey2">#252424</color>
     <color name="colorwhite">#ffff</color>
     <color name="colorblue">#2196F3</color>
+    <color name="coloryellow">#FFEB3B</color>
     <color name="colorbg_bottom_nav">#201F1F</color>
 </resources>

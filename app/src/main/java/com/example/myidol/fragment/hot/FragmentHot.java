@@ -19,7 +19,6 @@ import com.example.myidol.ui.image.ImageFullActivity;
 
 import java.util.ArrayList;
 public class FragmentHot extends BaseFragment<FragHotBinding,HotViewmodel> {
-    ArrayList<IdolHot> arrTemp = new ArrayList<>();
     @Override
     public Class<HotViewmodel> getViewmodel() {
         return HotViewmodel.class;
@@ -54,6 +53,7 @@ public class FragmentHot extends BaseFragment<FragHotBinding,HotViewmodel> {
                @Override
                public void onChanged(ArrayList<IdolHot> idolHots) {
                    viewmodel.adapter.setList(idolHots);
+                   binding.progressCircular.setVisibility(View.INVISIBLE);
                    viewmodel.adapter.setCallback(new IdolCallback() {
                        @Override
                        public void onPhotoClick(IdolHot idolHot) {

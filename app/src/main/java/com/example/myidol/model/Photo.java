@@ -26,11 +26,5 @@ public class Photo implements Serializable {
     public void setLinkImage(String linkImage) {
         this.linkImage = linkImage;
     }
-    @BindingAdapter({"bind:imageUrl"})
-    public static void loadImage(ImageView view, String imageUrl) {
-        Log.d("test","binđimg image");
-        Glide.with(view.getContext())
-                .load(imageUrl)
-                .into(view);
-    }
+
 }

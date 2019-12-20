@@ -42,7 +42,7 @@ public class FragmentProfile extends BaseFragment<FragProfileBinding,ProfileView
         // set recyclerview
         binding.rvPhoto.setHasFixedSize(true);
         binding.rvPhoto.setLayoutManager(new GridLayoutManager(getContext(),3));
-        binding.rvPhoto.setAdapter(viewmodel.adapter);
+       // binding.rvPhoto.setAdapter(viewmodel.adapter);
         // click avatar
         binding.ivAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
