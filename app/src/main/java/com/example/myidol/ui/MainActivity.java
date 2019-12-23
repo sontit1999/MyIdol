@@ -19,6 +19,8 @@ import com.example.myidol.fragment.home.FragmentHome;
 import com.example.myidol.fragment.hot.FragmentHot;
 import com.example.myidol.fragment.profile.FragmentProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmodel>{
 
@@ -34,6 +36,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
 
     @Override
     public void setBindingViewmodel() {
+
         binding.setViewmodel(viewmodel);
         // load defaut fragment
         loadFragment(new FragmentHome());

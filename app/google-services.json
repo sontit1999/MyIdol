@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "475939464077",
+    "firebase_url": "https://idol-8f33d.firebaseio.com",
+    "project_id": "idol-8f33d",
+    "storage_bucket": "idol-8f33d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475939464077:android:f587db318c2aaf373953c4",
+        "android_client_info": {
+          "package_name": "com.example.myidol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475939464077-7gnsa3vh95tnm76678pun3649j5l60hg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myidol",
+            "certificate_hash": "f4f34d27e65e30ce21c498bd6c8496c108d99496"
+          }
+        },
+        {
+          "client_id": "475939464077-08brl3inoue9l7erp6fr77uc29om46pc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbaFNVFfmDhy-xl4nRcvgNM6VtLO4qn3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475939464077-08brl3inoue9l7erp6fr77uc29om46pc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
