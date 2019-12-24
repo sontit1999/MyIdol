@@ -5,57 +5,64 @@
             name="viewmodel"
             type="com.example.myidol.fragment.add.AddViewmodel" />
     </data>
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.core.widget.NestedScrollView
         android:background="@color/colorbg_bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="horizontal"
-            android:padding="@dimen/padding_bottom_nav"
-            android:background="@color/colorbg_bottom_nav"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_create"
-                android:text="Share idol"
-                android:layout_weight="0.8"
-                android:layout_marginLeft="@dimen/padding_bottom_nav"
-                android:textSize="@dimen/tittle_size_main"
-                android:textColor="@color/colorwhite"
-                android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_bottom_nav"
+                android:background="@color/colorbg_bottom_nav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_create"
+                    android:text="Share idol"
+                    android:layout_weight="0.8"
+                    android:layout_marginLeft="@dimen/padding_bottom_nav"
+                    android:textSize="@dimen/tittle_size_main"
+                    android:textColor="@color/colorwhite"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tv_post"
+                    android:text="Đăng"
+                    android:paddingVertical="@dimen/padding_bottom_nav"
+                    android:gravity="end"
+                    android:layout_weight="0.2"
+                    android:textColor="@color/colorwhite"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <View
+                android:id="@+id/viewTemp"
+                android:background="@color/colorgrey2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <EditText
+                android:id="@+id/edt_mota"
+                android:background="@null"
+                android:gravity="start"
+                android:inputType="textCapSentences|textMultiLine"
+                android:textColor="@color/colorgrey"
+                android:padding="@dimen/padding_bottom_nav"
+                android:minHeight="120dp"
+                android:textColorHint="@color/colorgrey"
+                android:hint="@string/describe_idol"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/tv_post"
-                android:text="Đăng"
-                android:paddingVertical="@dimen/padding_bottom_nav"
-                android:gravity="end"
-                android:layout_weight="0.2"
-                android:textColor="@color/colorwhite"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/iv_idol"
+                android:src="@drawable/canhdep"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"/>
+
+
         </LinearLayout>
-        <View
-            android:id="@+id/viewTemp"
-            android:background="@color/colorgrey2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
-        <EditText
-            android:id="@+id/edt_mota"
-            android:background="@null"
-            android:lines="1"
-            android:inputType="text"
-            android:textColor="@color/colorgrey"
-            android:padding="@dimen/padding_bottom_nav"
-            android:textColorHint="@color/colorgrey"
-            android:hint="@string/describe_idol"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <ImageView
-            android:id="@+id/iv_idol"
-            android:src="@drawable/canhdep"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"/>
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
