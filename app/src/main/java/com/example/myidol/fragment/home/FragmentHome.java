@@ -17,10 +17,16 @@ import com.example.myidol.model.Photo;
 import com.example.myidol.model.Post;
 import com.example.myidol.ui.comment.CommentActivity;
 import com.example.myidol.ui.image.ImageFullActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel> {
+    DatabaseReference postRef = FirebaseDatabase.getInstance().getReference("post");
     @Override
     public Class<HomeViewmodel> getViewmodel() {
         return HomeViewmodel.class;
@@ -35,26 +41,31 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel> {
     public void setBindingViewmodel() {
         binding.setViewmodel(viewmodel);
         binding.rvPost.setHasFixedSize(true);
-        binding.rvPost.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        binding.rvPost.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         binding.rvPost.setAdapter(viewmodel.adapter);
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
 
+        postRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                    viewmodel.adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<Post> temp = new ArrayList<>();
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    Post post = ds.getValue(Post.class);
+                    temp.add(post);
+                }
+                viewmodel.setPost(temp);
             }
-        }).attachToRecyclerView(binding.rvPost);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
     public void ViewCreated() {
           viewmodel.getarrPost().observe(this, new Observer<ArrayList<Post>>() {
               @Override
-              public void onChanged(ArrayList<Post> posts) {
+              public void onChanged(final ArrayList<Post> posts) {
                   viewmodel.adapter.setList(posts);
                   viewmodel.adapter.setCallback(new Postcallback() {
                       @Override
@@ -72,6 +83,7 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel> {
                       @Override
                       public void onCommentClick(Post post) {
                           Intent intent = new Intent(getActivity(), CommentActivity.class);
+                          intent.putExtra("idpost",post.getIdpost());
                           startActivity(intent);
                       }
 

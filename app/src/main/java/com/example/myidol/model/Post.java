@@ -1,6 +1,7 @@
 package com.example.myidol.model;
 
 public class Post {
+    String idpost;
     String nameAuthor;
     String linkImage;
     String decribe;
@@ -8,7 +9,8 @@ public class Post {
     String numberComment;
     String numberDownload;
 
-    public Post(String nameAuthor, String linkImage, String decribe,  String numberLike,  String numberComment,  String numberDownload) {
+    public Post(String idpost,String nameAuthor, String linkImage, String decribe,  String numberLike,  String numberComment,  String numberDownload) {
+        this.idpost = idpost;
         this.nameAuthor = nameAuthor;
         this.linkImage = linkImage;
         this.decribe = decribe;
@@ -66,5 +68,13 @@ public class Post {
 
     public void setNumberDownload(String numberDownload) {
         this.numberDownload = numberDownload;
+    }
+
+    public String getIdpost() {
+        return idpost;
+    }
+
+    public void setIdpost(String idpost) {
+        this.idpost = idpost;
     }
 }

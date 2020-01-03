@@ -1,5 +1,6 @@
 package com.example.myidol.fragment.add;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.example.myidol.model.Post;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,7 +44,7 @@ public class FragmentAdd extends BaseFragment<FragAddBinding,AddViewmodel> {
     public static String TAG = "sondz";
     Uri imageURL = null;
     StorageReference storageReference;
-    DatabaseReference databaseReference;
+    DatabaseReference postRef;
     @Override
     public Class<AddViewmodel> getViewmodel() {
         return AddViewmodel.class;
@@ -56,7 +58,7 @@ public class FragmentAdd extends BaseFragment<FragAddBinding,AddViewmodel> {
     @Override
     public void setBindingViewmodel() {
          storageReference = FirebaseStorage.getInstance().getReference("uploads");
-         databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
+         postRef = FirebaseDatabase.getInstance().getReference("post");
          binding.setViewmodel(viewmodel);
          binding.ivIdol.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -74,29 +76,32 @@ public class FragmentAdd extends BaseFragment<FragAddBinding,AddViewmodel> {
                     Toast.makeText(getActivity(), "Input description!", Toast.LENGTH_SHORT).show();
                 }else if(imageURL == null){
                     Toast.makeText(getActivity(), "Input Image!", Toast.LENGTH_SHORT).show();
+
                 }else{
-//                    DateFormat df = new SimpleDateFormat("h:mm a");
-//                    String key = postRef.push().getKey();
-//                    Log.d("test","key" + key);
-//                    String date = df.format(Calendar.getInstance().getTime());
-//                    Post post = new Post("Sơn tít 99","https://congngheads.com/media/images/anh-dep/tai-hinh-nen-may-tinh-dep-1559550627/anh-gai-xinh-goi-cam-tuoi-cuoi-lam-hinh-nen-full-hd-05-07-2019-1.jpg","Em này kute quá <3 ","999","999","999");
-//                    postRef.push().setValue(post);
-                      StorageReference ref = FirebaseStorage.getInstance().getReference().child("image");
-                      ref.putFile(imageURL).
-                              addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                      final StorageReference ref = FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis()+"");
+                      ref.putFile(imageURL).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                           @Override
                           public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                               Toast.makeText(getActivity(), "upload succes!", Toast.LENGTH_SHORT).show();
-//                              Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-//                              String downloadUrl = uriTask.getResult().toString();
-//                              Toast.makeText(getActivity(), downloadUrl , Toast.LENGTH_SHORT).show();
-                          }
-                      }).addOnFailureListener(new OnFailureListener() {
-                          @Override
-                          public void onFailure(@NonNull Exception e) {
-                              Toast.makeText(getActivity(), "upload fail!" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//
+                                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Log.d("test", String.valueOf(uri));
+                                        DateFormat df = new SimpleDateFormat("h:mm a");
+                                        String date = df.format(Calendar.getInstance().getTime());
+                                        Post post = new Post(System.currentTimeMillis()+"","Sơn tít",String.valueOf(uri),binding.edtMota.getText().toString(),"0","0","0");
+                                        postRef.child(System.currentTimeMillis() + "").setValue(post);
+                                        Toast.makeText(getActivity(), "Đã đăng" , Toast.LENGTH_SHORT).show();
+
+
+                                    }
+                                });
                           }
                       });
+
+
+
                 }
 
              }
@@ -115,6 +120,5 @@ public class FragmentAdd extends BaseFragment<FragAddBinding,AddViewmodel> {
             Picasso.get().load(imageURL).into(binding.ivIdol);
         }
     }
-
 
 }
