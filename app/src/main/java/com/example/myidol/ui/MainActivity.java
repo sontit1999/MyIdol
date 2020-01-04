@@ -18,7 +18,10 @@ import com.example.myidol.fragment.favorite.FragmentFavorite;
 import com.example.myidol.fragment.home.FragmentHome;
 import com.example.myidol.fragment.hot.FragmentHot;
 import com.example.myidol.fragment.profile.FragmentProfile;
+import com.example.myidol.fragment.search.FragmentSearch;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -36,7 +39,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
 
     @Override
     public void setBindingViewmodel() {
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Toast.makeText(this, user.getUid(), Toast.LENGTH_SHORT).show();
         binding.setViewmodel(viewmodel);
         // load defaut fragment
         loadFragment(new FragmentHome());
@@ -51,7 +55,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
                         break;
                     case R.id.nav_hot:
                         Toast.makeText(MainActivity.this, "hot", Toast.LENGTH_SHORT).show();
-                        loadFragment(new FragmentHot());
+                        loadFragment(new FragmentSearch());
                         break;
                     case R.id.nav_add:
                         Toast.makeText(MainActivity.this, "add", Toast.LENGTH_SHORT).show();

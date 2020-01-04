@@ -16,12 +16,18 @@
         android:theme="@style/AppTheme">
         <activity
             android:windowSoftInputMode="adjustResize"
-            android:name=".ui.MainActivity">
+            android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:windowSoftInputMode="adjustResize"
+            android:name=".ui.MainActivity">
+
+        </activity>
+        <activity android:name=".ui.register.RegisterActivity"></activity>
         <activity android:name=".ui.image.ImageFullActivity"></activity>
         <activity android:name=".ui.comment.CommentActivity"></activity>
     </application>

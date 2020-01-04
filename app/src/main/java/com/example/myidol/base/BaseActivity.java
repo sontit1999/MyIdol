@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.myidol.ui.MainActivity;
+
 public abstract class BaseActivity<B extends ViewDataBinding,VM extends BaseViewmodel> extends AppCompatActivity {
     protected B binding;
     protected VM viewmodel;
@@ -23,7 +25,7 @@ public abstract class BaseActivity<B extends ViewDataBinding,VM extends BaseView
         viewmodel = ViewModelProviders.of(this).get(getViewmodel());
         setBindingViewmodel();
     }
-    public void gotoActivity(AppCompatActivity activity,Bundle bundle){
+    public void gotoActivity(Class<MainActivity> activity, Bundle bundle){
         Intent intent = new Intent(this,activity.getClass());
         if(bundle!=null){
             intent.putExtra("bundle",bundle);
