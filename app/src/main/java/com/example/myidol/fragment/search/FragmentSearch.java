@@ -111,8 +111,4 @@ public class FragmentSearch extends BaseFragment<FragSearchBinding,SearchViewmod
             }
         });
     }
-    private void follow(String id){
-        mdatabase.child("Follows").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("following").child(id).setValue(true);
-    }
 }

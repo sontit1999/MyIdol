@@ -18,6 +18,7 @@ import com.example.myidol.fragment.favorite.FragmentFavorite;
 import com.example.myidol.fragment.home.FragmentHome;
 import com.example.myidol.fragment.hot.FragmentHot;
 import com.example.myidol.fragment.profile.FragmentProfile;
+import com.example.myidol.fragment.profile.FragmentProfileUser;
 import com.example.myidol.fragment.search.FragmentSearch;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,8 +40,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
 
     @Override
     public void setBindingViewmodel() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Toast.makeText(this, user.getUid(), Toast.LENGTH_SHORT).show();
         binding.setViewmodel(viewmodel);
         // load defaut fragment
         loadFragment(new FragmentHome());
@@ -50,30 +49,26 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
-                        Toast.makeText(MainActivity.this, "home", Toast.LENGTH_SHORT).show();
                         loadFragment(new FragmentHome());
                         break;
                     case R.id.nav_hot:
-                        Toast.makeText(MainActivity.this, "hot", Toast.LENGTH_SHORT).show();
                         loadFragment(new FragmentSearch());
                         break;
                     case R.id.nav_add:
-                        Toast.makeText(MainActivity.this, "add", Toast.LENGTH_SHORT).show();
                         loadFragment(new FragmentAdd());
                         break;
                     case R.id.nav_favorite:
-                        Toast.makeText(MainActivity.this, "favorite", Toast.LENGTH_SHORT).show();
                         loadFragment(new FragmentFavorite());
                         break;
                     case R.id.nav_user:
-                        loadFragment(new FragmentProfile());
-                        Toast.makeText(MainActivity.this, "user", Toast.LENGTH_SHORT).show();
+                        loadFragment(new FragmentProfileUser());
                         break;
                 }
                 return true;
             }
 
         });
+
     }
     public void loadFragment(Fragment fragment){
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

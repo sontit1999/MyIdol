@@ -1,7 +1,10 @@
 package com.example.myidol.fragment.add;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.myidol.R;
 import com.example.myidol.base.BaseFragment;
@@ -23,6 +28,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,12 +45,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+
 public class FragmentAdd extends BaseFragment<FragAddBinding,AddViewmodel> {
     public static final int GALLERY = 123;
-    public static String TAG = "sondz";
-    Uri imageURL = null;
     StorageReference storageReference;
     DatabaseReference postRef;
+    Uri imageURL = null;
     @Override
     public Class<AddViewmodel> getViewmodel() {
         return AddViewmodel.class;
@@ -57,55 +64,32 @@ public class FragmentAdd extends BaseFragment<FragAddBinding,AddViewmodel> {
 
     @Override
     public void setBindingViewmodel() {
-         storageReference = FirebaseStorage.getInstance().getReference("uploads");
-         postRef = FirebaseDatabase.getInstance().getReference("post");
-         binding.setViewmodel(viewmodel);
-         binding.ivIdol.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 Intent intent = new Intent();
-                 intent.setType("image/*");
-                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                 startActivityForResult(intent, GALLERY);
-             }
-         });
-         binding.tvPost.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                if(TextUtils.isEmpty(binding.edtMota.getText())){
-                    Toast.makeText(getActivity(), "Input description!", Toast.LENGTH_SHORT).show();
-                }else if(imageURL == null){
-                    Toast.makeText(getActivity(), "Input Image!", Toast.LENGTH_SHORT).show();
-
-                }else{
-                      final StorageReference ref = FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis()+"");
-                      ref.putFile(imageURL).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                          @Override
-                          public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                              Toast.makeText(getActivity(), "upload succes!", Toast.LENGTH_SHORT).show();
-//
-                                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        Log.d("test", String.valueOf(uri));
-                                        DateFormat df = new SimpleDateFormat("h:mm a");
-                                        String date = df.format(Calendar.getInstance().getTime());
-                                        Post post = new Post(System.currentTimeMillis()+"","Sơn tít",String.valueOf(uri),binding.edtMota.getText().toString(),"0","0","0");
-                                        postRef.child(System.currentTimeMillis() + "").setValue(post);
-                                        Toast.makeText(getActivity(), "Đã đăng" , Toast.LENGTH_SHORT).show();
-
-
-                                    }
-                                });
-                          }
-                      });
-
-
-
-                }
-
-             }
-         });
+             postRef = FirebaseDatabase.getInstance().getReference();
+             binding.ivIdol.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View view) {
+                    Intent galleryIntent = new Intent(
+                             Intent.ACTION_PICK,
+                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                     startActivityForResult(galleryIntent, GALLERY);
+                 }
+             });
+             binding.tvPost.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View view) {
+                     DateFormat df = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
+                     String date = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+                     String idpost = postRef.push().getKey();
+                     Log.d("hihi",date);
+                     Post post = new Post(idpost,"https://i.a4vn.com/2019/7/27/bop-chut-o-eo-keo-chut-o-chan-gai-xinh-chinh-anh-suong-suong-toi-luc-lo-anh-duoc-tag-lai-khien-dan-tinh-choang-vang-954981.jpg",binding.edtMota.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getUid(),date);
+                     postRef.child("post").child(idpost).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                         @Override
+                         public void onSuccess(Void aVoid) {
+                             Toast.makeText(getActivity(), "Đã đăng", Toast.LENGTH_SHORT).show();
+                         }
+                     });
+                 }
+             });
     }
 
     @Override
@@ -115,10 +99,15 @@ public class FragmentAdd extends BaseFragment<FragAddBinding,AddViewmodel> {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == GALLERY && data.getData()!= null){
-            imageURL =  data.getData();
-            Picasso.get().load(imageURL).into(binding.ivIdol);
-        }
+        if (resultCode == Activity.RESULT_OK && data!=null)
+            switch (requestCode){
+                case GALLERY:
+                    //data.getData returns the content URI for the selected Image
+                    Uri selectedImage = data.getData();
+                    binding.ivIdol.setImageURI(selectedImage);
+                    break;
+            }
+
     }
 
 }

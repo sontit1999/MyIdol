@@ -13,8 +13,8 @@
         tools:context=".ui.MainActivity">
         <FrameLayout
             android:id="@+id/frame"
-            android:background="@color/colorblack"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:background="@color/colorwhite"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/bottom_nav"

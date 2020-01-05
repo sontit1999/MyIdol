@@ -57,7 +57,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:src="@drawable/ic_cmt1"
+                        android:src="@drawable/icons8comment"
                         android:layout_width="@dimen/size_icon_small"
                         android:layout_height="@dimen/size_icon_small"/>
                     <TextView

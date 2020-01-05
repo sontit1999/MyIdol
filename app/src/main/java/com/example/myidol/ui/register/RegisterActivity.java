@@ -60,7 +60,9 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding,Regis
                 String username = binding.etUsername.getText().toString().trim();
                 String email = binding.etEmail.getText().toString().trim();
                 String password = binding.etPassword.getText().toString().trim();
-                if(TextUtils.isEmpty(username) || TextUtils.isEmpty(username) || TextUtils.isEmpty(username)){
+                String address = binding.etAddress.getText().toString().trim();
+                String sentenceslike = binding.etSentencelike.getText().toString().trim();
+                if(TextUtils.isEmpty(username) || TextUtils.isEmpty(username) || TextUtils.isEmpty(username) || TextUtils.isEmpty(address) || TextUtils.isEmpty(sentenceslike) ){
                     Toast.makeText(RegisterActivity.this, "Must not empty!!!", Toast.LENGTH_SHORT).show();
                 }else if(username.length()<6 || password.length() < 6){
                     Toast.makeText(RegisterActivity.this, "Username and Password at least 6 character!", Toast.LENGTH_SHORT).show();
@@ -68,14 +70,14 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding,Regis
                     Toast.makeText(RegisterActivity.this, "Email at least 11 character!", Toast.LENGTH_SHORT).show();
                 }else{
                     pd.show();
-                    register(username,email,password);
+                    register(username,email,password,address,sentenceslike);
                 }
 
             }
         });
     }
 
-    public void register(final String username, String email, String password){
+    public void register(final String username, String email, String password, final String address, final String sentencelike){
         mauth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -88,7 +90,9 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding,Regis
                     HashMap<String,Object> hashMap = new HashMap<>();
                     hashMap.put("id",user.getUid());
                     hashMap.put("username",username);
-                    hashMap.put("imageUrl","https://image.flaticon.com/icons/svg/47/47774.svg");
+                    hashMap.put("sentenceslike",sentencelike);
+                    hashMap.put("address",address);
+                    hashMap.put("imageUrl","http://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png");
                     mdatabase.child("Users").child(user.getUid()).setValue(hashMap);
                     finish();
                 } else {

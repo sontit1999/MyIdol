@@ -10,41 +10,48 @@
             name="callback"
             type="com.example.myidol.callback.PhotoCallback" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:orientation="vertical"
-        android:padding="1dp"
+    <androidx.cardview.widget.CardView
+        app:cardElevation="1dp"
+        app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/iv_photo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            bind:imageUrl="@{photo.linkImage}"
-            android:scaleType="centerCrop"
-            android:onClick="@{()->callback.onPhotoClick(photo)}"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
-        <LinearLayout
-            android:id="@+id/container_like"
-            android:layout_marginLeft="@dimen/padding_5dp"
-            android:layout_marginBottom="@dimen/padding_5dp"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/iv_like"
-                android:src="@drawable/ic_tym"
-                android:layout_width="@dimen/size_ic_tym"
-                android:layout_height="@dimen/size_ic_tym"/>
-            <TextView
-                android:id="@+id/tv_like"
-                android:text="200"
-                android:textColor="@color/colorwhite"
+                android:id="@+id/iv_photo"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                bind:imageUrl="@{photo.linkImage}"
+                android:scaleType="centerCrop"
+                android:onClick="@{()->callback.onPhotoClick(photo)}"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"/>
+            <LinearLayout
+                android:id="@+id/container_like"
+                android:layout_marginLeft="@dimen/padding_5dp"
+                android:layout_marginBottom="@dimen/padding_5dp"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_like"
+                    android:src="@drawable/ic_tym"
+                    android:layout_width="@dimen/size_ic_tym"
+                    android:layout_height="@dimen/size_ic_tym"/>
+                <TextView
+                    android:id="@+id/tv_like"
+                    android:text="200"
+                    android:textColor="@color/colorwhite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
 </layout>

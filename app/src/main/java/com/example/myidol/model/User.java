@@ -13,16 +13,35 @@ public class User {
     String id;
     String imageUrl;
     String username;
+    String sentenceslike;
+    String address;
 
 
-    public User(String id, String imageUrl, String username) {
+    public User(String id, String imageUrl, String username,String sentenceslike,String address) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.username = username;
-
+        this.sentenceslike = sentenceslike;
+        this.address = address;
     }
 
     public User() {
+    }
+
+    public String getSentenceslike() {
+        return sentenceslike;
+    }
+
+    public void setSentenceslike(String sentenceslike) {
+        this.sentenceslike = sentenceslike;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getId() {

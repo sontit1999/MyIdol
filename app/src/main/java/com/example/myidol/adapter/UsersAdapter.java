@@ -52,10 +52,10 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHoder>
         final FirebaseUser curentUser = FirebaseAuth.getInstance().getCurrentUser();
         final User user = arrayList.get(position);
         holder.bindview(user);
+
         holder.tvfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Follow", Toast.LENGTH_SHORT).show();
                 if(holder.tvfollow.getText().equals("follow")){
                     FirebaseDatabase.getInstance().getReference("follows").child(curentUser.getUid())
                             .child("following").child(user.getId()).setValue(true);
@@ -94,22 +94,25 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHoder>
         }
     }
     private void isFollowing(final String id, final TextView tvfollow){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("follows").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("following");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(id).exists()){
-                    tvfollow.setText("unfollow");
-                }else{
-                    tvfollow.setText("follow");
+        {
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("follows").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child("following");
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.child(id).exists()){
+                        tvfollow.setText("unfollow");
+                    }else{
+                        tvfollow.setText("follow");
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }
+
     }
 }

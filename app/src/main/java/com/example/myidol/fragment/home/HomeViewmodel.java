@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 public class HomeViewmodel extends BaseViewmodel {
 
-    public PostAdapter adapter = new PostAdapter();
     private MutableLiveData<ArrayList<Post>> arrayPost = new MutableLiveData<>();
     public HomeViewmodel(@NonNull Application application) {
         super(application);

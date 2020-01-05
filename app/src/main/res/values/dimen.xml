@@ -11,5 +11,5 @@
     <dimen name="content_size_main">16sp</dimen>
     <dimen name="tittle_size_main">20sp</dimen>
     <dimen name="size_avatar">100dp</dimen>
-    <dimen name="size_ic_tym">20dp</dimen>
+    <dimen name="size_ic_tym">25dp</dimen>
 </resources>
