@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myidol.R;
+import com.example.myidol.callback.Postcallback;
 import com.example.myidol.model.Post;
 import com.example.myidol.model.User;
 import com.google.firebase.database.DataSnapshot;
@@ -27,10 +28,11 @@ import java.util.ArrayList;
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Myviewhoder> {
     Context context;
     ArrayList<Post> arrayList;
-
+    Postcallback listener;
     public PostsAdapter(Context context, ArrayList<Post> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
+        this.listener = (Postcallback) context;
     }
 
     @NonNull
@@ -42,10 +44,21 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Myviewhoder>
 
     @Override
     public void onBindViewHolder(@NonNull Myviewhoder holder, int position) {
-         Post post = arrayList.get(position);
+         final Post post = arrayList.get(position);
          holder.bind(post);
          cloneUser(post.getPublisher(),holder.iv_author,holder.tv_nameAuthor);
-
+         holder.comment.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 listener.onCommentClick(post);
+             }
+         });
+         holder.ivpost.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 listener.onPhotoClick(post);
+             }
+         });
     }
 
     @Override
@@ -64,6 +77,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Myviewhoder>
             tv_nameAuthor = (TextView) itemView.findViewById(R.id.tv_nameAuthor);
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
             tv_describe = (TextView) itemView.findViewById(R.id.tv_describe);
+            comment = (LinearLayout) itemView.findViewById(R.id.comments);
+            like = (LinearLayout) itemView.findViewById(R.id.comments);
+            share = (LinearLayout) itemView.findViewById(R.id.shares);
         }
         private void bind(Post post){
             tv_describe.setText(post.getDecribe());

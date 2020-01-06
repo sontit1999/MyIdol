@@ -8,6 +8,6 @@ public interface Postcallback extends CBAdapter {
     void onPhotoClick(Post post);
     void onLikeClick(Post post);
     void onCommentClick(Post post);
-    void onDownloadClick(Post post);
-    void onDownAuthorclickClick(Post post);
+    void onShareClick(Post post);
+    void onAuthorclickClick(Post post);
 }

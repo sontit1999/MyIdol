@@ -68,7 +68,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_below="@id/tv_describe"
-                android:onClick="@{()->callback.onPhotoClick(post)}"
                 bind:imageUrl="@{post.linkImage}"
                  />
             <View
@@ -102,7 +101,7 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:id="@+id/comment"
+                    android:id="@+id/comments"
                     android:paddingVertical="10dp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -119,7 +118,7 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:id="@+id/share"
+                    android:id="@+id/shares"
                     android:paddingVertical="10dp"
                     android:layout_weight="1"
                     android:layout_width="0dp"

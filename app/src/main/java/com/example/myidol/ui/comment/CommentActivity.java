@@ -48,13 +48,6 @@ public class CommentActivity extends BaseActivity<ActivityCommentBinding,Comment
         // set recyclerview
           binding.rvComment.setHasFixedSize(true);
           binding.rvComment.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-          binding.rvComment.setAdapter(viewmodel.adapter);
-          viewmodel.getarrComment().observe(this, new Observer<ArrayList<Comment>>() {
-              @Override
-              public void onChanged(ArrayList<Comment> comments) {
-                  viewmodel.adapter.setList(comments);
-              }
-          });
 
           binding.tvSend.setOnClickListener(new View.OnClickListener() {
               @Override

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
     <data>
         <variable
             name="viewmodel"
@@ -24,6 +25,7 @@
                 <ImageView
                     android:id="@+id/iv_avatar"
                     android:src="@drawable/gaixinh"
+                    bind:imageUrl="@{user.imageUrl}"
                     android:scaleType="centerCrop"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"

@@ -1,49 +1,40 @@
 package com.example.myidol.model;
 
 public class Comment {
-    String linkAvatar;
-    String nameAuthor;
-    String contentComment;
-    String timeComment;
-    public Comment(String linkAvatar, String nameAuthor, String contentComment, String timeComment) {
-        this.linkAvatar = linkAvatar;
-        this.nameAuthor = nameAuthor;
-        this.contentComment = contentComment;
-        this.timeComment = timeComment;
-    }
+    String iduser;
+    String content;
+    String timecomment;
 
     public Comment() {
     }
 
-    public String getLinkAvatar() {
-        return linkAvatar;
+    public Comment(String iduser, String content, String timecomment) {
+        this.iduser = iduser;
+        this.content = content;
+        this.timecomment = timecomment;
     }
 
-    public void setLinkAvatar(String linkAvatar) {
-        this.linkAvatar = linkAvatar;
+    public String getIduser() {
+        return iduser;
     }
 
-    public String getNameAuthor() {
-        return nameAuthor;
+    public void setIduser(String iduser) {
+        this.iduser = iduser;
     }
 
-    public void setNameAuthor(String nameAuthor) {
-        this.nameAuthor = nameAuthor;
+    public String getContent() {
+        return content;
     }
 
-    public String getContentComment() {
-        return contentComment;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public void setContentComment(String contentComment) {
-        this.contentComment = contentComment;
+    public String getTimecomment() {
+        return timecomment;
     }
 
-    public String getTimeComment() {
-        return timeComment;
-    }
-
-    public void setTimeComment(String timeComment) {
-        this.timeComment = timeComment;
+    public void setTimecomment(String timecomment) {
+        this.timecomment = timecomment;
     }
 }

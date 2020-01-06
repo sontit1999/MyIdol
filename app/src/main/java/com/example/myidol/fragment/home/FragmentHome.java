@@ -2,6 +2,7 @@ package com.example.myidol.fragment.home;
 
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.myidol.R;
 import com.example.myidol.adapter.PostsAdapter;
@@ -28,8 +30,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel> {
+public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
     ArrayList<Post> arrayList;
     PostsAdapter adapter;
     DatabaseReference postRef = FirebaseDatabase.getInstance().getReference("post");
@@ -48,23 +51,27 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel> {
     public void setBindingViewmodel() {
         binding.setViewmodel(viewmodel);
         setupRecyclerview();
-       // checkfollowing();
         checkfollowing();
-
+        binding.swipeRefesh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.d("ahjhjhj","aaaaa");
+                checkfollowing();
+                binding.swipeRefesh.setRefreshing(false);
+            }
+        });
     }
 
     private void checkfollowing() {
         followinglist = new ArrayList<>();
-        Log.d("size",followinglist.size()+"");
         DatabaseReference referencefollow = FirebaseDatabase.getInstance().getReference("follows").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("following");
         referencefollow.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                followinglist.clear();
                 for(DataSnapshot i : dataSnapshot.getChildren()){
                        followinglist.add(i.getKey());
-                       Log.d("key",i.getKey());
                 }
-                Log.d("size",followinglist.size()+"");
                 getPost();
             }
 
@@ -89,6 +96,7 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel> {
                         }
                     }
                 }
+                Collections.shuffle(temp);
                 viewmodel.setPost(temp);
             }
             @Override
@@ -113,6 +121,7 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel> {
               @Override
               public void onChanged(final ArrayList<Post> posts) {
                   adapter.setList(posts);
+                  binding.pbLoading.setVisibility(View.GONE);
               }
           });
     }
