@@ -1,6 +1,7 @@
 package com.example.myidol.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.myidol.R;
 import com.example.myidol.model.User;
+import com.example.myidol.ui.profile.ProfileUserClientActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -52,7 +54,22 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHoder>
         final FirebaseUser curentUser = FirebaseAuth.getInstance().getCurrentUser();
         final User user = arrayList.get(position);
         holder.bindview(user);
-
+        holder.tv_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProfileUserClientActivity.class);
+                intent.putExtra("iduser",user.getId());
+                context.startActivity(intent);
+            }
+        });
+        holder.iv_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProfileUserClientActivity.class);
+                intent.putExtra("iduser",user.getId());
+                context.startActivity(intent);
+            }
+        });
         holder.tvfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

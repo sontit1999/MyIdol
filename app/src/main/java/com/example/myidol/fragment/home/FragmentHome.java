@@ -7,21 +7,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.example.myidol.R;
 import com.example.myidol.adapter.PostsAdapter;
 import com.example.myidol.base.BaseFragment;
-import com.example.myidol.callback.Postcallback;
 import com.example.myidol.databinding.FragHomeBinding;
-import com.example.myidol.model.Photo;
+
 import com.example.myidol.model.Post;
-import com.example.myidol.model.User;
-import com.example.myidol.ui.comment.CommentActivity;
-import com.example.myidol.ui.image.ImageFullActivity;
+import com.example.myidol.ui.chat.ChatActivity;
+import com.example.myidol.ui.register.RegisterActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,12 +47,24 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
         binding.setViewmodel(viewmodel);
         setupRecyclerview();
         checkfollowing();
+        action();
+
+    }
+
+    private void action() {
         binding.swipeRefesh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.d("ahjhjhj","aaaaa");
                 checkfollowing();
                 binding.swipeRefesh.setRefreshing(false);
+            }
+        });
+        binding.ivChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "click chát", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                startActivity(intent);
             }
         });
     }

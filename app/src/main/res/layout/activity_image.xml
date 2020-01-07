@@ -29,46 +29,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:id="@+id/container_like"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    android:padding="@dimen/padding_bottom_nav"
-                    android:gravity="center"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:src="@drawable/ic_likes"
-                        android:layout_width="@dimen/size_icon_small"
-                        android:layout_height="@dimen/size_icon_small"/>
-                    <TextView
-                        android:text="Thích"
-                        android:textColor="@color/colorwhite"
-                        android:layout_marginLeft="@dimen/padding_5dp"
-                        android:textSize="@dimen/content_size_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/container_comment"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    android:padding="@dimen/padding_bottom_nav"
-                    android:gravity="center"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:src="@drawable/icons8comment"
-                        android:layout_width="@dimen/size_icon_small"
-                        android:layout_height="@dimen/size_icon_small"/>
-                    <TextView
-                        android:text="Comment"
-                        android:textColor="@color/colorwhite"
-                        android:layout_marginLeft="@dimen/padding_5dp"
-                        android:textSize="@dimen/content_size_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <LinearLayout
                     android:id="@+id/container_download"
                     android:orientation="horizontal"
                     android:layout_weight="1"

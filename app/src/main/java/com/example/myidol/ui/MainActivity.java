@@ -6,44 +6,36 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myidol.R;
 import com.example.myidol.adapter.CommentAdapter;
-import com.example.myidol.adapter.PostsAdapter;
 import com.example.myidol.base.BaseActivity;
 import com.example.myidol.callback.Postcallback;
 import com.example.myidol.databinding.ActivityMainBinding;
 import com.example.myidol.fragment.add.FragmentAdd;
 import com.example.myidol.fragment.favorite.FragmentFavorite;
 import com.example.myidol.fragment.home.FragmentHome;
-import com.example.myidol.fragment.hot.FragmentHot;
-import com.example.myidol.fragment.profile.FragmentProfile;
 import com.example.myidol.fragment.profile.FragmentProfileUser;
 import com.example.myidol.fragment.search.FragmentSearch;
 import com.example.myidol.model.Comment;
 import com.example.myidol.model.Photo;
 import com.example.myidol.model.Post;
-import com.example.myidol.ui.bottomsheet.BottomSheetCommentFragment;
 import com.example.myidol.ui.image.ImageFullActivity;
+import com.example.myidol.ui.profile.ProfileUserClientActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,7 +44,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmodel> implements Postcallback {
     ArrayList<Comment> temp = new ArrayList<>();
@@ -188,12 +179,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
 
     @Override
     public void onShareClick(Post post) {
-
+        Toast.makeText(this, "share click", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onAuthorclickClick(Post post) {
-
+        Intent intent = new Intent(MainActivity.this, ProfileUserClientActivity.class);
+        intent.putExtra("iduser",post.getPublisher());
+        startActivity(intent);
     }
 
 }

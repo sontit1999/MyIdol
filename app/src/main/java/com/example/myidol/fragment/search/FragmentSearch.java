@@ -1,8 +1,10 @@
 package com.example.myidol.fragment.search;
 
+import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,7 @@ public class FragmentSearch extends BaseFragment<FragSearchBinding,SearchViewmod
     DatabaseReference mdatabase;
     UsersAdapter adapter;
     ArrayList<User> arrayList;
+    int chooseUser = 0,choosePost = 0;
     @Override
     public Class<SearchViewmodel> getViewmodel() {
         return SearchViewmodel.class;
@@ -49,6 +52,7 @@ public class FragmentSearch extends BaseFragment<FragSearchBinding,SearchViewmod
         // set up recyclerview
         init();
         setuprecycleview();
+        searchUser("");
         action();
     }
 
@@ -65,12 +69,44 @@ public class FragmentSearch extends BaseFragment<FragSearchBinding,SearchViewmod
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                searchUser(charSequence.toString());
+                searchUser(charSequence.toString().trim());
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+        binding.tvPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(choosePost==1){
+                    choosePost = 0;
+                }else {
+                    choosePost = 1;
+                }
+                if(choosePost == 0){
+                    binding.tvPost.setBackgroundResource(R.drawable.bg_follow);
+                }else {
+                    binding.tvPost.setBackgroundResource(R.drawable.bg_unfollow);
+                }
+                Log.d("choose","choose post : " + choosePost);
+            }
+        });
+        binding.tvUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(chooseUser==1){
+                    chooseUser = 0;
+                }else {
+                    chooseUser = 1;
+                }
+                Log.d("choose","choose user : " + chooseUser);
+                if(chooseUser == 0){
+                    binding.tvUser.setBackgroundResource(R.drawable.bg_follow);
+                }else {
+                    binding.tvUser.setBackgroundResource(R.drawable.bg_unfollow);
+                }
             }
         });
     }

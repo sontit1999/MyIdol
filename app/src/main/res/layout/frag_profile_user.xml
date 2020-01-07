@@ -155,7 +155,7 @@
                     android:id="@+id/tv_mota"
                     android:textColor="@color/colorgrey"
                     android:background="@color/colorwhite"
-                    android:padding="20dp"
+                    android:padding="10dp"
                     android:layout_below="@id/container_name"
                     android:gravity="center"
                     android:text="@{user.sentenceslike}"
