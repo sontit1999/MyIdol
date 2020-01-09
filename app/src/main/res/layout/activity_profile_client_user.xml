@@ -89,6 +89,13 @@
                android:background="#08bcbb"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>
+           <Button
+               android:id="@+id/btn_chat"
+               android:text="Chat"
+               android:layout_marginTop="10dp"
+               android:background="#08bcbb"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
            <View
                android:id="@+id/viewngang"
                android:layout_marginTop="10dp"
@@ -106,7 +113,7 @@
                android:layout_height="wrap_content"/>
            <androidx.recyclerview.widget.RecyclerView
                android:id="@+id/rv_photos"
-               android:nestedScrollingEnabled="true"
+               android:nestedScrollingEnabled="false"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>
            <TextView
@@ -120,7 +127,7 @@
                android:layout_height="wrap_content"/>
            <androidx.recyclerview.widget.RecyclerView
                android:id="@+id/rv_post"
-               android:nestedScrollingEnabled="true"
+               android:nestedScrollingEnabled="false"
                android:layout_marginTop="10dp"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>

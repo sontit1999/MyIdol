@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="user"
+            type="com.example.myidol.model.User" />
+        <variable
+            name="callback"
+            type="com.example.myidol.callback.UserCallback" />
+    </data>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        bind:cardElevation="0dp"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:padding="20dp"
+            android:onClick="@{()->callback.onAvatarClick(user)}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_avatar"
+                android:layout_alignParentLeft="true"
+                bind:imageUrl="@{user.imageUrl}"
+                android:src="@drawable/sondz5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+            <LinearLayout
+                android:id="@+id/infor"
+                android:orientation="vertical"
+                android:layout_toRightOf="@id/iv_avatar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:text="@{user.username}"
+                    android:textSize="@dimen/content_size_main"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginTop="@dimen/padding_5dp"
+                    android:layout_marginStart="@dimen/padding_5dp"
+                    android:textColor="@color/colorgrey2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tv_folow"
+                    android:text="tin nhắn gần đây"
+                    android:textSize="12sp"
+                    bind:iduser="@{user.id}"
+                    android:layout_marginTop="@dimen/padding_5dp"
+                    android:textColor="#9FA1A5"
+                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

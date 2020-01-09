@@ -2,11 +2,14 @@ package com.example.myidol.model;
 
 public class Message {
     String content;
-    String nameUser;
+    String idsendUser;
+    String idreciveUser;
     String timeSend;
-    public Message(String content, String nameUser, String timeSend) {
+
+    public Message(String content, String idsendUser, String idreciveUser, String timeSend) {
         this.content = content;
-        this.nameUser = nameUser;
+        this.idsendUser = idsendUser;
+        this.idreciveUser = idreciveUser;
         this.timeSend = timeSend;
     }
 
@@ -21,12 +24,20 @@ public class Message {
         this.content = content;
     }
 
-    public String getNameUser() {
-        return nameUser;
+    public String getIdsendUser() {
+        return idsendUser;
     }
 
-    public void setNameUser(String nameUser) {
-        this.nameUser = nameUser;
+    public void setIdsendUser(String idsendUser) {
+        this.idsendUser = idsendUser;
+    }
+
+    public String getIdreciveUser() {
+        return idreciveUser;
+    }
+
+    public void setIdreciveUser(String idreciveUser) {
+        this.idreciveUser = idreciveUser;
     }
 
     public String getTimeSend() {

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="10dp"
+    android:background="@color/colorwhite"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/tv_timesent"
+        android:text="15:05 pm"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textColor="@color/colorgrey"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:gravity="end"
+        android:layout_below="@id/tv_timesent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_sent"
+            android:text="Hi sơn"
+            android:padding="10dp"
+            android:maxWidth="200dp"
+            android:layout_marginEnd="@dimen/padding_5dp"
+            android:textColor="@color/colorwhite"
+            android:background="@drawable/bg_item_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</RelativeLayout>
+
+

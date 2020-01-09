@@ -30,6 +30,7 @@ import com.example.myidol.model.Photo;
 import com.example.myidol.model.Post;
 import com.example.myidol.model.User;
 import com.example.myidol.ui.MainActivity;
+import com.example.myidol.ui.detailchat.DetailChatActivity;
 import com.example.myidol.ui.image.ImageFullActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -101,6 +102,14 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
     }
 
     private void action() {
+        binding.btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileUserClientActivity.this, DetailChatActivity.class);
+                intent.putExtra("iduser",iduser);
+                startActivity(intent);
+            }
+        });
         binding.btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,6 +159,11 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
 
             }
         });
+
+        if(iduser.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+            binding.btnChat.setVisibility(View.GONE);
+            binding.btnFollow.setVisibility(View.GONE);
+        }
     }
 
     private void setupRecyclerview() {

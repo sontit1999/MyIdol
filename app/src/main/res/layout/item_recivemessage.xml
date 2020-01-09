@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="10dp"
+    android:background="@color/colorwhite"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+     <TextView
+         android:id="@+id/tv_timerecieve"
+         android:text="15:05 pm"
+         android:visibility="gone"
+         android:gravity="center"
+         android:textColor="@color/colorgrey"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"/>
+     <LinearLayout
+        android:id="@+id/container_mesage"
+         android:layout_below="@id/tv_timerecieve"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:gravity="start"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_avatarChatRecive"
+            android:src="@drawable/sondz5"
+            android:layout_width="@dimen/size_icon"
+            android:layout_height="@dimen/size_icon"/>
+        <TextView
+            android:id="@+id/tv_recive"
+            android:text="Hi sơn"
+            android:padding="10dp"
+            android:maxWidth="200dp"
+            android:layout_marginStart="@dimen/padding_5dp"
+            android:textColor="@color/colorblack"
+            android:background="@drawable/bg_item_recievechat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</RelativeLayout>

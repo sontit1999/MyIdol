@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,6 +71,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Myviewhoder>
              @Override
              public void onClick(View view) {
                  listener.onShareClick(post);
+                 PopupMenu popup = new PopupMenu(context, holder.share);
+                 //Inflating the Popup using xml file
+                 popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
+                 popup.show();//showing popup menu
              }
          });
          holder.tv_nameAuthor.setOnClickListener(new View.OnClickListener() {

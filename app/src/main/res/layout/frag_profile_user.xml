@@ -164,7 +164,7 @@
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_hotidol"
-                android:nestedScrollingEnabled="true"
+                android:nestedScrollingEnabled="false"
                 android:layout_below="@id/container_name"
                 android:background="@color/colorwhite"
                 android:layout_width="match_parent"

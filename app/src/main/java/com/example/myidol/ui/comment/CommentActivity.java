@@ -46,8 +46,7 @@ public class CommentActivity extends BaseActivity<ActivityCommentBinding,Comment
         mSwipeBackLayout.setSwipeBackFactor(0.5f);
         mSwipeBackLayout.attachToActivity(this);
         // set recyclerview
-          binding.rvComment.setHasFixedSize(true);
-          binding.rvComment.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+
 
           binding.tvSend.setOnClickListener(new View.OnClickListener() {
               @Override
