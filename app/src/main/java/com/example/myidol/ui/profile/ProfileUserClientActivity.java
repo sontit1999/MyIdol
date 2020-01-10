@@ -30,6 +30,7 @@ import com.example.myidol.model.Photo;
 import com.example.myidol.model.Post;
 import com.example.myidol.model.User;
 import com.example.myidol.ui.MainActivity;
+import com.example.myidol.ui.comment.CommentActivity;
 import com.example.myidol.ui.detailchat.DetailChatActivity;
 import com.example.myidol.ui.image.ImageFullActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -102,6 +103,15 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
     }
 
     private void action() {
+        binding.containFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileUserClientActivity.this, CommentActivity.class);
+                intent.putExtra("type","follower");
+                intent.putExtra("iduser",iduser);
+                startActivity(intent);
+            }
+        });
         binding.btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

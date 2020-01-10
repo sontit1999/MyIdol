@@ -2,7 +2,7 @@
     <string name="app_name">MyIdol</string>
     <string name="menu_home">Home</string>
     <string name="menu_hot">Hot</string>
-    <string name="menu_like">Favorite</string>
+    <string name="menu_nofification">Nofification</string>
     <string name="menu_user">Me</string>
     <string name="edit_profile">Edit profile</string>
     <string name="name_author">Sơn tít</string>

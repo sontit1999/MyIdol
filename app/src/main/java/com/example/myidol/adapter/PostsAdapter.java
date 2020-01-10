@@ -1,6 +1,7 @@
 package com.example.myidol.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.example.myidol.callback.Postcallback;
 import com.example.myidol.model.Comment;
 import com.example.myidol.model.Post;
 import com.example.myidol.model.User;
+import com.example.myidol.ui.comment.CommentActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -107,6 +109,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Myviewhoder>
                      FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
                      Toast.makeText(context, "likes", Toast.LENGTH_SHORT).show();
                  }
+             }
+         });
+         holder.tv_numlike.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 Intent intent = new Intent(context, CommentActivity.class);
+                 intent.putExtra("type","likes");
+                 intent.putExtra("idpost",post.getIdpost());
+                 context.startActivity(intent);
              }
          });
     }

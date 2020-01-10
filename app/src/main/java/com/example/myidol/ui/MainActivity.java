@@ -25,6 +25,7 @@ import com.example.myidol.databinding.ActivityMainBinding;
 import com.example.myidol.fragment.add.FragmentAdd;
 import com.example.myidol.fragment.favorite.FragmentFavorite;
 import com.example.myidol.fragment.home.FragmentHome;
+import com.example.myidol.fragment.notification.FragmentNotification;
 import com.example.myidol.fragment.profile.FragmentProfileUser;
 import com.example.myidol.fragment.search.FragmentSearch;
 import com.example.myidol.model.Comment;
@@ -76,8 +77,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
                     case R.id.nav_add:
                         loadFragment(new FragmentAdd());
                         break;
-                    case R.id.nav_favorite:
-                        loadFragment(new FragmentFavorite());
+                    case R.id.nav_notification:
+                        loadFragment(new FragmentNotification());
                         break;
                     case R.id.nav_user:
                         loadFragment(new FragmentProfileUser());

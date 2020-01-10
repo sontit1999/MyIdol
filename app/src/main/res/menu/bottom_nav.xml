@@ -15,9 +15,9 @@
         android:title=" "
          />
     <item
-        android:id="@+id/nav_favorite"
-        android:icon="@drawable/ic_favorite"
-        android:title="@string/menu_like" />
+        android:id="@+id/nav_notification"
+        android:icon="@drawable/ic_notification"
+        android:title="@string/menu_nofification" />
     <item
         android:id="@+id/nav_user"
         android:icon="@drawable/ic_user"

@@ -21,7 +21,9 @@ import com.example.myidol.model.IdolHot;
 import com.example.myidol.model.Photo;
 import com.example.myidol.model.Post;
 import com.example.myidol.model.User;
+import com.example.myidol.ui.comment.CommentActivity;
 import com.example.myidol.ui.image.ImageFullActivity;
+import com.example.myidol.ui.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -82,6 +84,33 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
     private void init() {
         arrayList = new ArrayList<>();
         adapter = new PostsAdapter(getContext(),arrayList);
+        binding.containNumberFollowing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), CommentActivity.class);
+                intent.putExtra("type","following");
+                intent.putExtra("iduser",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                startActivity(intent);
+            }
+        });
+        binding.containNumberFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), CommentActivity.class);
+                intent.putExtra("type","follower");
+                intent.putExtra("iduser",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                startActivity(intent);
+            }
+        });
+        binding.btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
