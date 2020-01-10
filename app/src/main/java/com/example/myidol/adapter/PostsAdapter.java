@@ -67,11 +67,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Myviewhoder>
                  listener.onPhotoClick(post);
              }
          });
-         holder.share.setOnClickListener(new View.OnClickListener() {
+         holder.iv_more.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
                  listener.onShareClick(post);
-                 PopupMenu popup = new PopupMenu(context, holder.share);
+                 PopupMenu popup = new PopupMenu(context, holder.iv_more);
                  //Inflating the Popup using xml file
                  popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
                  popup.show();//showing popup menu
@@ -118,11 +118,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Myviewhoder>
     }
 
     class Myviewhoder extends RecyclerView.ViewHolder{
-        ImageView iv_author,ivpost,ivlike,ivcomment, ivshare;
+        ImageView iv_author,ivpost,ivlike,ivcomment, ivshare,iv_more;
         TextView tv_nameAuthor,tv_describe,tv_time,tv_numlike,tv_numcomment;
         LinearLayout like,comment,share;
         public Myviewhoder(@NonNull View itemView) {
             super(itemView);
+            iv_more = (ImageView) itemView.findViewById(R.id.iv_more);
             iv_author = (ImageView) itemView.findViewById(R.id.iv_avatar);
             ivshare = (ImageView) itemView.findViewById(R.id.iv_shares);
             ivlike = (ImageView) itemView.findViewById(R.id.iv_hearts);

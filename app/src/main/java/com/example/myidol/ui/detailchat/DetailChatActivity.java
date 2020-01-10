@@ -16,6 +16,7 @@ import com.example.myidol.R;
 import com.example.myidol.adapter.MessageAdapter;
 import com.example.myidol.base.BaseActivity;
 import com.example.myidol.databinding.ActivityDetailChatBinding;
+import com.example.myidol.model.GroupChat;
 import com.example.myidol.model.Message;
 import com.example.myidol.model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,6 +37,7 @@ public class DetailChatActivity extends BaseActivity<ActivityDetailChatBinding,D
     String iduser;
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     String nodechat;
+    Boolean isGroup = false;
     @Override
     public Class<DetailChatViewmodel> getViewmodel() {
         return DetailChatViewmodel.class;
@@ -51,12 +53,18 @@ public class DetailChatActivity extends BaseActivity<ActivityDetailChatBinding,D
        binding.setViewmodel(viewmodel);
        Intent intent = getIntent();
        if(intent!=null){
-           iduser = intent.getStringExtra("iduser");
-           if(iduser.compareTo(currentUser.getUid())>0){
-               nodechat = currentUser.getUid()+"-"+iduser;
-           }else if(iduser.compareTo(currentUser.getUid())<0){
-               nodechat = iduser +"-" + currentUser.getUid();
+           if(intent.getStringExtra("idgroup")==null){
+               iduser = intent.getStringExtra("iduser");
+               if(iduser.compareTo(currentUser.getUid())>0){
+                   nodechat = currentUser.getUid()+"-"+iduser;
+               }else if(iduser.compareTo(currentUser.getUid())<0){
+                   nodechat = iduser +"-" + currentUser.getUid();
+               }
+           }else{
+               isGroup = true;
+               nodechat = intent.getStringExtra("idgroup");
            }
+
        }
        getinforReciever();
        setuprecycleview();
@@ -66,39 +74,75 @@ public class DetailChatActivity extends BaseActivity<ActivityDetailChatBinding,D
     }
 
     private void getinforReciever() {
-        FirebaseDatabase.getInstance().getReference("Users").child(iduser).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User userRecive = dataSnapshot.getValue(User.class);
-                binding.tvPartner.setText(userRecive.getUsername());
-                Picasso.get().load(userRecive.getImageUrl()).into(binding.ivAvatarRecive);
-            }
+       if(isGroup){
+              FirebaseDatabase.getInstance().getReference("Groups").child(nodechat).addValueEventListener(new ValueEventListener() {
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                      GroupChat groupChat = dataSnapshot.getValue(GroupChat.class);
+                      Picasso.get().load(groupChat.getImageGroup()).into(binding.ivAvatarRecive);
+                      binding.tvPartner.setText(groupChat.getNamegroup());
+                  }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                  }
+              });
+       }else {
+           FirebaseDatabase.getInstance().getReference("Users").child(iduser).addValueEventListener(new ValueEventListener() {
+               @Override
+               public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                   User userRecive = dataSnapshot.getValue(User.class);
+                   binding.tvPartner.setText(userRecive.getUsername());
+                   Picasso.get().load(userRecive.getImageUrl()).into(binding.ivAvatarRecive);
+               }
+
+               @Override
+               public void onCancelled(@NonNull DatabaseError databaseError) {
+
+               }
+           });
+       }
     }
 
     private void getlistChat() {
-        FirebaseDatabase.getInstance().getReference("Chats").child(nodechat).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("sizelist",dataSnapshot.getChildrenCount()+"");
-                ArrayList<Message> temp = new ArrayList<>();
-                for(DataSnapshot i : dataSnapshot.getChildren()){
-                    Message message = i.getValue(Message.class);
-                    temp.add(message);
+        if(isGroup){
+            FirebaseDatabase.getInstance().getReference("Groups").child(nodechat).child("mesage").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Log.d("sizelist",dataSnapshot.getChildrenCount()+"");
+                    ArrayList<Message> temp = new ArrayList<>();
+                    for(DataSnapshot i : dataSnapshot.getChildren()){
+                        Message message = i.getValue(Message.class);
+                        temp.add(message);
+                    }
+                    viewmodel.setListChat(temp);
                 }
-                viewmodel.setListChat(temp);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }else{
+            FirebaseDatabase.getInstance().getReference("Chats").child(nodechat).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Log.d("sizelist",dataSnapshot.getChildrenCount()+"");
+                    ArrayList<Message> temp = new ArrayList<>();
+                    for(DataSnapshot i : dataSnapshot.getChildren()){
+                        Message message = i.getValue(Message.class);
+                        temp.add(message);
+                    }
+                    viewmodel.setListChat(temp);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
     private void setuprecycleview() {
@@ -108,13 +152,23 @@ public class DetailChatActivity extends BaseActivity<ActivityDetailChatBinding,D
         binding.rvListchat.setAdapter(adapter);
     }
     private void sendmessage(Message message){
-         FirebaseDatabase.getInstance().getReference("Chats").child(nodechat).child(System.currentTimeMillis()+"").setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
-             @Override
-             public void onSuccess(Void aVoid) {
-                 Toast.makeText(DetailChatActivity.this, "Đã gửi!", Toast.LENGTH_SHORT).show();
-                 binding.etChat.setText("");
-             }
-         });
+         if(isGroup){
+             FirebaseDatabase.getInstance().getReference("Groups").child(nodechat).child("mesage").child(System.currentTimeMillis()+"").setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                 @Override
+                 public void onSuccess(Void aVoid) {
+                     Toast.makeText(DetailChatActivity.this, "Đã gửi!", Toast.LENGTH_SHORT).show();
+                     binding.etChat.setText("");
+                 }
+             });
+         }else {
+             FirebaseDatabase.getInstance().getReference("Chats").child(nodechat).child(System.currentTimeMillis()+"").setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
+                 @Override
+                 public void onSuccess(Void aVoid) {
+                     Toast.makeText(DetailChatActivity.this, "Đã gửi!", Toast.LENGTH_SHORT).show();
+                     binding.etChat.setText("");
+                 }
+             });
+         }
     }
     private void action() {
         binding.ivSendmessage.setOnClickListener(new View.OnClickListener() {

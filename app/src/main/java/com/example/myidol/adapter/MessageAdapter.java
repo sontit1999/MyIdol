@@ -68,11 +68,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                           if(sendHoder.tv_time.getTag().equals("none")){
                               sendHoder.tv_time.setTag("display");
                               sendHoder.tv_time.setVisibility(View.VISIBLE);
-                              Toast.makeText(context, "display", Toast.LENGTH_SHORT).show();
                           }else{
                               sendHoder.tv_time.setTag("none");
                               sendHoder.tv_time.setVisibility(View.GONE);
-                              Toast.makeText(context, "none", Toast.LENGTH_SHORT).show();
                           }
                       }
                   });
@@ -152,7 +150,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public int getItemViewType(int position) {
         if(arrayList.get(position).getIdsendUser().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
             return KEY_SEND;
-        }else{
+        }else {
             return KEY_RECIVE;
         }
     }

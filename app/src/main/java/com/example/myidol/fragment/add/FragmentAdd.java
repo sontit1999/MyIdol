@@ -77,7 +77,6 @@ public class FragmentAdd extends BaseFragment<FragAddBinding,AddViewmodel> {
              binding.tvPost.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View view) {
-                     DateFormat df = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
                      String date = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
                      String idpost = postRef.push().getKey();
                      Log.d("hihi",date);

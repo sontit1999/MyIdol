@@ -8,9 +8,63 @@
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
-        android:background="@color/colorblue"
+        android:background="@color/colorwhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_creategroup"
+                android:src="@drawable/ic_group"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+            <TextView
+                android:id="@+id/tv_Create"
+                android:fontFamily="@font/caveat_brush"
+                android:textColor="@color/colorblack"
+                android:layout_marginStart="10dp"
+                android:text="Create new a group"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/et_nameGroup"
+                android:padding="13dp"
+                android:hint="name group"
+                android:inputType="text"
+                android:maxLines="1"
+                android:fontFamily="@font/caveat_brush"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/padding_5dp"
+                android:background="@drawable/bg_et_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/btn_add"
+                android:text="add"
+                android:fontFamily="@font/caveat_brush"
+                android:textColor="@color/colorwhite"
+                android:background="#08bcbb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_group"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </layout>
