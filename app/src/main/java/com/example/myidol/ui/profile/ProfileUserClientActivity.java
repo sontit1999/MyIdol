@@ -26,6 +26,7 @@ import com.example.myidol.callback.PhotoCallback;
 import com.example.myidol.callback.Postcallback;
 import com.example.myidol.databinding.ActivityProfileClientUserBinding;
 import com.example.myidol.model.Comment;
+import com.example.myidol.model.Notification;
 import com.example.myidol.model.Photo;
 import com.example.myidol.model.Post;
 import com.example.myidol.model.User;
@@ -129,6 +130,7 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
                             .child("following").child(iduser).setValue(true);
                     FirebaseDatabase.getInstance().getReference("follows").child(iduser)
                             .child("follows").child(curentUser.getUid()).setValue(true);
+                    addNotification();
                 }else{
                     FirebaseDatabase.getInstance().getReference("follows").child(curentUser.getUid())
                             .child("following").child(iduser).removeValue();
@@ -143,7 +145,11 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
         ArrayList<Photo> temp = new ArrayList<>();
 
     }
-
+    public void addNotification(){
+        FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
+        Notification notification = new Notification("null",currentUer.getUid(),"start following you","follow",System.currentTimeMillis()+"");
+        FirebaseDatabase.getInstance().getReference("notification").child(iduser).child(System.currentTimeMillis()+"").setValue(notification);
+    }
     private void getInfor() {
         FirebaseDatabase.getInstance().getReference("Users").child(iduser).addValueEventListener(new ValueEventListener() {
             @Override

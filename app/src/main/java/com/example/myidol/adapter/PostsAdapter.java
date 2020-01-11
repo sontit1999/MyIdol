@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myidol.R;
 import com.example.myidol.callback.Postcallback;
 import com.example.myidol.model.Comment;
+import com.example.myidol.model.Notification;
 import com.example.myidol.model.Post;
 import com.example.myidol.model.User;
 import com.example.myidol.ui.comment.CommentActivity;
@@ -103,10 +104,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Myviewhoder>
 
                  }else{
                      // add like
+                     addNotification(post);
                      Animation rotate = AnimationUtils.loadAnimation(context,R.anim.like);
                      holder.ivlike.startAnimation(rotate);
                      holder.ivlike.setImageResource(R.drawable.icons8liked);
                      FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
+
                      Toast.makeText(context, "likes", Toast.LENGTH_SHORT).show();
                  }
              }
@@ -228,5 +231,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Myviewhoder>
 
         }
 
+    }
+    public void addNotification(Post post){
+        FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
+        Notification notification = new Notification(post.getIdpost(),currentUer.getUid(),"like your post","post",System.currentTimeMillis()+"");
+        FirebaseDatabase.getInstance().getReference("notification").child(post.getPublisher()).child(System.currentTimeMillis()+"").setValue(notification);
     }
 }

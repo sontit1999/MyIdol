@@ -29,6 +29,7 @@ import com.example.myidol.fragment.notification.FragmentNotification;
 import com.example.myidol.fragment.profile.FragmentProfileUser;
 import com.example.myidol.fragment.search.FragmentSearch;
 import com.example.myidol.model.Comment;
+import com.example.myidol.model.Notification;
 import com.example.myidol.model.Photo;
 import com.example.myidol.model.Post;
 import com.example.myidol.ui.image.ImageFullActivity;
@@ -37,6 +38,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -164,6 +166,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(MainActivity.this, "Đã comment", Toast.LENGTH_SHORT).show();
                             etContent.setText("");
+                            if(!post.getPublisher().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                                addNotification(post);
+                            }
+
                         }
                     })
                     ;
@@ -188,6 +194,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
         Intent intent = new Intent(MainActivity.this, ProfileUserClientActivity.class);
         intent.putExtra("iduser",post.getPublisher());
         startActivity(intent);
+    }
+    public void addNotification(Post post){
+        FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
+        Notification notification = new Notification(post.getIdpost(),currentUer.getUid(),"comment your post","post",System.currentTimeMillis()+"");
+        FirebaseDatabase.getInstance().getReference("notification").child(post.getPublisher()).child(System.currentTimeMillis()+"").setValue(notification);
     }
 
 }

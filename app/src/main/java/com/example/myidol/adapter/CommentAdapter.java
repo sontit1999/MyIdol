@@ -3,6 +3,7 @@ package com.example.myidol.adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import com.example.myidol.callback.CommentCallback;
 import com.example.myidol.databinding.ItemCommentBinding;
 import com.example.myidol.model.Comment;
 import com.example.myidol.model.User;
+import com.example.myidol.ui.MainActivity;
+import com.example.myidol.ui.profile.ProfileUserClientActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +46,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Myviewho
     }
     public void setList(ArrayList<Comment> arrayList){
         this.arrayList = arrayList;
+        notifyDataSetChanged();
     }
     @NonNull
     @Override
@@ -54,9 +58,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Myviewho
 
     @Override
     public void onBindViewHolder(@NonNull Myviewhoder holder, int position) {
-           Comment comment = arrayList.get(position);
+           final Comment comment = arrayList.get(position);
            holder.bind(comment);
            inforAuthorcomment(comment.getIduser(),holder.iv_avatar,holder.tv_author);
+           holder.itemView.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   Intent intent = new Intent(context, ProfileUserClientActivity.class);
+                   intent.putExtra("iduser",comment.getIduser());
+                   context.startActivity(intent);
+               }
+           });
     }
 
     @Override

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:background="@color/colorwhite"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_avatarNotification"
+        android:src="@drawable/sondz5"
+        android:layout_width="60dp"
+        android:layout_height="60dp"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:layout_marginEnd="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_usernameNotification"
+            android:text="Sơn tít"
+            android:textSize="20sp"
+            android:textColor="@color/colorblack"
+            android:fontFamily="@font/caveat_brush"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_textNotification"
+            android:text="đã bắt đầu follow bạn"
+            android:textSize="14sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_timeNotifi"
+            android:text="10 phút trước"
+            android:textSize="12sp"
+            android:fontFamily="@font/caveat_brush"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_postNotification"
+        android:src="@drawable/sondz5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"/>
+</LinearLayout>

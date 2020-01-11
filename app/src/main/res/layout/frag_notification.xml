@@ -46,7 +46,7 @@
         </androidx.cardview.widget.CardView>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_notifi"
-            android:background="#7CB342"
+            android:background="@color/colorwhite"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
