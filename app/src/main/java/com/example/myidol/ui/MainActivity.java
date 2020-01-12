@@ -28,6 +28,7 @@ import com.example.myidol.fragment.home.FragmentHome;
 import com.example.myidol.fragment.notification.FragmentNotification;
 import com.example.myidol.fragment.profile.FragmentProfileUser;
 import com.example.myidol.fragment.search.FragmentSearch;
+import com.example.myidol.fragment.video.FragmentVideo;
 import com.example.myidol.model.Comment;
 import com.example.myidol.model.Notification;
 import com.example.myidol.model.Photo;
@@ -77,7 +78,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
                         loadFragment(new FragmentSearch());
                         break;
                     case R.id.nav_add:
-                        loadFragment(new FragmentAdd());
+                        loadFragment(new FragmentVideo());
                         break;
                     case R.id.nav_notification:
                         loadFragment(new FragmentNotification());

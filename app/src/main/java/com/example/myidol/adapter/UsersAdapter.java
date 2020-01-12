@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myidol.R;
+import com.example.myidol.model.Notification;
 import com.example.myidol.model.User;
 import com.example.myidol.ui.profile.ProfileUserClientActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,6 +82,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHoder>
                             .child("following").child(user.getId()).setValue(true);
                     FirebaseDatabase.getInstance().getReference("follows").child(user.getId())
                             .child("follows").child(curentUser.getUid()).setValue(true);
+                    addNotification(user.getId());
                 }else{
                     FirebaseDatabase.getInstance().getReference("follows").child(curentUser.getUid())
                             .child("following").child(user.getId()).removeValue();
@@ -134,5 +136,10 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHoder>
             });
         }
 
+    }
+    public void addNotification(String iduser){
+        FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
+        Notification notification = new Notification("null",currentUer.getUid(),"start following you","follow",System.currentTimeMillis()+"");
+        FirebaseDatabase.getInstance().getReference("notification").child(iduser).child(System.currentTimeMillis()+"").setValue(notification);
     }
 }
