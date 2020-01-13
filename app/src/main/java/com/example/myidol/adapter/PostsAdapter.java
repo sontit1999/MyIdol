@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -11,15 +12,21 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myidol.R;
+import com.example.myidol.callback.ILoadMore;
 import com.example.myidol.callback.Postcallback;
+import com.example.myidol.fragment.home.FragmentHome;
 import com.example.myidol.model.Comment;
+import com.example.myidol.model.LoadingViewHolder;
+import com.example.myidol.model.Myviewhoder;
 import com.example.myidol.model.Notification;
 import com.example.myidol.model.Post;
 import com.example.myidol.model.User;
@@ -35,128 +42,162 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Myviewhoder> {
+public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final int VIEW_TYPE_ITEM=0,VIEW_TYPE_LOADING=1;
+    ILoadMore loadMore;
+    boolean isLoading;
     Context context;
     ArrayList<Post> arrayList;
     Postcallback listener;
-    public PostsAdapter(Context context, ArrayList<Post> arrayList) {
+    int visibleThreshold=5;
+    int lastVisibleItem,totalItemCount;
+    public PostsAdapter(RecyclerView recyclerView,Context context, ArrayList<Post> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         this.listener = (Postcallback) context;
+        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalItemCount = linearLayoutManager.getItemCount();
+                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+                if(!isLoading && totalItemCount <= (lastVisibleItem+visibleThreshold))
+                {
+                    Log.d("xxxx","on scroll adapter");
+                    if(loadMore != null)
+                        loadMore.onLoadMore();
+                    isLoading = true;
+                }
+
+            }
+        });
+    }
+    public void setLoadMore(ILoadMore loadMore) {
+        this.loadMore = loadMore;
+    }
+    @Override
+    public int getItemViewType(int position) {
+        return arrayList.get(position) == null ? VIEW_TYPE_LOADING:VIEW_TYPE_ITEM;
     }
 
     @NonNull
     @Override
-    public Myviewhoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post,parent,false);
-        return new Myviewhoder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if(viewType == VIEW_TYPE_ITEM)
+        {
+            Log.d("xxxx","create view item");
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post,parent,false);
+            return new Myviewhoder(view);
+        }
+        else if(viewType == VIEW_TYPE_LOADING)
+        {
+            Log.d("xxxx","create view loading");
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_loading,parent,false);
+            return new LoadingViewHolder(view);
+        }
+        return null;
     }
-
+    public void additem(Object object){
+        arrayList.add((Post) object);
+        notifyItemInserted(arrayList.size());
+    }
     @Override
-    public void onBindViewHolder(@NonNull final Myviewhoder holder, int position) {
-         final Post post = arrayList.get(position);
-         holder.bind(post);
-         cloneUser(post.getPublisher(),holder.iv_author,holder.tv_nameAuthor);
-         islike(post.getIdpost(),holder.ivlike,holder.tv_numlike,holder.tv_numcomment);
-         holder.comment.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 listener.onCommentClick(post);
-             }
-         });
-         holder.ivpost.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 listener.onPhotoClick(post);
-             }
-         });
-         holder.iv_more.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 listener.onShareClick(post);
-                 PopupMenu popup = new PopupMenu(context, holder.iv_more);
-                 //Inflating the Popup using xml file
-                 popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
-                 popup.show();//showing popup menu
-             }
-         });
-         holder.tv_nameAuthor.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 listener.onAuthorclickClick(post);
-             }
-         });
-         holder.iv_author.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 listener.onAuthorclickClick(post);
-             }
-         });
-         holder.ivlike.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 Toast.makeText(context, "like click", Toast.LENGTH_SHORT).show();
-                 if(holder.ivlike.getTag().equals("liked")){
-                     // romove like
-                     holder.ivlike.setImageResource(R.drawable.icons8like);
-                     FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
-                     Toast.makeText(context, "unlikes", Toast.LENGTH_SHORT).show();
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
+        if(holder instanceof Myviewhoder){
+            final Post post = arrayList.get(position);
+            final Myviewhoder myviewhoder = (Myviewhoder) holder;
+            myviewhoder.bind(post);
+            cloneUser(post.getPublisher(), myviewhoder.iv_author, myviewhoder.tv_nameAuthor);
+            islike(post.getIdpost(),myviewhoder.ivlike,myviewhoder.tv_numlike,myviewhoder.tv_numcomment);
+            myviewhoder.comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onCommentClick(post);
+                }
+            });
+            myviewhoder.ivpost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onPhotoClick(post);
+                }
+            });
+            myviewhoder.iv_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onShareClick(post);
+                    PopupMenu popup = new PopupMenu(context, myviewhoder.iv_more);
+                    //Inflating the Popup using xml file
+                    popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
+                    popup.show();//showing popup menu
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()){
+                                case R.id.one:
+                                    Toast.makeText(context, "Reported succes!", Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                            return true;
+                        }
+                    });
+                }
+            });
+            myviewhoder.tv_nameAuthor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onAuthorclickClick(post);
+                }
+            });
+            myviewhoder.iv_author.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onAuthorclickClick(post);
+                }
+            });
+            myviewhoder.ivlike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(context, "like click", Toast.LENGTH_SHORT).show();
+                    if(myviewhoder.ivlike.getTag().equals("liked")){
+                        // romove like
+                        myviewhoder.ivlike.setImageResource(R.drawable.icons8like);
+                        FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
+                        Toast.makeText(context, "unlikes", Toast.LENGTH_SHORT).show();
 
-                 }else{
-                     // add like
-                     addNotification(post);
-                     Animation rotate = AnimationUtils.loadAnimation(context,R.anim.like);
-                     holder.ivlike.startAnimation(rotate);
-                     holder.ivlike.setImageResource(R.drawable.icons8liked);
-                     FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
+                    }else{
+                        // add like
+                        addNotification(post);
+                        Animation rotate = AnimationUtils.loadAnimation(context,R.anim.like);
+                        myviewhoder.ivlike.startAnimation(rotate);
+                        myviewhoder.ivlike.setImageResource(R.drawable.icons8liked);
+                        FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
 
-                     Toast.makeText(context, "likes", Toast.LENGTH_SHORT).show();
-                 }
-             }
-         });
-         holder.tv_numlike.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 Intent intent = new Intent(context, CommentActivity.class);
-                 intent.putExtra("type","likes");
-                 intent.putExtra("idpost",post.getIdpost());
-                 context.startActivity(intent);
-             }
-         });
+                        Toast.makeText(context, "likes", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            myviewhoder.tv_numlike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, CommentActivity.class);
+                    intent.putExtra("type","likes");
+                    intent.putExtra("idpost",post.getIdpost());
+                    context.startActivity(intent);
+                }
+            });
+        }else if(holder instanceof LoadingViewHolder)
+        {
+            LoadingViewHolder loadingViewHolder = (LoadingViewHolder)holder;
+            loadingViewHolder.progressBar.setIndeterminate(true);
+        }
     }
 
 
     @Override
     public int getItemCount() {
         return arrayList.size();
-    }
-
-    class Myviewhoder extends RecyclerView.ViewHolder{
-        ImageView iv_author,ivpost,ivlike,ivcomment, ivshare,iv_more;
-        TextView tv_nameAuthor,tv_describe,tv_time,tv_numlike,tv_numcomment;
-        LinearLayout like,comment,share;
-        public Myviewhoder(@NonNull View itemView) {
-            super(itemView);
-            iv_more = (ImageView) itemView.findViewById(R.id.iv_more);
-            iv_author = (ImageView) itemView.findViewById(R.id.iv_avatar);
-            ivshare = (ImageView) itemView.findViewById(R.id.iv_shares);
-            ivlike = (ImageView) itemView.findViewById(R.id.iv_hearts);
-            ivcomment = (ImageView) itemView.findViewById(R.id.iv_comments);
-            ivpost = ( ImageView) itemView.findViewById(R.id.iv_post);
-            tv_nameAuthor = (TextView) itemView.findViewById(R.id.tv_nameAuthor);
-            tv_time = (TextView) itemView.findViewById(R.id.tv_time);
-            tv_numlike = (TextView) itemView.findViewById(R.id.numberlikepost);
-            tv_numcomment = (TextView) itemView.findViewById(R.id.numbercommentpost);
-            tv_describe = (TextView) itemView.findViewById(R.id.tv_describe);
-            comment = (LinearLayout) itemView.findViewById(R.id.comments);
-            like = (LinearLayout) itemView.findViewById(R.id.likes);
-            share = (LinearLayout) itemView.findViewById(R.id.shares);
-        }
-        private void bind(Post post){
-            tv_describe.setText(post.getDecribe());
-            tv_time.setText(post.getTimepost());
-            Picasso.get().load(post.getLinkImage()).into(ivpost);
-        }
     }
     public void setList(ArrayList<Post> arrayList){
          this.arrayList = arrayList;
@@ -236,5 +277,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Myviewhoder>
         FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
         Notification notification = new Notification(post.getIdpost(),currentUer.getUid(),"like your post","post",System.currentTimeMillis()+"");
         FirebaseDatabase.getInstance().getReference("notification").child(post.getPublisher()).child(System.currentTimeMillis()+"").setValue(notification);
+    }
+    public void setLoaded() {
+        isLoading = false;
     }
 }

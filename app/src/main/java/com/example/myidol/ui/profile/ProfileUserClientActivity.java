@@ -22,6 +22,7 @@ import com.example.myidol.adapter.CommentAdapter;
 import com.example.myidol.adapter.PhotoAdapter;
 import com.example.myidol.adapter.PostsAdapter;
 import com.example.myidol.base.BaseActivity;
+import com.example.myidol.callback.ILoadMore;
 import com.example.myidol.callback.PhotoCallback;
 import com.example.myidol.callback.Postcallback;
 import com.example.myidol.databinding.ActivityProfileClientUserBinding;
@@ -90,6 +91,12 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
                         startActivity(intent);
                     }
                 });
+            }
+        });
+        viewmodel.getArrPost().observe(this, new Observer<ArrayList<Post>>() {
+            @Override
+            public void onChanged(ArrayList<Post> posts) {
+                adapter.setList(posts);
             }
         });
     }
@@ -184,15 +191,23 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
 
     private void setupRecyclerview() {
         arrayList = new ArrayList<>();
-        adapter = new PostsAdapter(this,arrayList);
+
         binding.rvPost.setHasFixedSize(true);
         binding.rvPost.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        adapter = new PostsAdapter(binding.rvPost,this,arrayList);
         binding.rvPost.setAdapter(adapter);
 
         // recyclerview photo
 
         binding.rvPhotos.setHasFixedSize(true);
         binding.rvPhotos.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        adapter.setLoadMore(new ILoadMore() {
+            @Override
+            public void onLoadMore() {
+                Toast.makeText(ProfileUserClientActivity.this, "đang lấy thêm!", Toast.LENGTH_SHORT).show();
+            }
+        });
         binding.rvPhotos.setAdapter(viewmodel.adapter);
     }
     private void getPost(String iduser) {
@@ -211,7 +226,8 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
                 Collections.reverse(arrayList);
                 Collections.shuffle(temp);
                 viewmodel.setListPhoto(temp);
-                adapter.setList(arrayList);
+                Log.d("sizepost",arrayList.size()+"");
+                viewmodel.setListPost(arrayList);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

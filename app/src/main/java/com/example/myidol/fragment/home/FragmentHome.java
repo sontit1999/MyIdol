@@ -1,6 +1,7 @@
 package com.example.myidol.fragment.home;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -8,10 +9,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.myidol.R;
 import com.example.myidol.adapter.PostsAdapter;
 import com.example.myidol.base.BaseFragment;
+import com.example.myidol.callback.ILoadMore;
 import com.example.myidol.databinding.FragHomeBinding;
 
 import com.example.myidol.model.Post;
@@ -46,7 +49,6 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
     public void setBindingViewmodel() {
         binding.setViewmodel(viewmodel);
         setupRecyclerview();
-        checkfollowing();
         action();
 
     }
@@ -116,14 +118,15 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
 
     private void setupRecyclerview() {
         arrayList = new ArrayList<>();
-        adapter = new PostsAdapter(getContext(),arrayList);
         binding.rvPost.setHasFixedSize(true);
         binding.rvPost.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        adapter = new PostsAdapter(binding.rvPost,getContext(),arrayList);
         binding.rvPost.setAdapter(adapter);
     }
 
     @Override
     public void ViewCreated() {
+          checkfollowing();
           viewmodel.getarrPost().observe(this, new Observer<ArrayList<Post>>() {
               @Override
               public void onChanged(final ArrayList<Post> posts) {

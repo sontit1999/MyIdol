@@ -20,6 +20,7 @@ import com.example.myidol.databinding.ActivityImageBinding;
 import com.example.myidol.model.Photo;
 import com.gw.swipeback.SwipeBackLayout;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -58,8 +59,6 @@ public class ImageFullActivity extends BaseActivity<ActivityImageBinding,ImageFu
         binding.containerDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                  Drawable drawable = binding.ivFullscreen.getDrawable();
-                  Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
             }
         });
     }
@@ -69,5 +68,15 @@ public class ImageFullActivity extends BaseActivity<ActivityImageBinding,ImageFu
         super.onDestroy();
         Log.d("test","destroy");
     }
-
+    public static File savebitmap(Bitmap bmp) throws IOException {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+        File f = new File(Environment.getExternalStorageDirectory()
+                + File.separator + "testimage.jpg");
+        f.createNewFile();
+        FileOutputStream fo = new FileOutputStream(f);
+        fo.write(bytes.toByteArray());
+        fo.close();
+        return f;
+    }
 }

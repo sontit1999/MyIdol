@@ -76,14 +76,14 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
     }
 
     private void setupRecyclerview() {
+        arrayList = new ArrayList<>();
         binding.rvHotidol.setHasFixedSize(true);
         binding.rvHotidol.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
+        adapter = new PostsAdapter(binding.rvHotidol,getContext(),arrayList);
         binding.rvHotidol.setAdapter(adapter);
     }
 
     private void init() {
-        arrayList = new ArrayList<>();
-        adapter = new PostsAdapter(getContext(),arrayList);
         binding.containNumberFollowing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

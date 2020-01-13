@@ -2,11 +2,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/one"
-        android:title="Lưu bài viết" />
-    <item
-        android:id="@+id/two"
-        android:title="Chỉnh Sửa"/>
-    <item
-        android:id="@+id/three"
-        android:title="Xóa bài viết"/>
+        android:title="Report to Sơn Tít" />
 </menu>

@@ -55,29 +55,20 @@
                     android:layout_height="25dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_news"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/actionBarrHome"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:background="@color/coloryellow"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"/>
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefesh"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/rv_news"
+            app:layout_constraintTop_toBottomOf="@id/actionBarrHome"
             android:layout_width="match_parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_height="0dp">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_post"
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_post"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         <ProgressBar
             android:id="@+id/pb_loading"
