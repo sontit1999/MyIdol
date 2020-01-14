@@ -1,13 +1,17 @@
 package com.example.myidol.ui.login;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.myidol.R;
 import com.example.myidol.base.BaseActivity;
@@ -94,10 +98,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding,LoginViewMo
     @Override
     protected void onStart() {
         super.onStart();
-        if(mauth.getCurrentUser() == null){
-            Toast.makeText(this, "Chưa login", Toast.LENGTH_SHORT).show();
-        }else{
+        if(mauth.getCurrentUser() != null){
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
         }
     }
+
 }
