@@ -65,7 +65,7 @@ public class FragmentAdd extends BaseFragment<FragAddBinding,AddViewmodel> {
     @Override
     public void setBindingViewmodel() {
              postRef = FirebaseDatabase.getInstance().getReference();
-             binding.ivIdol.setOnClickListener(new View.OnClickListener() {
+             binding.ivPost.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View view) {
                     Intent galleryIntent = new Intent(
@@ -80,7 +80,7 @@ public class FragmentAdd extends BaseFragment<FragAddBinding,AddViewmodel> {
                      String date = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
                      String idpost = postRef.push().getKey();
                      Log.d("hihi",date);
-                     Post post = new Post(idpost,"https://i.a4vn.com/2019/7/27/bop-chut-o-eo-keo-chut-o-chan-gai-xinh-chinh-anh-suong-suong-toi-luc-lo-anh-duoc-tag-lai-khien-dan-tinh-choang-vang-954981.jpg",binding.edtMota.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getUid(),date);
+                     Post post = new Post(idpost,"https://i.a4vn.com/2019/7/27/bop-chut-o-eo-keo-chut-o-chan-gai-xinh-chinh-anh-suong-suong-toi-luc-lo-anh-duoc-tag-lai-khien-dan-tinh-choang-vang-954981.jpg",binding.etCaption.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getUid(),date);
                      postRef.child("post").child(idpost).setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                          @Override
                          public void onSuccess(Void aVoid) {
@@ -103,7 +103,7 @@ public class FragmentAdd extends BaseFragment<FragAddBinding,AddViewmodel> {
                 case GALLERY:
                     //data.getData returns the content URI for the selected Image
                     Uri selectedImage = data.getData();
-                    binding.ivIdol.setImageURI(selectedImage);
+                    binding.ivPost.setImageURI(selectedImage);
                     break;
             }
 

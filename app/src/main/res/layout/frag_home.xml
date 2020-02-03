@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
     <data>
+        <variable
+            name="user"
+            type="com.example.myidol.model.User" />
         <variable
             name="viewmodel"
             type="com.example.myidol.fragment.home.HomeViewmodel" />
@@ -11,65 +15,53 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.cardview.widget.CardView
-            android:id="@+id/actionBarrHome"
+        <androidx.core.widget.NestedScrollView
+            android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            app:cardElevation="5dp"
-            xmlns:android="http://schemas.android.com/apk/res/android">
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:background="@color/colorwhite"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <ImageView
-                    android:id="@+id/iv_logo"
-                    android:layout_marginStart="@dimen/padding_5dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/logo"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"/>
-                <TextView
-                    android:id="@+id/tv_slogan"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/padding_5dp"
-                    android:fontFamily="@font/caveat_brush"
-                    android:text="Sơn Tít Social"
-                    android:textColor="@color/colorblack"
-                    android:textSize="19sp" />
-                <ImageView
-                    android:id="@+id/iv_chat"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="@dimen/padding_5dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/message"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefesh"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/actionBarrHome"
-            android:layout_width="match_parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
             android:layout_height="0dp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:id="@+id/llpost"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:background="@color/colorwhite"
+                    app:layout_constraintTop_toBottomOf="@id/actionBarrHome"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_avatar"
+                        android:layout_alignParentLeft="true"
+                        bind:imageUrl="@{user.imageUrl}"
+                        android:src="@drawable/sondz5"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
+                    <TextView
+                        android:id="@+id/tv_think"
+                        android:padding="12dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/bg_think_newfeed"
+                        android:text="Bạn đang nghĩ gì"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_post"
                     android:padding="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
         <ProgressBar
             android:id="@+id/pb_loading"
             app:layout_constraintTop_toTopOf="parent"

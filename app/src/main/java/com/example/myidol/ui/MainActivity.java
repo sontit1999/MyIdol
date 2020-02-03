@@ -1,5 +1,6 @@
 package com.example.myidol.ui;
 
+import android.Manifest;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,19 +14,24 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myidol.R;
 import com.example.myidol.adapter.CommentAdapter;
+import com.example.myidol.adapter.ViewPagerChatAdapter;
 import com.example.myidol.base.BaseActivity;
 import com.example.myidol.callback.Postcallback;
 import com.example.myidol.databinding.ActivityMainBinding;
 import com.example.myidol.fragment.add.FragmentAdd;
+import com.example.myidol.fragment.chat.FragmentChatBasic;
+import com.example.myidol.fragment.chat.FragmentChatGroup;
 import com.example.myidol.fragment.favorite.FragmentFavorite;
 import com.example.myidol.fragment.home.FragmentHome;
 import com.example.myidol.fragment.notification.FragmentNotification;
+import com.example.myidol.fragment.profile.FragmentProfile;
 import com.example.myidol.fragment.profile.FragmentProfileUser;
 import com.example.myidol.fragment.search.FragmentSearch;
 import com.example.myidol.fragment.video.FragmentVideo;
@@ -33,6 +39,7 @@ import com.example.myidol.model.Comment;
 import com.example.myidol.model.Notification;
 import com.example.myidol.model.Photo;
 import com.example.myidol.model.Post;
+import com.example.myidol.ui.chat.ChatActivity;
 import com.example.myidol.ui.image.ImageFullActivity;
 import com.example.myidol.ui.profile.ProfileUserClientActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,6 +58,13 @@ import java.util.Calendar;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmodel> implements Postcallback {
     ArrayList<Comment> temp = new ArrayList<>();
+    final Fragment fragment1 = new FragmentHome();
+    final Fragment fragment2 = new FragmentSearch();
+    final Fragment fragment3 = new  FragmentVideo();
+    final Fragment fragment4 = new FragmentNotification();
+    final Fragment fragment5 = new FragmentProfileUser();
+    final FragmentManager fm = getSupportFragmentManager();
+    Fragment active = fragment1;
     @Override
     public Class<MainViewmodel> getViewmodel() {
         return MainViewmodel.class;
@@ -65,38 +79,50 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
     public void setBindingViewmodel() {
         binding.setViewmodel(viewmodel);
         // load defaut fragment
-        loadFragment(new FragmentHome());
+        fm.beginTransaction().add(R.id.frame, fragment5, "5").hide(fragment5).commit();
+        fm.beginTransaction().add(R.id.frame, fragment4, "4").hide(fragment4).commit();
+        fm.beginTransaction().add(R.id.frame, fragment3, "3").hide(fragment3).commit();
+        fm.beginTransaction().add(R.id.frame, fragment2, "2").hide(fragment2).commit();
+        fm.beginTransaction().add(R.id.frame, fragment1, "1").commit();
         // set listener bottom nav
         binding.bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
-                        loadFragment(new FragmentHome());
+                        fm.beginTransaction().hide(active).show(fragment1).commit();
+                        active = fragment1;
                         break;
                     case R.id.nav_hot:
-                        loadFragment(new FragmentSearch());
+                        fm.beginTransaction().hide(active).show(fragment2).commit();
+                        active = fragment2;
                         break;
                     case R.id.nav_add:
-                        loadFragment(new FragmentVideo());
+                        fm.beginTransaction().hide(active).show(fragment3).commit();
+                        active = fragment3;
                         break;
                     case R.id.nav_notification:
-                        loadFragment(new FragmentNotification());
+                        fm.beginTransaction().hide(active).show(fragment4).commit();
+                        active = fragment4;
                         break;
                     case R.id.nav_user:
-                        loadFragment(new FragmentProfileUser());
+                        fm.beginTransaction().hide(active).show(fragment5).commit();
+                        active = fragment5;
                         break;
                 }
                 return true;
             }
-
         });
+        action();
     }
-    public void loadFragment(Fragment fragment){
-        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame, fragment);
-        //transaction.addToBackStack(null);
-        transaction.commit();
+
+    private void action() {
+        binding.actionBar.ivChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ChatActivity.class));
+            }
+        });
     }
 
     @Override
@@ -201,5 +227,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
         Notification notification = new Notification(post.getIdpost(),currentUer.getUid(),"comment your post","post",System.currentTimeMillis()+"");
         FirebaseDatabase.getInstance().getReference("notification").child(post.getPublisher()).child(System.currentTimeMillis()+"").setValue(notification);
     }
-
+    public void loadFragment(Fragment fragment){
+        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame, fragment);
+        //transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }

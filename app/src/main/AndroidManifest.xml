@@ -17,8 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ui.fullscreenvideo.FullscreenVideo"></activity>
+        <activity android:name=".ui.postnew.PostNewActivity"></activity>
+        <activity android:name=".ui.fullscreenvideo.FullscreenVideo" />
         <activity android:name=".ui.detailpost.DetailpostActivity" />
         <activity android:name=".ui.detailchat.DetailChatActivity" />
         <activity

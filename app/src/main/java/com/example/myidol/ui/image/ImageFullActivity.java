@@ -56,11 +56,7 @@ public class ImageFullActivity extends BaseActivity<ActivityImageBinding,ImageFu
             Glide.with(this).load(photo.getLinkImage()).into(binding.ivFullscreen);
         }
         // set swipe destroy activity
-        SwipeBackLayout mSwipeBackLayout = new SwipeBackLayout(this);
-        mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_TOP);
-        mSwipeBackLayout.setMaskAlpha(125);
-        mSwipeBackLayout.setSwipeBackFactor(0.5f);
-        mSwipeBackLayout.attachToActivity(this);
+        swipedissmisActivity();
         // save image
         binding.containerDownload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +65,15 @@ public class ImageFullActivity extends BaseActivity<ActivityImageBinding,ImageFu
             }
         });
     }
+
+    private void swipedissmisActivity() {
+        SwipeBackLayout mSwipeBackLayout = new SwipeBackLayout(this);
+        mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_TOP);
+        mSwipeBackLayout.setMaskAlpha(125);
+        mSwipeBackLayout.setSwipeBackFactor(0.5f);
+        mSwipeBackLayout.attachToActivity(this);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -8,42 +8,6 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.cardview.widget.CardView
-            android:id="@+id/actionBarrHome"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            app:cardElevation="5dp"
-            xmlns:android="http://schemas.android.com/apk/res/android">
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:background="@color/colorwhite"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <ImageView
-                    android:id="@+id/iv_logo"
-                    android:layout_marginStart="@dimen/padding_5dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/logo"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"/>
-                <TextView
-                    android:id="@+id/tv_notifi"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/padding_5dp"
-                    android:fontFamily="@font/caveat_brush"
-                    android:text="Thông báo"
-                    android:textColor="@color/colorblack"
-                    android:textSize="19sp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_notifi"
             android:background="@color/colorwhite"

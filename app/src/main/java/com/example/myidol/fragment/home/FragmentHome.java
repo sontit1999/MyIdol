@@ -1,12 +1,16 @@
 package com.example.myidol.fragment.home;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +22,9 @@ import com.example.myidol.callback.ILoadMore;
 import com.example.myidol.databinding.FragHomeBinding;
 
 import com.example.myidol.model.Post;
+import com.example.myidol.model.User;
 import com.example.myidol.ui.chat.ChatActivity;
+import com.example.myidol.ui.postnew.PostNewActivity;
 import com.example.myidol.ui.register.RegisterActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +35,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static com.example.myidol.ui.postnew.PostNewActivity.PICK_IMAGE;
 
 public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
     ArrayList<Post> arrayList;
@@ -54,19 +62,11 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
     }
 
     private void action() {
-        binding.swipeRefesh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                checkfollowing();
-                binding.swipeRefesh.setRefreshing(false);
-            }
-        });
-        binding.ivChat.setOnClickListener(new View.OnClickListener() {
+        binding.tvThink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "click chát", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), ChatActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(getActivity(),PostNewActivity.class);
+                getActivity().startActivity(intent);
             }
         });
     }
@@ -126,7 +126,9 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
 
     @Override
     public void ViewCreated() {
+          Log.d("xxx","on view creat");
           checkfollowing();
+          getInfor();
           viewmodel.getarrPost().observe(this, new Observer<ArrayList<Post>>() {
               @Override
               public void onChanged(final ArrayList<Post> posts) {
@@ -135,5 +137,43 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
               }
           });
     }
+    public void getInfor(){
+        final DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        user.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                binding.setUser(user);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        Log.d("xxx"," on actack");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d("xxx"," on destroy view");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("xxx"," on destroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d("xxx"," on detack");
+    }
 }

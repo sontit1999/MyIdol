@@ -167,8 +167,9 @@
                     android:text="Log out"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="@dimen/padding_5dp"
-                    android:background="#08bcbb"
-                    android:layout_width="wrap_content"
+                    android:background="#29B6F6"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView

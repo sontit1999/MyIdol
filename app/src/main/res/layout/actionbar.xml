@@ -1,44 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
     </data>
-    <androidx.cardview.widget.CardView android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardElevation="5dp"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:background="@color/colorwhite"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
-            <ImageView
-                android:id="@+id/iv_logo"
-                android:layout_marginStart="@dimen/padding_5dp"
-                android:layout_gravity="center"
-                android:src="@drawable/logo"
-                android:layout_width="25dp"
-                android:layout_height="25dp"/>
-            <TextView
-                android:id="@+id/tv_slogan"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/padding_5dp"
-                android:fontFamily="@font/caveat_brush"
-                android:text="Sơn Tít Social"
-                android:textColor="@color/colorblack"
-                android:textSize="19sp" />
-            <ImageView
-                android:id="@+id/iv_chat"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="@dimen/padding_5dp"
-                android:layout_gravity="center"
-                android:src="@drawable/message"
-                android:layout_width="25dp"
-                android:layout_height="25dp"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="10dp"
+        android:background="@color/colorwhite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivlogo"
+            android:src="@drawable/logo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+        <TextView
+            android:id="@+id/tv_logo"
+            android:layout_weight="1"
+            android:textSize="25sp"
+            android:fontFamily="@font/baumans"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/colorblack"
+            android:text="Sơn tít social"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/iv_chat"
+            android:src="@drawable/message"
+            android:layout_width="25dp"
+            android:layout_height="25dp"/>
+    </LinearLayout>
 </layout>

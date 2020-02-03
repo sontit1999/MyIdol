@@ -17,6 +17,7 @@ import com.example.myidol.R;
 import com.example.myidol.base.BaseActivity;
 import com.example.myidol.databinding.ActivityLoginBinding;
 import com.example.myidol.ui.MainActivity;
+import com.example.myidol.ui.postnew.PostNewActivity;
 import com.example.myidol.ui.register.RegisterActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,7 +43,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding,LoginViewMo
     public void setBindingViewmodel() {
         mauth = FirebaseAuth.getInstance();
         binding.setViewmodel(viewmodel);
-
+        binding.tvNoacount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, PostNewActivity.class));
+            }
+        });
         binding.tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
