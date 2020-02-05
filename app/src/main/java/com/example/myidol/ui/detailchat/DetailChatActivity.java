@@ -2,6 +2,7 @@ package com.example.myidol.ui.detailchat;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -52,6 +53,7 @@ public class DetailChatActivity extends BaseActivity<ActivityDetailChatBinding,D
     public void setBindingViewmodel() {
        binding.setViewmodel(viewmodel);
        Intent intent = getIntent();
+
        if(intent!=null){
            if(intent.getStringExtra("idgroup")==null){
                iduser = intent.getStringExtra("iduser");

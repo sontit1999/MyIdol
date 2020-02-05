@@ -1,74 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable
-            name="user"
-            type="com.example.myidol.model.User" />
         <variable
             name="viewmodel"
             type="com.example.myidol.fragment.home.HomeViewmodel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:gravity="center"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.core.widget.NestedScrollView
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
-                    android:id="@+id/llpost"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:background="@color/colorwhite"
-                    app:layout_constraintTop_toBottomOf="@id/actionBarrHome"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_avatar"
-                        android:layout_alignParentLeft="true"
-                        bind:imageUrl="@{user.imageUrl}"
-                        android:src="@drawable/sondz5"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"/>
-                    <TextView
-                        android:id="@+id/tv_think"
-                        android:padding="12dp"
-                        android:layout_marginStart="10dp"
-                        android:background="@drawable/bg_think_newfeed"
-                        android:text="Bạn đang nghĩ gì"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <androidx.recyclerview.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_post"
                     android:padding="10dp"
+                    android:background="@color/colorwhite"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
         <ProgressBar
             android:id="@+id/pb_loading"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+
 </layout>

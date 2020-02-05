@@ -194,7 +194,7 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
 
         binding.rvPost.setHasFixedSize(true);
         binding.rvPost.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        adapter = new PostsAdapter(binding.rvPost,this,arrayList);
+        adapter = new PostsAdapter(this,arrayList);
         binding.rvPost.setAdapter(adapter);
 
         // recyclerview photo
@@ -202,12 +202,6 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
         binding.rvPhotos.setHasFixedSize(true);
         binding.rvPhotos.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        adapter.setLoadMore(new ILoadMore() {
-            @Override
-            public void onLoadMore() {
-                Toast.makeText(ProfileUserClientActivity.this, "đang lấy thêm!", Toast.LENGTH_SHORT).show();
-            }
-        });
         binding.rvPhotos.setAdapter(viewmodel.adapter);
     }
     private void getPost(String iduser) {

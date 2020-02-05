@@ -43,61 +43,20 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private final int VIEW_TYPE_ITEM=0,VIEW_TYPE_LOADING=1;
-    ILoadMore loadMore;
-    boolean isLoading;
     Context context;
     ArrayList<Post> arrayList;
     Postcallback listener;
-    int visibleThreshold=5;
-    int lastVisibleItem,totalItemCount;
-    public PostsAdapter(RecyclerView recyclerView,Context context, ArrayList<Post> arrayList) {
+    public PostsAdapter(Context context, ArrayList<Post> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         this.listener = (Postcallback) context;
-        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                totalItemCount = linearLayoutManager.getItemCount();
-                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-                if(!isLoading && totalItemCount <= (lastVisibleItem+visibleThreshold))
-                {
-                    Log.d("xxxx","on scroll adapter");
-                    if(loadMore != null)
-                        loadMore.onLoadMore();
-                    isLoading = true;
-                }
-
-            }
-        });
     }
-    public void setLoadMore(ILoadMore loadMore) {
-        this.loadMore = loadMore;
-    }
-    @Override
-    public int getItemViewType(int position) {
-        return arrayList.get(position) == null ? VIEW_TYPE_LOADING:VIEW_TYPE_ITEM;
-    }
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(viewType == VIEW_TYPE_ITEM)
-        {
-            Log.d("xxxx","create view item");
+
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post,parent,false);
-            return new Myviewhoder(view);
-        }
-        else if(viewType == VIEW_TYPE_LOADING)
-        {
-            Log.d("xxxx","create view loading");
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_loading,parent,false);
-            return new LoadingViewHolder(view);
-        }
-        return null;
+            return new Myviewhoder(view,context);
     }
     public void additem(Object object){
         arrayList.add((Post) object);
@@ -105,7 +64,6 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof Myviewhoder){
             final Post post = arrayList.get(position);
             final Myviewhoder myviewhoder = (Myviewhoder) holder;
             myviewhoder.bind(post);
@@ -187,13 +145,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     context.startActivity(intent);
                 }
             });
-        }else if(holder instanceof LoadingViewHolder)
-        {
-            LoadingViewHolder loadingViewHolder = (LoadingViewHolder)holder;
-            loadingViewHolder.progressBar.setIndeterminate(true);
-        }
     }
-
 
     @Override
     public int getItemCount() {
@@ -277,8 +229,5 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
         Notification notification = new Notification(post.getIdpost(),currentUer.getUid(),"like your post","post",System.currentTimeMillis()+"");
         FirebaseDatabase.getInstance().getReference("notification").child(post.getPublisher()).child(System.currentTimeMillis()+"").setValue(notification);
-    }
-    public void setLoaded() {
-        isLoading = false;
     }
 }

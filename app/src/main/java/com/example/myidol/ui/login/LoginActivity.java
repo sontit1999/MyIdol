@@ -42,6 +42,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding,LoginViewMo
     @Override
     public void setBindingViewmodel() {
         mauth = FirebaseAuth.getInstance();
+        if(mauth.getCurrentUser() != null){
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
         binding.setViewmodel(viewmodel);
         binding.tvNoacount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +92,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding,LoginViewMo
                             Log.d("hihi", "createUserWithEmail:success");
                             FirebaseUser user = mauth.getCurrentUser();
                             Log.d("hihi", "id: " + user.getUid());
-                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                            Intent intent =  new Intent(LoginActivity.this,MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
                             pd.dismiss();
@@ -99,14 +106,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding,LoginViewMo
                     }
                 });
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if(mauth.getCurrentUser() != null){
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
-        }
     }
 
 }

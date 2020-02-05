@@ -79,7 +79,7 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
         arrayList = new ArrayList<>();
         binding.rvHotidol.setHasFixedSize(true);
         binding.rvHotidol.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
-        adapter = new PostsAdapter(binding.rvHotidol,getContext(),arrayList);
+        adapter = new PostsAdapter(getContext(),arrayList);
         binding.rvHotidol.setAdapter(adapter);
     }
 
@@ -106,8 +106,8 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });

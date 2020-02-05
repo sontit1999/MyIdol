@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/actionBarchat"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:background="@color/colorwhite"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_marginStart="@dimen/padding_5dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_avatarRecive"
+                android:src="@drawable/sondz5"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+            <TextView
+                android:id="@+id/tv_partner"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/padding_5dp"
+                android:fontFamily="@font/caveat_brush"
+                android:text="Kim so un"
+                android:textColor="@color/colorblack"
+                android:textSize="19sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.appcompat.widget.Toolbar>

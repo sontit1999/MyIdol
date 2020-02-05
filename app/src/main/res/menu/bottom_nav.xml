@@ -11,7 +11,7 @@
         android:title="@string/menu_hot" />
     <item
         android:id="@+id/nav_add"
-        android:icon="@drawable/ic_video_library_black_40dp"
+        android:icon="@drawable/ic_addition"
         android:title=" "
          />
     <item

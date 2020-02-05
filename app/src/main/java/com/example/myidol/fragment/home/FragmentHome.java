@@ -57,18 +57,6 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
     public void setBindingViewmodel() {
         binding.setViewmodel(viewmodel);
         setupRecyclerview();
-        action();
-
-    }
-
-    private void action() {
-        binding.tvThink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),PostNewActivity.class);
-                getActivity().startActivity(intent);
-            }
-        });
     }
 
     private void checkfollowing() {
@@ -120,15 +108,13 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
         arrayList = new ArrayList<>();
         binding.rvPost.setHasFixedSize(true);
         binding.rvPost.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        adapter = new PostsAdapter(binding.rvPost,getContext(),arrayList);
+        adapter = new PostsAdapter(getContext(),arrayList);
         binding.rvPost.setAdapter(adapter);
     }
 
     @Override
     public void ViewCreated() {
-          Log.d("xxx","on view creat");
           checkfollowing();
-          getInfor();
           viewmodel.getarrPost().observe(this, new Observer<ArrayList<Post>>() {
               @Override
               public void onChanged(final ArrayList<Post> posts) {
@@ -136,21 +122,6 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
                   binding.pbLoading.setVisibility(View.GONE);
               }
           });
-    }
-    public void getInfor(){
-        final DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        user.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                binding.setUser(user);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @Override

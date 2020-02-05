@@ -53,14 +53,17 @@
                     android:textSize="19sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_listchat"
             android:background="@color/colorwhite"
             android:padding="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toTopOf="@id/control"
             app:layout_constraintTop_toBottomOf="@id/actionBarchat"
             android:layout_width="match_parent"
-            android:layout_height="0dp"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="0dp"/>
 
         <View
             app:layout_constraintBottom_toTopOf="@id/control"
@@ -68,6 +71,7 @@
             android:background="@color/colorblue"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
+
         <LinearLayout
             android:id="@+id/control"
             android:orientation="horizontal"
@@ -93,14 +97,20 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
             <ImageView
+                android:id="@+id/iv_camera"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/camera"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+            <ImageView
                 android:id="@+id/iv_gallery"
                 android:layout_marginEnd="5dp"
-                android:src="@drawable/ic_gallery"
+                android:src="@drawable/gallery"
                 android:layout_width="30dp"
                 android:layout_height="30dp"/>
             <ImageView
                 android:id="@+id/iv_sendmessage"
-                android:src="@drawable/ic_send"
+                android:src="@drawable/sentchat"
                 android:layout_width="30dp"
                 android:layout_marginEnd="10dp"
                 android:layout_height="30dp"/>

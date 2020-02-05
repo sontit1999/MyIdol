@@ -39,11 +39,6 @@
             android:fontFamily="@font/caveat_brush"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <View
-            android:background="#BBB6B6"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
     </LinearLayout>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_postNotification"

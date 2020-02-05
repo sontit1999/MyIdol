@@ -41,6 +41,7 @@ import com.example.myidol.model.Photo;
 import com.example.myidol.model.Post;
 import com.example.myidol.ui.chat.ChatActivity;
 import com.example.myidol.ui.image.ImageFullActivity;
+import com.example.myidol.ui.postnew.PostNewActivity;
 import com.example.myidol.ui.profile.ProfileUserClientActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -55,12 +56,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmodel> implements Postcallback {
     ArrayList<Comment> temp = new ArrayList<>();
     final Fragment fragment1 = new FragmentHome();
     final Fragment fragment2 = new FragmentSearch();
-    final Fragment fragment3 = new  FragmentVideo();
     final Fragment fragment4 = new FragmentNotification();
     final Fragment fragment5 = new FragmentProfileUser();
     final FragmentManager fm = getSupportFragmentManager();
@@ -81,7 +82,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
         // load defaut fragment
         fm.beginTransaction().add(R.id.frame, fragment5, "5").hide(fragment5).commit();
         fm.beginTransaction().add(R.id.frame, fragment4, "4").hide(fragment4).commit();
-        fm.beginTransaction().add(R.id.frame, fragment3, "3").hide(fragment3).commit();
         fm.beginTransaction().add(R.id.frame, fragment2, "2").hide(fragment2).commit();
         fm.beginTransaction().add(R.id.frame, fragment1, "1").commit();
         // set listener bottom nav
@@ -98,8 +98,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
                         active = fragment2;
                         break;
                     case R.id.nav_add:
-                        fm.beginTransaction().hide(active).show(fragment3).commit();
-                        active = fragment3;
+                        startActivity(new Intent(MainActivity.this, PostNewActivity.class));
                         break;
                     case R.id.nav_notification:
                         fm.beginTransaction().hide(active).show(fragment4).commit();
@@ -164,8 +163,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
                     Comment comment = i.getValue(Comment.class);
                     temp.add(comment);
                 }
+                Collections.reverse(temp);
                 adapter.setList(temp);
-                rvcomment.scrollToPosition(adapter.getItemCount()-1);
             }
 
             @Override
@@ -213,7 +212,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
 
     @Override
     public void onShareClick(Post post) {
-        Toast.makeText(this, "share click", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -226,11 +225,5 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
         FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
         Notification notification = new Notification(post.getIdpost(),currentUer.getUid(),"comment your post","post",System.currentTimeMillis()+"");
         FirebaseDatabase.getInstance().getReference("notification").child(post.getPublisher()).child(System.currentTimeMillis()+"").setValue(notification);
-    }
-    public void loadFragment(Fragment fragment){
-        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame, fragment);
-        //transaction.addToBackStack(null);
-        transaction.commit();
     }
 }

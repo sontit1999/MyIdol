@@ -9,6 +9,7 @@ import com.example.myidol.fragment.chat.FragmentChatGroup;
 import com.gw.swipeback.SwipeBackLayout;
 
 public class ChatActivity extends BaseActivity<ActivityChatBinding,ChatViewmodel> {
+    FragmentChatBasic fragmentChatBasic = new FragmentChatBasic();
     @Override
     public Class<ChatViewmodel> getViewmodel() {
         return ChatViewmodel.class;
@@ -23,8 +24,8 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding,ChatViewmodel
     public void setBindingViewmodel() {
        binding.setViewmodel(viewmodel);
        setswipedismissActivity();
-
-        setupviewpagerandtab();
+       // load fragment
+        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,fragmentChatBasic).commit();
     }
 
     private void setswipedismissActivity() {
@@ -36,11 +37,11 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding,ChatViewmodel
         mSwipeBackLayout.attachToActivity(this);
     }
 
-    private void setupviewpagerandtab() {
-        ViewPagerChatAdapter viewpager = new ViewPagerChatAdapter(getSupportFragmentManager());
-        viewpager.addFragment(new FragmentChatBasic(),"Chats Basic");
-        viewpager.addFragment(new FragmentChatGroup(),"Groups Chat");
-        binding.viewpager.setAdapter(viewpager);
-        binding.tablayout.setupWithViewPager(binding.viewpager);
-    }
+//    private void setupviewpagerandtab() {
+//        ViewPagerChatAdapter viewpager = new ViewPagerChatAdapter(getSupportFragmentManager());
+//        viewpager.addFragment(new FragmentChatBasic(),"Chats Basic");
+//        viewpager.addFragment(new FragmentChatGroup(),"Groups Chat");
+//        binding.viewpager.setAdapter(viewpager);
+//        binding.tablayout.setupWithViewPager(binding.viewpager);
+//    }
 }
