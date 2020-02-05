@@ -84,7 +84,6 @@
                         <ImageView
                             android:id="@+id/iv_post"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/gaixinh"
                             android:layout_width="match_parent"
                             android:layout_height="400dp"
                             android:layout_below="@id/tv_describe"

@@ -98,7 +98,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Myviewho
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 Log.d("user",user.getUsername());
-                Picasso.get().load(user.getImageUrl()).into(ivavatar);
+                Picasso.get().load(user.getImageUrl()).fit().into(ivavatar);
                 tvNameAuthor.setText(user.getUsername());
             }
 

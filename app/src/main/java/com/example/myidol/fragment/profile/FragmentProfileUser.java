@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -132,6 +133,7 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
                 User user1 = dataSnapshot.getValue(User.class);
                 Log.d("user",user1.getUsername());
                 binding.setUser(user1);
+                Picasso.get().load(user1.getImageUrl()).placeholder(R.drawable.ic_launcher_foreground).into(binding.ivAvatar);
             }
 
             @Override

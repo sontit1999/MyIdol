@@ -24,6 +24,7 @@ import com.example.myidol.base.BaseActivity;
 import com.example.myidol.databinding.ActivityImageBinding;
 import com.example.myidol.model.Photo;
 import com.gw.swipeback.SwipeBackLayout;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -53,7 +54,7 @@ public class ImageFullActivity extends BaseActivity<ActivityImageBinding,ImageFu
         Intent intent = getIntent();
         if(intent!=null){
             photo = (Photo) intent.getSerializableExtra("photo");
-            Glide.with(this).load(photo.getLinkImage()).into(binding.ivFullscreen);
+            Picasso.get().load(photo.getLinkImage()).into(binding.ivFullscreen);
         }
         // set swipe destroy activity
         swipedissmisActivity();
@@ -79,17 +80,7 @@ public class ImageFullActivity extends BaseActivity<ActivityImageBinding,ImageFu
         super.onDestroy();
         Log.d("test","destroy");
     }
-    public static File savebitmap(Bitmap bmp) throws IOException {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
-        File f = new File(Environment.getExternalStorageDirectory()
-                + File.separator + "testimage.jpg");
-        f.createNewFile();
-        FileOutputStream fo = new FileOutputStream(f);
-        fo.write(bytes.toByteArray());
-        fo.close();
-        return f;
-    }
+
     public void saveImageFromImageview(ImageView imageView){
         // Get the image from drawable resource as drawable object
         Drawable drawable = imageView.getDrawable();
