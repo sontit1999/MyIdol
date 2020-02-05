@@ -16,7 +16,6 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll"
             android:background="@color/colorwhite"
-            android:layout_above="@id/contianCOmment"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
@@ -197,35 +196,39 @@
                     android:background="@color/colorwhite"
                     android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+                    android:layout_height="match_parent"/>
+                <View
+                    android:id="@+id/viewngang2"
+                    android:background="@color/colorgrey1"
+                    android:layout_below="@id/rv_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:layout_below="@id/viewngang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/et_comment"
+                        android:hint="Thêm bình luận"
+                        android:textSize="15sp"
+                        android:inputType="text"
+                        android:maxLines="3"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                    <ImageView
+                        android:id="@+id/iv_send"
+                        android:src="@drawable/ic_send"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
             </LinearLayout>
+
         </androidx.core.widget.NestedScrollView>
-        <LinearLayout
-            android:id="@+id/contianCOmment"
-            android:orientation="horizontal"
-            android:background="@color/colorwhite"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/et_comment"
-                android:hint="Thêm bình luận"
-                android:textSize="15sp"
-                android:inputType="text"
-                android:maxLines="3"
-                android:background="@drawable/bg_et_group"
-                android:padding="10dp"
-                android:layout_below="@id/viewngang"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
-            <ImageView
-                android:id="@+id/iv_send"
-                android:src="@drawable/ic_send"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
     </RelativeLayout>
 </layout>

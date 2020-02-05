@@ -42,7 +42,7 @@ public class Myviewhoder extends RecyclerView.ViewHolder{
         if(post.getLinkImage().equals("no")){
             ivpost.setVisibility(View.GONE);
         }else{
-            Picasso.get().load(post.getLinkImage()).placeholder(R.drawable.ic_launcher_foreground).into(ivpost);
+            Picasso.get().load(post.getLinkImage()).fit().placeholder(R.drawable.ic_launcher_foreground).centerCrop().into(ivpost);
         }
 
     }

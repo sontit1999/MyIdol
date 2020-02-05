@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -78,6 +79,12 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
                 intent.putExtra("type","likes");
                 intent.putExtra("idpost",post.getIdpost());
                 startActivity(intent);
+            }
+        });
+        binding.comments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
         binding.scroll.scrollTo(0,binding.scroll.getBottom());

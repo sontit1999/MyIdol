@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import com.example.myidol.R;
 import com.example.myidol.base.BaseActivity;
 import com.example.myidol.databinding.ActivityPostNewBinding;
 import com.example.myidol.model.Post;
+import com.example.myidol.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +42,7 @@ import static com.example.myidol.fragment.add.FragmentAdd.GALLERY;
 
 public class PostNewActivity extends BaseActivity<ActivityPostNewBinding,PostNewViewModel>{
     public static int PICK_IMAGE = 54151;
+    ProgressDialog pd;
     Uri imageURL = null;
     StorageReference storageReference;
     DatabaseReference postRef;
@@ -62,6 +65,10 @@ public class PostNewActivity extends BaseActivity<ActivityPostNewBinding,PostNew
     }
 
     private void action() {
+        pd = new ProgressDialog(PostNewActivity.this);
+        pd.setCanceledOnTouchOutside(false);
+        pd.setMessage("Đang tải lên.Đợi tý ^^ ");
+
        binding.ivPost.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
@@ -81,8 +88,21 @@ public class PostNewActivity extends BaseActivity<ActivityPostNewBinding,PostNew
                if(TextUtils.isEmpty(caption)){
                    Toast.makeText(PostNewActivity.this, "Caption not empty", Toast.LENGTH_SHORT).show();
                }else if(imageURL == null){
+                   pd.show();
+                   DateFormat df = new SimpleDateFormat("h:mm a");
+                   String date = df.format(Calendar.getInstance().getTime());
+                   Post post = new Post(System.currentTimeMillis()+"","no",caption, FirebaseAuth.getInstance().getCurrentUser().getUid()+"",date);
+                   postRef.child(System.currentTimeMillis() + "").setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                       @Override
+                       public void onSuccess(Void aVoid) {
+                           pd.dismiss();
+                           finish();
+                       }
+                   });
                    Toast.makeText(PostNewActivity.this, "Chưa chọn ảnh", Toast.LENGTH_SHORT).show();
                }else{
+
+                   pd.show();
                    final StorageReference ref = FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis()+"");
                    ref.putFile(imageURL).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                        @Override
@@ -96,7 +116,13 @@ public class PostNewActivity extends BaseActivity<ActivityPostNewBinding,PostNew
                                    DateFormat df = new SimpleDateFormat("h:mm a");
                                    String date = df.format(Calendar.getInstance().getTime());
                                    Post post = new Post(System.currentTimeMillis()+"",String.valueOf(uri),caption, FirebaseAuth.getInstance().getCurrentUser().getUid()+"",date);
-                                   postRef.child(System.currentTimeMillis() + "").setValue(post);
+                                   postRef.child(System.currentTimeMillis() + "").setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                       @Override
+                                       public void onSuccess(Void aVoid) {
+                                           pd.dismiss();
+                                           finish();
+                                       }
+                                   });
                                    Toast.makeText(PostNewActivity.this, "Đã đăng" , Toast.LENGTH_SHORT).show();
 
 

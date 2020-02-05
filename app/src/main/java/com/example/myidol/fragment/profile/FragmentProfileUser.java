@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,ProfileUserViewmodel> {
     PostsAdapter adapter ;
@@ -65,6 +66,7 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     temp.add(ds.getValue(Post.class));
                 }
+                Collections.reverse(temp);
                 viewmodel.setPost(temp);
             }
 

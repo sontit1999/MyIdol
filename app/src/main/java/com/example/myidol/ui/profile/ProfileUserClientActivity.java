@@ -191,8 +191,8 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
 
     private void setupRecyclerview() {
         arrayList = new ArrayList<>();
-
         binding.rvPost.setHasFixedSize(true);
+        binding.rvPost.setItemViewCacheSize(10);
         binding.rvPost.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         adapter = new PostsAdapter(this,arrayList);
         binding.rvPost.setAdapter(adapter);
@@ -200,8 +200,8 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
         // recyclerview photo
 
         binding.rvPhotos.setHasFixedSize(true);
-        binding.rvPhotos.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
+        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+        binding.rvPhotos.setLayoutManager(mLayoutManager);
         binding.rvPhotos.setAdapter(viewmodel.adapter);
     }
     private void getPost(String iduser) {

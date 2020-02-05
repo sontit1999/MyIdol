@@ -22,7 +22,7 @@
         android:layout_height="wrap_content">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_avatarChatRecive"
-            android:src="@drawable/sondz5"
+            android:src="@drawable/ic_launcher_foreground"
             android:layout_width="@dimen/size_icon"
             android:layout_height="@dimen/size_icon"/>
         <TextView

@@ -18,12 +18,12 @@
             android:id="@+id/iv_avatarComment"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:src="@drawable/sondz5"
+            android:src="@drawable/ic_launcher_foreground"
             android:layout_width="@dimen/size_icon"
             android:layout_height="@dimen/size_icon"/>
         <TextView
             android:id="@+id/tv_nameAuthorComment"
-            android:text="Sơn tít"
+            android:text=""
             android:textStyle="bold"
             app:layout_constraintLeft_toRightOf="@id/iv_avatarComment"
             app:layout_constraintRight_toRightOf="parent"

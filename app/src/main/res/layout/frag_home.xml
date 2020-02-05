@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_post"
-                    android:padding="10dp"
+                    android:paddingVertical="10dp"
                     android:background="@color/colorwhite"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"

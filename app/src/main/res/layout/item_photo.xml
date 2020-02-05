@@ -16,20 +16,15 @@
         app:cardUseCompatPadding="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/iv_photo"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                bind:imageUrl="@{photo.linkImage}"
-                android:scaleType="centerCrop"
-                android:onClick="@{()->callback.onPhotoClick(photo)}"
-                android:layout_width="150dp"
-                android:layout_height="150dp"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/iv_photo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            bind:imageUrl="@{photo.linkImage}"
+            android:scaleType="centerCrop"
+            android:onClick="@{()->callback.onPhotoClick(photo)}"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
     </androidx.cardview.widget.CardView>
 
 </layout>

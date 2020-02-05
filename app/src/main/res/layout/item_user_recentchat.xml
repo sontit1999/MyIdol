@@ -23,7 +23,7 @@
                 android:id="@+id/iv_avatar"
                 android:layout_alignParentLeft="true"
                 bind:imageUrl="@{user.imageUrl}"
-                android:src="@drawable/sondz5"
+                android:src="@drawable/ic_launcher_foreground"
                 android:layout_width="50dp"
                 android:layout_height="50dp"/>
             <LinearLayout

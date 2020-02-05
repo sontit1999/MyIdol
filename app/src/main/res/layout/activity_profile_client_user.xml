@@ -27,11 +27,10 @@
                android:layout_height="300dp">
                <ImageView
                    android:id="@+id/iv_imageAvatar"
-                   android:src="@drawable/gaixinh"
                    bind:imageUrl="@{user.imageUrl}"
                    android:scaleType="centerCrop"
                    android:layout_width="match_parent"
-                   android:layout_height="match_parent"/>
+                   android:layout_height="300dp"/>
            </androidx.cardview.widget.CardView>
            <LinearLayout
                android:orientation="horizontal"
@@ -116,6 +115,7 @@
                android:layout_height="wrap_content"/>
            <androidx.recyclerview.widget.RecyclerView
                android:id="@+id/rv_photos"
+               app:layout_behavior="@string/appbar_scrolling_view_behavior"
                android:nestedScrollingEnabled="false"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>
@@ -128,17 +128,14 @@
                android:textSize="15sp"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>
-           <LinearLayout
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/rv_post"
+               app:layout_behavior="@string/appbar_scrolling_view_behavior"
+               android:nestedScrollingEnabled="false"
+               android:layout_marginTop="10dp"
                android:layout_width="match_parent"
-               android:layout_height="match_parent">
-               <androidx.recyclerview.widget.RecyclerView
-                   android:id="@+id/rv_post"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:nestedScrollingEnabled="false"
-                   android:layout_marginTop="10dp"
-                   />
-           </LinearLayout>
+               android:layout_height="wrap_content"
+               />
        </LinearLayout>
    </androidx.core.widget.NestedScrollView>
 

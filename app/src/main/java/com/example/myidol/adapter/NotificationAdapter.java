@@ -114,11 +114,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             String timenotifi;
             long totaltime = (System.currentTimeMillis() - Long.parseLong(notification.getTime()))/60000;
             if(totaltime<60){
-                timenotifi = totaltime + " phút trước";
+                timenotifi = totaltime + " mins";
             }else if(totaltime>=60 && totaltime < 1440){
-                timenotifi = totaltime/60 + " giờ trước ";
+                timenotifi = totaltime/60 + " hours";
             }else{
-                timenotifi = totaltime/1440 + " ngày trước";
+                timenotifi = totaltime/1440 + " days";
             }
             tv_time.setText(timenotifi);
         }

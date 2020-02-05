@@ -9,7 +9,7 @@
             name="user"
             type="com.example.myidol.model.User" />
     </data>
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:android="http://schemas.android.com/apk/res/android">
@@ -18,26 +18,21 @@
             android:background="@color/colorwhite"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <RelativeLayout
-                android:id="@+id/container_infor"
+            <ImageView
+                android:id="@+id/iv_avatar"
+                android:src="@drawable/gaixinh"
+                bind:imageUrl="@{user.imageUrl}"
+                android:scaleType="centerCrop"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/iv_avatar"
-                    android:src="@drawable/gaixinh"
-                    bind:imageUrl="@{user.imageUrl}"
-                    android:scaleType="centerCrop"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    />
-            </RelativeLayout>
+                android:layout_height="300dp"
+                />
             <androidx.cardview.widget.CardView
                 android:id="@+id/container_feature"
                 app:cardElevation="10dp"
                 app:cardCornerRadius="10dp"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="-30dp"
-                android:layout_below="@id/container_infor"
+                android:layout_below="@id/iv_avatar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -127,58 +122,55 @@
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-            <LinearLayout
-                android:id="@+id/container_name"
-                android:orientation="vertical"
-                android:gravity="center"
+            <TextView
+                android:id="@+id/tv_name"
+                android:text="@{user.username}"
                 android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"
                 android:layout_below="@id/container_feature"
+                android:textSize="@dimen/tittle_size_main"
+                android:textColor="@color/colorblack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_address"
+                android:text="@{user.address}"
+                android:textSize="@dimen/content_size_main"
+                android:textColor="#448AFF"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/tv_name"
+                android:layout_marginTop="@dimen/padding_5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_mota"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorgrey"
+                android:background="@color/colorwhite"
+                android:padding="10dp"
+                android:layout_below="@id/tv_address"
+                android:gravity="center"
+                android:text="@{user.sentenceslike}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/btn_logout"
+                android:text="Log out"
+                android:layout_below="@id/tv_mota"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="@dimen/padding_5dp"
+                android:background="#29B6F6"
+                android:layout_marginHorizontal="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tv_name"
-                    android:text="@{user.username}"
-                    android:textSize="@dimen/tittle_size_main"
-                    android:textColor="@color/colorblack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/tv_address"
-                    android:text="@{user.address}"
-                    android:textSize="@dimen/content_size_main"
-                    android:textColor="#448AFF"
-                    android:layout_marginTop="@dimen/padding_5dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/tv_mota"
-                    android:textColor="@color/colorgrey"
-                    android:background="@color/colorwhite"
-                    android:padding="10dp"
-                    android:layout_below="@id/container_name"
-                    android:gravity="center"
-                    android:text="@{user.sentenceslike}"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <Button
-                    android:id="@+id/btn_logout"
-                    android:text="Log out"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="@dimen/padding_5dp"
-                    android:background="#29B6F6"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
+                android:layout_height="wrap_content"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_hotidol"
                 android:nestedScrollingEnabled="false"
-                android:layout_below="@id/container_name"
+                android:layout_below="@id/btn_logout"
                 android:background="@color/colorwhite"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

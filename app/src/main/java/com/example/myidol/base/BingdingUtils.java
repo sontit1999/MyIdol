@@ -1,6 +1,7 @@
 package com.example.myidol.base;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -30,7 +31,17 @@ public class BingdingUtils {
     }
     @BindingAdapter({"bind:imageUrl"})
     public static void loadImage(ImageView view, String imageUrl) {
-        Picasso.get().load(imageUrl).placeholder(R.drawable.ic_launcher_foreground).into(view);
+        Log.d("sondz","bind image");
+        if(imageUrl == null){
+            imageUrl = "no";
+        }
+        if(!imageUrl.equals("no")){
+            Picasso.get().load(imageUrl).fit().centerCrop().placeholder(R.drawable.ic_launcher_foreground).into(view);
+        }else{
+            view.setVisibility(View.GONE);
+        }
+
+
     }
     @BindingAdapter({"bind:iduser"})
     public static void loadRecentChat(final TextView view, String iduser) {
