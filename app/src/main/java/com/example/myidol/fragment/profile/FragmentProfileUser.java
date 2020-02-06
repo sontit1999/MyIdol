@@ -35,9 +35,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
 public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,ProfileUserViewmodel> {
     PostsAdapter adapter ;
     ArrayList<Post> arrayList;
+    public static int PICK_IMAGEGallery = 125;
     @Override
     public Class<ProfileUserViewmodel> getViewmodel() {
         return ProfileUserViewmodel.class;
@@ -114,6 +116,12 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
                 startActivity(intent);
             }
         });
+        binding.ivAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override
@@ -177,5 +185,11 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
 
             }
         });
+    }
+    private void choosePhotofromgallery(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGEGallery);
     }
 }

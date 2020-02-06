@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.myidol.R;
 import com.squareup.picasso.Picasso;
 
@@ -42,7 +43,12 @@ public class Myviewhoder extends RecyclerView.ViewHolder{
         if(post.getLinkImage().equals("no")){
             ivpost.setVisibility(View.GONE);
         }else{
-            Picasso.get().load(post.getLinkImage()).fit().placeholder(R.drawable.ic_launcher_foreground).centerCrop().into(ivpost);
+            Glide
+                    .with(context)
+                    .load(post.getLinkImage())
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .override(500,250)
+                    .into(ivpost);
         }
 
     }

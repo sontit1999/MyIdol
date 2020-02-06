@@ -130,7 +130,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 Log.d("user",user.getUsername());
-                Picasso.get().load(user.getImageUrl()).into(ivavatar);
+                Picasso.get().load(user.getImageUrl()).placeholder(R.drawable.ic_launcher_foreground).into(ivavatar);
                 tvname.setText(user.getUsername());
             }
 

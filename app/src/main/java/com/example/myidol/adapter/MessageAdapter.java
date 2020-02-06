@@ -104,7 +104,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     User user = dataSnapshot.getValue(User.class);
-                    Picasso.get().load(user.getImageUrl()).into(iv_avatar);
+                    Picasso.get().load(user.getImageUrl()).placeholder(R.drawable.ic_launcher_foreground).into(iv_avatar);
                 }
 
                 @Override

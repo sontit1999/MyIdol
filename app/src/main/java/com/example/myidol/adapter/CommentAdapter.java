@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.myidol.BR;
 import com.example.myidol.R;
 import com.example.myidol.base.BaseAdapter;
@@ -98,7 +99,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Myviewho
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 Log.d("user",user.getUsername());
-                Picasso.get().load(user.getImageUrl()).fit().into(ivavatar);
+//                Picasso.get().load(user.getImageUrl()).fit().into(ivavatar);
+                Glide
+                        .with(context)
+                        .load(user.getImageUrl())
+                        .placeholder(R.drawable.ic_launcher_foreground)
+                        .override(500,250)
+                        .into(ivavatar);
                 tvNameAuthor.setText(user.getUsername());
             }
 

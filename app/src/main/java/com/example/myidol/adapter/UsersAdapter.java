@@ -110,7 +110,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHoder>
             tvfollow = ( TextView) itemView.findViewById(R.id.tv_folow);
         }
         public void bindview(User user){
-            Picasso.get().load(user.getImageUrl()).into(iv_avatar);
+            Picasso.get().load(user.getImageUrl()).placeholder(R.drawable.ic_launcher_foreground).into(iv_avatar);
             tv_name.setText(user.getUsername());
             isFollowing(user.getId(),tvfollow);
         }

@@ -36,7 +36,12 @@ public class BingdingUtils {
             imageUrl = "no";
         }
         if(!imageUrl.equals("no")){
-            Picasso.get().load(imageUrl).fit().centerCrop().placeholder(R.drawable.ic_launcher_foreground).into(view);
+            Glide
+                    .with(view.getContext())
+                    .load(imageUrl)
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .override(500,250)
+                    .into(view);
         }else{
             view.setVisibility(View.GONE);
         }
