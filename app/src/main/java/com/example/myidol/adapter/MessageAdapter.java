@@ -86,11 +86,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                           if(reciveHoder.tv_time.getTag().equals("none")){
                               reciveHoder.tv_time.setTag("display");
                               reciveHoder.tv_time.setVisibility(View.VISIBLE);
-                              Toast.makeText(context, "display", Toast.LENGTH_SHORT).show();
                           }else {
                               reciveHoder.tv_time.setTag("none");
                               reciveHoder.tv_time.setVisibility(View.GONE);
-                              Toast.makeText(context, "none", Toast.LENGTH_SHORT).show();
                           }
                       }
                   });

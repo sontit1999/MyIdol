@@ -3,26 +3,20 @@ package com.example.myidol.fragment.profile;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
 import com.example.myidol.R;
 import com.example.myidol.adapter.PostsAdapter;
 import com.example.myidol.base.BaseFragment;
-import com.example.myidol.callback.IdolCallback;
-import com.example.myidol.callback.PhotoCallback;
 import com.example.myidol.databinding.FragProfileUserBinding;
-import com.example.myidol.model.IdolHot;
-import com.example.myidol.model.Photo;
 import com.example.myidol.model.Post;
 import com.example.myidol.model.User;
 import com.example.myidol.ui.comment.CommentActivity;
-import com.example.myidol.ui.image.ImageFullActivity;
 import com.example.myidol.ui.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +28,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,ProfileUserViewmodel> {
@@ -119,7 +115,7 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
         binding.ivAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                          choosePhotofromgallery();
             }
         });
     }
@@ -191,5 +187,14 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGEGallery);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode== PICK_IMAGEGallery && data!=null){
+            binding.ivAvatar.setImageURI(data.getData());
+            viewmodel.uploadAvatar(data.getData(),getContext());
+        }
     }
 }

@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
     final Fragment fragment4 = new FragmentNotification();
     final Fragment fragment5 = new FragmentProfileUser();
     final FragmentManager fm = getSupportFragmentManager();
+    RecyclerView rvcomment;
     Fragment active = fragment1;
     @Override
     public Class<MainViewmodel> getViewmodel() {
@@ -141,7 +142,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
         // nạp layout vào view
         final View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.bottom_sheet_comment_fragment,null);
         // ánh xạ
-        final RecyclerView rvcomment = (RecyclerView) view.findViewById(R.id.rv_comment);
+        rvcomment = (RecyclerView) view.findViewById(R.id.rv_comment);
         final EditText etContent = (EditText) view.findViewById(R.id.et_comment);
         ImageView iv_send = (ImageView) view.findViewById(R.id.iv_send);
         ImageView iv_close = (ImageView) view.findViewById(R.id.iv_close);
@@ -165,6 +166,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
                 }
                 Collections.reverse(temp);
                 adapter.setList(temp);
+                rvcomment.smoothScrollToPosition(0);
             }
 
             @Override

@@ -17,6 +17,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.myidol.R;
 import com.example.myidol.adapter.CommentAdapter;
 import com.example.myidol.base.BaseActivity;
@@ -24,6 +25,7 @@ import com.example.myidol.databinding.ActivityDetailpostBinding;
 import com.example.myidol.model.Comment;
 import com.example.myidol.model.Photo;
 import com.example.myidol.model.Post;
+import com.example.myidol.model.User;
 import com.example.myidol.ui.MainActivity;
 import com.example.myidol.ui.comment.CommentActivity;
 import com.example.myidol.ui.image.ImageFullActivity;
@@ -40,6 +42,7 @@ import com.gw.swipeback.SwipeBackLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,DetailpostViewmodel> {
     CommentAdapter adapter;
@@ -145,6 +148,7 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
                startActivity(intent);
            }
        });
+       // get infor user publisher
     }
 
     private void getComment() {
@@ -158,8 +162,9 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
                     Comment comment = i.getValue(Comment.class);
                     arrayList.add(comment);
                 }
+                Collections.reverse(arrayList);
                 adapter.setList(arrayList);
-                binding.rvComment.scrollToPosition(adapter.getItemCount()-1);
+                binding.rvComment.scrollToPosition(0);
             }
 
             @Override
@@ -252,5 +257,26 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
         mSwipeBackLayout.setMaskAlpha(125);
         mSwipeBackLayout.setSwipeBackFactor(0.5f);
         mSwipeBackLayout.attachToActivity(this);
+    }
+    public void getInforUser(String iduser, final ImageView ivavatar, final TextView textView) {
+        final DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child(iduser);
+        user.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                Glide
+                        .with(ivavatar.getContext())
+                        .load(user.getImageUrl())
+                        .placeholder(R.drawable.ic_launcher_foreground)
+                        .override(500,250)
+                        .into(ivavatar);
+                textView.setText(user.getUsername());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

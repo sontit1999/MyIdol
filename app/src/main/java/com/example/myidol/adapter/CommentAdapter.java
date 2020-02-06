@@ -104,7 +104,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Myviewho
                         .with(context)
                         .load(user.getImageUrl())
                         .placeholder(R.drawable.ic_launcher_foreground)
-                        .override(500,250)
                         .into(ivavatar);
                 tvNameAuthor.setText(user.getUsername());
             }

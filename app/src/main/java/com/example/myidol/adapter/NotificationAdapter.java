@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.myidol.R;
 import com.example.myidol.model.Notification;
 import com.example.myidol.model.Post;
@@ -82,7 +83,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Post post = dataSnapshot.getValue(Post.class);
-                Picasso.get().load(post.getLinkImage()).into(ivpost);
+                Glide
+                        .with(context)
+                        .load(post.getLinkImage())
+                        .placeholder(R.drawable.ic_launcher_foreground)
+                        .override(100,100)
+                        .into(ivpost);
             }
 
             @Override
@@ -130,7 +136,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 Log.d("user",user.getUsername());
-                Picasso.get().load(user.getImageUrl()).placeholder(R.drawable.ic_launcher_foreground).into(ivavatar);
+                Glide
+                        .with(context)
+                        .load(user.getImageUrl())
+                        .placeholder(R.drawable.ic_launcher_foreground)
+                        .override(100,100)
+                        .into(ivavatar);
                 tvname.setText(user.getUsername());
             }
 
