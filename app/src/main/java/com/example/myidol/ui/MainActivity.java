@@ -2,6 +2,7 @@ package com.example.myidol.ui;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -79,6 +81,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
 
     @Override
     public void setBindingViewmodel() {
+
+        setuptoobar();
+
         binding.setViewmodel(viewmodel);
         // load defaut fragment
         fm.beginTransaction().add(R.id.frame, fragment5, "5").hide(fragment5).commit();
@@ -117,10 +122,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
     }
 
     private void action() {
-        binding.actionBar.ivChat.setOnClickListener(new View.OnClickListener() {
+        binding.ivChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, ChatActivity.class));
+                startActivity(new Intent(MainActivity.this,ChatActivity.class));
             }
         });
     }
@@ -227,5 +232,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
         FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
         Notification notification = new Notification(post.getIdpost(),currentUer.getUid(),"comment your post","post",System.currentTimeMillis()+"");
         FirebaseDatabase.getInstance().getReference("notification").child(post.getPublisher()).child(System.currentTimeMillis()+"").setValue(notification);
+    }
+    private void setuptoobar() {
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_more_vert_black_24dp);
+        binding.toolbar.setOverflowIcon(drawable);
     }
 }

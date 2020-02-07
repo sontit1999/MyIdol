@@ -11,45 +11,38 @@
         android:background="@color/colorblue"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.cardview.widget.CardView
-            android:id="@+id/actionBarrHome"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:android="http://schemas.android.com/apk/res/android">
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:background="@color/colorwhite"
-                android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="wrap_content"
+                android:background="@color/colorwhite"
+                android:theme="@style/ThemeOverlay.AppCompat.Light">
                 <ImageView
                     android:id="@+id/iv_logo"
                     android:layout_marginStart="@dimen/padding_5dp"
-                    android:layout_gravity="center"
                     android:src="@drawable/logo"
                     android:layout_width="25dp"
                     android:layout_height="25dp"/>
                 <TextView
                     android:id="@+id/tv_slogan"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="20dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/padding_5dp"
                     android:fontFamily="@font/caveat_brush"
                     android:text="Chats"
                     android:textColor="@color/colorblack"
                     android:textSize="19sp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
         <FrameLayout
             android:id="@+id/framelayout"
             android:background="@color/colorwhite"
-            android:layout_below="@id/actionBarrHome"
+            android:layout_below="@id/appbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </RelativeLayout>

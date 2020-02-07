@@ -61,6 +61,8 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
 
     @Override
     public void setBindingViewmodel() {
+        post = new Post();
+
         binding.setViewmodel(viewmodel);
         Intent intent = getIntent();
         if(intent!=null){
@@ -187,10 +189,12 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
         FirebaseDatabase.getInstance().getReference("post").child(idpost).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Post mainpost = dataSnapshot.getValue(Post.class);
                 post = dataSnapshot.getValue(Post.class);
-                binding.setPost(post);
+                binding.setPost(mainpost);
+                Log.d("post",post.getPublisher());
+                getInforUser(mainpost.getPublisher());
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -258,19 +262,14 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
         mSwipeBackLayout.setSwipeBackFactor(0.5f);
         mSwipeBackLayout.attachToActivity(this);
     }
-    public void getInforUser(String iduser, final ImageView ivavatar, final TextView textView) {
+    public void getInforUser(String iduser) {
         final DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child(iduser);
         user.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                Glide
-                        .with(ivavatar.getContext())
-                        .load(user.getImageUrl())
-                        .placeholder(R.drawable.ic_launcher_foreground)
-                        .override(500,250)
-                        .into(ivavatar);
-                textView.setText(user.getUsername());
+                Log.d("userxxxxx",user.getImageUrl());
+                binding.tvNameAuthor.setText(user.getUsername());
             }
 
             @Override
@@ -278,5 +277,10 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

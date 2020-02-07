@@ -23,9 +23,16 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding,ChatViewmodel
     @Override
     public void setBindingViewmodel() {
        binding.setViewmodel(viewmodel);
+
+       setupToolbar();
        setswipedismissActivity();
        // load fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,fragmentChatBasic).commit();
+    }
+
+    private void setupToolbar() {
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     private void setswipedismissActivity() {

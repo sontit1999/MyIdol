@@ -3,13 +3,17 @@ package com.example.myidol.ui.detailchat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -68,11 +72,20 @@ public class DetailChatActivity extends BaseActivity<ActivityDetailChatBinding,D
            }
 
        }
+       setuptoobar();
+        action();
        getinforReciever();
        setuprecycleview();
        getlistChat();
-       action();
 
+
+    }
+
+    private void setuptoobar() {
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_more_vert_black_24dp);
+        binding.toolbar.setOverflowIcon(drawable);
     }
 
     private void getinforReciever() {
@@ -173,6 +186,7 @@ public class DetailChatActivity extends BaseActivity<ActivityDetailChatBinding,D
          }
     }
     private void action() {
+
         binding.ivSendmessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,5 +212,25 @@ public class DetailChatActivity extends BaseActivity<ActivityDetailChatBinding,D
                 binding.rvListchat.scrollToPosition(adapter.getItemCount()-1);
             }
         });
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_chat, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuchat:
+                Toast.makeText(this, "Đã xóa cuộc trò chuyện", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 }

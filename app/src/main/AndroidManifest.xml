@@ -22,8 +22,7 @@
         <activity android:name=".ui.detailpost.DetailpostActivity" />
         <activity android:name=".ui.detailchat.DetailChatActivity" />
         <activity
-            android:name=".ui.login.LoginActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,7 +36,6 @@
         <activity android:name=".ui.image.ImageFullActivity" />
         <activity android:name=".ui.comment.CommentActivity" />
         <activity
-            android:windowSoftInputMode="adjustResize"
             android:name=".ui.chat.ChatActivity" />
         <activity android:name=".ui.profile.ProfileUserClientActivity" />
 
