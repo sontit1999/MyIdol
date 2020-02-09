@@ -9,35 +9,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:orientation="vertical"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_hotidol"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="horizontal"
-                android:padding="@dimen/padding_bottom_nav"
-                android:background="@color/colorbg_bottom_nav"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/tv_create"
-                    android:text="Hot idol"
-                    android:layout_weight="0.8"
-                    android:layout_marginLeft="@dimen/padding_bottom_nav"
-                    android:textSize="@dimen/tittle_size_main"
-                    android:textColor="@color/colorwhite"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_hotidol"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
+            android:layout_height="match_parent"/>
         <ProgressBar
             android:id="@+id/progress_circular"
             app:layout_constraintTop_toTopOf="parent"

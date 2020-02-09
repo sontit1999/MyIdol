@@ -18,6 +18,7 @@
             android:background="@color/colorwhite"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ImageView
                 android:id="@+id/iv_avatar"
                 android:src="@drawable/gaixinh"
@@ -25,6 +26,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 />
+            <ImageButton
+                android:id="@+id/btn_setting"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_settings_black_24dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
             <androidx.cardview.widget.CardView
                 android:id="@+id/container_feature"
                 app:cardElevation="10dp"

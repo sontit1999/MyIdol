@@ -109,6 +109,7 @@ public class FragmentSearch extends BaseFragment<FragSearchBinding,SearchViewmod
                 }
             }
         });
+        binding.filter.setVisibility(View.GONE);
     }
 
     private void setuprecycleview() {

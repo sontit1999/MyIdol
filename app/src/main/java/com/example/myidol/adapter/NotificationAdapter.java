@@ -56,11 +56,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         final Notification notification = arraylist.get(position);
         holder.bindata(notification);
         cloneUser(notification.getIduser(),holder.iv_user,holder.tv_nameuser);
-        if(notification.getType().equals("post")){
-            getImagePost(notification.getIdpost(),holder.iv_post);
-        }else{
-            holder.iv_post.setVisibility(View.GONE);
-        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,25 +73,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         });
     }
 
-    private void getImagePost(String idpost, final ImageView ivpost) {
-        FirebaseDatabase.getInstance().getReference("post").child(idpost).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Post post = dataSnapshot.getValue(Post.class);
-                Glide
-                        .with(context)
-                        .load(post.getLinkImage())
-                        .placeholder(R.drawable.ic_launcher_foreground)
-                        .override(100,100)
-                        .into(ivpost);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     @Override
     public int getItemCount() {
@@ -109,7 +85,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         public MyHoder(@NonNull View itemView) {
             super(itemView);
-            iv_post = (ImageView) itemView.findViewById(R.id.iv_postNotification);
             iv_user = (ImageView) itemView.findViewById(R.id.iv_avatarNotification);
             tv_text = (TextView) itemView.findViewById(R.id.tv_textNotification);
             tv_nameuser = (TextView) itemView.findViewById(R.id.tv_usernameNotification);

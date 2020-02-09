@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.bumptech.glide.Glide;
 import com.example.myidol.R;
 import com.example.myidol.adapter.CommentAdapter;
 import com.example.myidol.adapter.PhotoAdapter;
@@ -163,6 +164,12 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 binding.setUser(user);
+                Glide
+                        .with(ProfileUserClientActivity.this)
+                        .load(user.getImageUrl())
+                        .placeholder(R.drawable.ic_launcher_foreground)
+                        .override(500,500)
+                        .into(binding.ivImageAvatar);
             }
 
             @Override

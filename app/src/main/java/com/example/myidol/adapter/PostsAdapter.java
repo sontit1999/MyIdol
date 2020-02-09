@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.myidol.R;
 import com.example.myidol.callback.ILoadMore;
 import com.example.myidol.callback.Postcallback;
@@ -162,7 +163,12 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 Log.d("user",user.getUsername());
-                Picasso.get().load(user.getImageUrl()).into(ivavatar);
+                Glide
+                        .with(context)
+                        .load(user.getImageUrl())
+                        .placeholder(R.drawable.ic_launcher_foreground)
+                        .override(250,250)
+                        .into(ivavatar);
                 tvname.setText(user.getUsername());
             }
 

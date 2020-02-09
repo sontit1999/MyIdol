@@ -69,7 +69,7 @@
                 <ImageView
                     android:id="@+id/iv_post"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher_background"
+                    android:src="@drawable/ic_launcher_foreground"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"/>
                 <EditText

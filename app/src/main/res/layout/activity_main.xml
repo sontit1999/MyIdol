@@ -42,13 +42,6 @@
                         android:text="Sơn tít social"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                    <ImageView
-                        android:id="@+id/iv_chat"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginEnd="@dimen/padding_5dp"
-                        android:src="@drawable/message"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"/>
                 </RelativeLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>

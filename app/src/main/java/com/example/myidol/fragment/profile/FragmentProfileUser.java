@@ -17,6 +17,7 @@ import com.example.myidol.databinding.FragProfileUserBinding;
 import com.example.myidol.model.Post;
 import com.example.myidol.model.User;
 import com.example.myidol.ui.comment.CommentActivity;
+import com.example.myidol.ui.editprofile.EditProfileActivity;
 import com.example.myidol.ui.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -85,6 +86,12 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
     }
 
     private void init() {
+        binding.btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), EditProfileActivity.class));
+            }
+        });
         binding.containNumberFollowing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

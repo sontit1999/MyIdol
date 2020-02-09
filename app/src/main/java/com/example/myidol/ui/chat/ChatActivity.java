@@ -44,11 +44,4 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding,ChatViewmodel
         mSwipeBackLayout.attachToActivity(this);
     }
 
-//    private void setupviewpagerandtab() {
-//        ViewPagerChatAdapter viewpager = new ViewPagerChatAdapter(getSupportFragmentManager());
-//        viewpager.addFragment(new FragmentChatBasic(),"Chats Basic");
-//        viewpager.addFragment(new FragmentChatGroup(),"Groups Chat");
-//        binding.viewpager.setAdapter(viewpager);
-//        binding.tablayout.setupWithViewPager(binding.viewpager);
-//    }
 }

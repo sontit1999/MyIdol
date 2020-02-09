@@ -39,6 +39,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.gw.swipeback.SwipeBackLayout;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -63,17 +64,20 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
     public void setBindingViewmodel() {
         post = new Post();
 
+
+
+
         binding.setViewmodel(viewmodel);
         Intent intent = getIntent();
         if(intent!=null){
             idpost = intent.getStringExtra("idpost");
         }
+        action();
         setswipedismissActivity();
         setUpRecyclerviewComment();
         getPost();
         getComment();
         islike(idpost,binding.ivHearts,binding.numberlikepost,binding.numbercommentpost);
-        action();
     }
 
     private void action() {
@@ -193,7 +197,7 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
                 post = dataSnapshot.getValue(Post.class);
                 binding.setPost(mainpost);
                 Log.d("post",post.getPublisher());
-                getInforUser(mainpost.getPublisher());
+                getInforUser(post.getPublisher());
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -263,12 +267,14 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
         mSwipeBackLayout.attachToActivity(this);
     }
     public void getInforUser(String iduser) {
-        final DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child(iduser);
-        user.addValueEventListener(new ValueEventListener() {
+        DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child(iduser);
+        user.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 Log.d("userxxxxx",user.getImageUrl());
+                binding.tvNameAuthor.setText(user.getUsername());
+                Picasso.get().load(user.getImageUrl()).into(binding.ivAvatar);
                 binding.tvNameAuthor.setText(user.getUsername());
             }
 

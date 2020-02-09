@@ -13,4 +13,12 @@
     <string name="signup">Sign up</string>
     <string name="noaccount">Don"t have account ?</string>
     <string name="haveaccount">Already have account ?</string>
+    <string name="edit">Edit Profile</string>
+    <string name="sentencelike">Quotations</string>
+    <string name="address">Address</string>
+    <string name="phonenumber">PhoneNumber</string>
+    <string name="samplesenten">Try hard to make dream come true</string>
+    <string name="sampleAddress">Moscow, Russian</string>
+    <string name="samplephone">+84335275330</string>
+    <string name="save">Confirm</string>
 </resources>

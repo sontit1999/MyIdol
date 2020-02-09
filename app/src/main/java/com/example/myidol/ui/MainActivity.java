@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ import com.example.myidol.fragment.chat.FragmentChatBasic;
 import com.example.myidol.fragment.chat.FragmentChatGroup;
 import com.example.myidol.fragment.favorite.FragmentFavorite;
 import com.example.myidol.fragment.home.FragmentHome;
+import com.example.myidol.fragment.hot.FragmentHot;
 import com.example.myidol.fragment.notification.FragmentNotification;
 import com.example.myidol.fragment.profile.FragmentProfile;
 import com.example.myidol.fragment.profile.FragmentProfileUser;
@@ -66,6 +68,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
     final Fragment fragment2 = new FragmentSearch();
     final Fragment fragment4 = new FragmentNotification();
     final Fragment fragment5 = new FragmentProfileUser();
+    final Fragment fragment6 = new FragmentHot();
     final FragmentManager fm = getSupportFragmentManager();
     RecyclerView rvcomment;
     Fragment active = fragment1;
@@ -86,6 +89,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
 
         binding.setViewmodel(viewmodel);
         // load defaut fragment
+        fm.beginTransaction().add(R.id.frame, fragment6, "6").hide(fragment5).commit();
         fm.beginTransaction().add(R.id.frame, fragment5, "5").hide(fragment5).commit();
         fm.beginTransaction().add(R.id.frame, fragment4, "4").hide(fragment4).commit();
         fm.beginTransaction().add(R.id.frame, fragment2, "2").hide(fragment2).commit();
@@ -100,8 +104,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
                         active = fragment1;
                         break;
                     case R.id.nav_hot:
-                        fm.beginTransaction().hide(active).show(fragment2).commit();
-                        active = fragment2;
+                        fm.beginTransaction().hide(active).show(fragment6).commit();
+                        active = fragment6;
                         break;
                     case R.id.nav_add:
                         startActivity(new Intent(MainActivity.this, PostNewActivity.class));
@@ -122,12 +126,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
     }
 
     private void action() {
-        binding.ivChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,ChatActivity.class));
-            }
-        });
+
     }
 
     @Override
@@ -238,5 +237,28 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         Drawable drawable = ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_more_vert_black_24dp);
         binding.toolbar.setOverflowIcon(drawable);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.mess:
+                startActivity(new Intent(MainActivity.this,ChatActivity.class));
+                return true;
+            case R.id.search:
+                fm.beginTransaction().hide(active).show(fragment2).commit();
+                active = fragment2;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 }

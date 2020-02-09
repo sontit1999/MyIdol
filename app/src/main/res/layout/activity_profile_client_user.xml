@@ -27,7 +27,7 @@
                android:layout_height="300dp">
                <ImageView
                    android:id="@+id/iv_imageAvatar"
-                   bind:imageUrl="@{user.imageUrl}"
+                   android:src="@drawable/ic_launcher_foreground"
                    android:scaleType="centerCrop"
                    android:layout_width="match_parent"
                    android:layout_height="300dp"/>

@@ -11,53 +11,109 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        bind:cardElevation="0dp"
+        bind:cardCornerRadius="10dp"
+        bind:cardElevation="8dp"
+        bind:cardUseCompatPadding="true"
         xmlns:android="http://schemas.android.com/apk/res/android">
         <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:padding="20dp"
+            android:padding="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_avatar"
-                android:onClick="@{()->callback.onAvatarClick(user)}"
-                android:layout_alignParentLeft="true"
-                bind:imageUrl="@{user.imageUrl}"
-                android:src="@drawable/ic_launcher_foreground"
-                android:layout_width="60dp"
-                android:layout_height="60dp"/>
-            <LinearLayout
-                android:id="@+id/infor"
-                android:orientation="vertical"
-                android:layout_toLeftOf="@id/tv_folow"
-                android:layout_toRightOf="@id/iv_avatar"
-                android:layout_width="0dp"
+            <RelativeLayout
+                android:id="@+id/rl_top"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_avatar"
+                    android:onClick="@{()->callback.onAvatarClick(user)}"
+                    android:layout_alignParentLeft="true"
+                    bind:imageUrl="@{user.imageUrl}"
+                    android:src="@drawable/ic_launcher_foreground"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"/>
+                <LinearLayout
+                    android:id="@+id/infor"
+                    android:orientation="vertical"
+                    android:layout_toLeftOf="@id/tv_folow"
+                    android:layout_toRightOf="@id/iv_avatar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:text="@{user.username}"
+                        android:textSize="@dimen/content_size_main"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginTop="@dimen/padding_5dp"
+                        android:layout_marginStart="@dimen/padding_5dp"
+                        android:paddingVertical="@dimen/padding_5dp"
+                        android:textColor="@color/colorgrey2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
                 <TextView
-                    android:id="@+id/tv_name"
-                    android:text="@{user.username}"
-                    android:textSize="@dimen/content_size_main"
+                    android:id="@+id/tv_folow"
+                    android:text="following"
                     android:paddingHorizontal="10dp"
-                    android:layout_marginTop="@dimen/padding_5dp"
-                    android:layout_marginStart="@dimen/padding_5dp"
+                    android:layout_centerVertical="true"
+                    android:onClick="@{()->callback.onFollowClick(user)}"
+                    android:layout_marginEnd="@dimen/padding_5dp"
                     android:paddingVertical="@dimen/padding_5dp"
-                    android:textColor="@color/colorgrey2"
+                    android:background="@drawable/bg_follow"
+                    android:layout_alignParentRight="true"
+                    android:textColor="#448AFF"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+            </RelativeLayout>
+            <View
+                android:id="@+id/viewngang"
+                android:layout_below="@id/rl_top"
+                android:background="#EEE5E5"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"></View>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/viewngang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/ic_people_black_24dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"/>
+                    <TextView
+                        android:id="@+id/tv_followerSearch"
+                        android:textColor="@color/colorblack"
+                        android:text="50 followers"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/ic_location_on_black_24dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"/>
+                    <TextView
+                        android:id="@+id/tv_location"
+                        android:textColor="@color/colorblack"
+                        android:text="ba vì, tây"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
             </LinearLayout>
-            <TextView
-                android:id="@+id/tv_folow"
-                android:text="following"
-                android:paddingHorizontal="10dp"
-                android:layout_centerVertical="true"
-                android:onClick="@{()->callback.onFollowClick(user)}"
-                android:layout_marginEnd="@dimen/padding_5dp"
-                android:paddingVertical="@dimen/padding_5dp"
-                android:background="@drawable/bg_follow"
-                android:layout_alignParentRight="true"
-                android:textColor="#448AFF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </layout>

@@ -57,6 +57,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHoder>
     public void onBindViewHolder(@NonNull final myViewHoder holder, int position) {
         final FirebaseUser curentUser = FirebaseAuth.getInstance().getCurrentUser();
         final User user = arrayList.get(position);
+        getnumberFollower(user.getId(),holder.tvfollower);
         holder.bindview(user);
         holder.tv_name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +101,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHoder>
 
     class myViewHoder extends RecyclerView.ViewHolder{
         ImageView iv_avatar;
-        TextView tv_name,tvfollow;
+        TextView tv_name,tvfollow,tvfollower,tvLocation;
 
 
         public myViewHoder(@NonNull View itemView) {
@@ -108,11 +109,14 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHoder>
             iv_avatar = (ImageView) itemView.findViewById(R.id.iv_avatar);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tvfollow = ( TextView) itemView.findViewById(R.id.tv_folow);
+            tvfollower = ( TextView) itemView.findViewById(R.id.tv_followerSearch);
+            tvLocation = ( TextView) itemView.findViewById(R.id.tv_location);
         }
         public void bindview(User user){
-            Picasso.get().load(user.getImageUrl()).placeholder(R.drawable.ic_launcher_foreground).into(iv_avatar);
+            Picasso.get().load(user.getImageUrl()).placeholder(R.drawable.ic_launcher_foreground).resize(65,65).into(iv_avatar);
             tv_name.setText(user.getUsername());
             isFollowing(user.getId(),tvfollow);
+            tvLocation.setText(user.getAddress());
         }
     }
     private void isFollowing(final String id, final TextView tvfollow){
@@ -141,5 +145,19 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHoder>
         FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
         Notification notification = new Notification("null",currentUer.getUid(),"start following you","follow",System.currentTimeMillis()+"");
         FirebaseDatabase.getInstance().getReference("notification").child(iduser).child(System.currentTimeMillis()+"").setValue(notification);
+    }
+    public void getnumberFollower(String iduser, final TextView tv_numberfollower){
+        DatabaseReference follow = FirebaseDatabase.getInstance().getReference("follows").child(iduser).child("follows");
+        follow.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 tv_numberfollower.setText(dataSnapshot.getChildrenCount() + " follower" );
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
