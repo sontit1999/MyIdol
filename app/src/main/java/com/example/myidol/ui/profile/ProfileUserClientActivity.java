@@ -52,8 +52,7 @@ import java.util.Calendar;
 import java.util.Collections;
 
 public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClientUserBinding,ProfileUserViewModel> implements Postcallback {
-    ArrayList<Post> arrayList;
-    PostsAdapter adapter;
+
     String iduser;
     ArrayList<Comment> temp = new ArrayList<>();
     @Override
@@ -75,8 +74,6 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
         binding.setViewmodel(viewmodel);
         setwipedismisActivity();
         setupRecyclerview();
-        getPost(iduser);
-        getPhotos();
         getInfor();
         isFollowing(iduser,binding.btnFollow);
         action();
@@ -94,10 +91,10 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
                 });
             }
         });
-        viewmodel.getArrPost().observe(this, new Observer<ArrayList<Post>>() {
+        viewmodel.getArrPost(iduser).observe(this, new Observer<ArrayList<Post>>() {
             @Override
             public void onChanged(ArrayList<Post> posts) {
-                adapter.setList(posts);
+                viewmodel.adapterPost.setList(posts);
             }
         });
     }
@@ -149,10 +146,6 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
         });
     }
 
-    private void getPhotos() {
-        ArrayList<Photo> temp = new ArrayList<>();
-
-    }
     public void addNotification(){
         FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
         Notification notification = new Notification("null",currentUer.getUid(),"start following you","follow",System.currentTimeMillis()+"");
@@ -164,24 +157,6 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 binding.setUser(user);
-                Glide
-                        .with(ProfileUserClientActivity.this)
-                        .load(user.getImageUrl())
-                        .placeholder(R.drawable.ic_launcher_foreground)
-                        .override(500,500)
-                        .into(binding.ivImageAvatar);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        DatabaseReference follow = FirebaseDatabase.getInstance().getReference("follows").child(iduser).child("follows");
-        follow.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                binding.numberFollow.setText(dataSnapshot.getChildrenCount()+"");
             }
 
             @Override
@@ -197,12 +172,12 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
     }
 
     private void setupRecyclerview() {
-        arrayList = new ArrayList<>();
+        // recyclerview post
         binding.rvPost.setHasFixedSize(true);
         binding.rvPost.setItemViewCacheSize(10);
         binding.rvPost.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        adapter = new PostsAdapter(this,arrayList);
-        binding.rvPost.setAdapter(adapter);
+        binding.rvPost.setAdapter(viewmodel.adapterPost);
+        viewmodel.adapterPost.setContext(this);
 
         // recyclerview photo
 
@@ -211,31 +186,7 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
         binding.rvPhotos.setLayoutManager(mLayoutManager);
         binding.rvPhotos.setAdapter(viewmodel.adapter);
     }
-    private void getPost(String iduser) {
-        final ArrayList<Photo> temp = new ArrayList<>();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("post");
-        reference.orderByChild("publisher").equalTo(iduser).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                arrayList.clear();
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    Post post = ds.getValue(Post.class);
-                    temp.add(new Photo(post.getLinkImage()));
-                    arrayList.add(post);
-                }
-                Log.d("sizepost",arrayList.size() + "");
-                Collections.reverse(arrayList);
-                Collections.shuffle(temp);
-                viewmodel.setListPhoto(temp);
-                Log.d("sizepost",arrayList.size()+"");
-                viewmodel.setListPost(arrayList);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-    }
 
     @Override
     public void onPhotoClick(Post post) {

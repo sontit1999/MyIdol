@@ -58,14 +58,14 @@
         </FrameLayout>
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
-            app:itemIconTint="@color/colorgrey"
-            android:background="@color/colorbg_bottom_nav"
+            app:itemIconTint="@color/colormain"
+            android:background="@color/colorwhite"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_width="match_parent"
             app:menu="@menu/bottom_nav"
-            app:itemTextColor="@color/colorwhite"
+            app:itemTextColor="@color/colormain"
             android:layout_height="wrap_content"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -89,27 +89,11 @@ public class DetailChatActivity extends BaseActivity<ActivityDetailChatBinding,D
     }
 
     private void getinforReciever() {
-       if(isGroup){
-              FirebaseDatabase.getInstance().getReference("Groups").child(nodechat).addValueEventListener(new ValueEventListener() {
-                  @Override
-                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                      GroupChat groupChat = dataSnapshot.getValue(GroupChat.class);
-                      Picasso.get().load(groupChat.getImageGroup()).into(binding.ivAvatarRecive);
-                      binding.tvPartner.setText(groupChat.getNamegroup());
-                  }
-
-                  @Override
-                  public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                  }
-              });
-       }else {
            FirebaseDatabase.getInstance().getReference("Users").child(iduser).addValueEventListener(new ValueEventListener() {
                @Override
                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                    User userRecive = dataSnapshot.getValue(User.class);
                    binding.tvPartner.setText(userRecive.getUsername());
-                   Picasso.get().load(userRecive.getImageUrl()).into(binding.ivAvatarRecive);
                }
 
                @Override
@@ -118,7 +102,6 @@ public class DetailChatActivity extends BaseActivity<ActivityDetailChatBinding,D
                }
            });
        }
-    }
 
     private void getlistChat() {
         if(isGroup){

@@ -16,9 +16,13 @@
     <string name="edit">Edit Profile</string>
     <string name="sentencelike">Quotations</string>
     <string name="address">Address</string>
+    <string name="username">Username</string>
     <string name="phonenumber">PhoneNumber</string>
     <string name="samplesenten">Try hard to make dream come true</string>
     <string name="sampleAddress">Moscow, Russian</string>
     <string name="samplephone">+84335275330</string>
     <string name="save">Confirm</string>
+    <string name="Login">Log In</string>
+    <string name="Regiser">Regiser</string>
+    <string name="orlogin">Or login with social account</string>
 </resources>

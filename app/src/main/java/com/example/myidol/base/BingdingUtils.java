@@ -42,8 +42,6 @@ public class BingdingUtils {
                     .placeholder(R.drawable.ic_launcher_foreground)
                     .override(500,250)
                     .into(view);
-        }else{
-            view.setVisibility(View.GONE);
         }
 
 

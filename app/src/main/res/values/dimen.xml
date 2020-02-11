@@ -9,6 +9,7 @@
     <dimen name="padding_container_feature">15dp</dimen>
     <dimen name="margin_container_feature">25dp</dimen>
     <dimen name="content_size_main">16sp</dimen>
+    <dimen name="content_sizeSmall_main">14sp</dimen>
     <dimen name="tittle_size_main">20sp</dimen>
     <dimen name="size_avatar">100dp</dimen>
     <dimen name="size_ic_tym">25dp</dimen>

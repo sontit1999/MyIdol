@@ -41,6 +41,7 @@ import static com.example.myidol.ui.postnew.PostNewActivity.PICK_IMAGE;
 public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
     ArrayList<Post> arrayList;
     PostsAdapter adapter;
+    LinearLayoutManager manager;
     DatabaseReference postRef = FirebaseDatabase.getInstance().getReference("post");
     ArrayList<String> followinglist;
     @Override
@@ -57,6 +58,8 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
     public void setBindingViewmodel() {
         binding.setViewmodel(viewmodel);
         setupRecyclerview();
+
+
     }
 
     private void checkfollowing() {
@@ -108,8 +111,9 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
         arrayList = new ArrayList<>();
         binding.rvPost.setHasFixedSize(true);
         binding.rvPost.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        adapter = new PostsAdapter(getContext(),arrayList);
+        adapter = new PostsAdapter(getContext(),arrayList,binding.rvPost);
         binding.rvPost.setAdapter(adapter);
+
     }
 
     @Override

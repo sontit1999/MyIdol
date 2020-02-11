@@ -37,6 +37,7 @@ public abstract class BaseAdapter<T ,VB extends ViewDataBinding> extends Recycle
     }
 
     @Override
+
     public int getItemCount() {
         return datalist.size();
     }

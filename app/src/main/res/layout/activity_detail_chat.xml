@@ -23,18 +23,12 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorwhite"
                 android:theme="@style/ThemeOverlay.AppCompat.Light">
-                <ImageView
+                <ImageButton
                     android:id="@+id/iv_back"
-                    android:layout_marginStart="@dimen/padding_5dp"
+                    android:background="@null"
                     android:src="@drawable/ic_arrow_back_black_24dp"
                     android:layout_width="25dp"
                     android:layout_height="25dp"/>
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_avatarRecive"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/sondz5" />
-
                 <TextView
                     android:id="@+id/tv_partner"
                     android:layout_width="wrap_content"
@@ -67,7 +61,7 @@
             <View
                 android:layout_alignParentTop="true"
                 android:id="@+id/viewngang3"
-                android:background="@color/colorgrey"
+                android:background="@color/colorviewngang"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
             <LinearLayout
@@ -95,6 +89,7 @@
                     android:id="@+id/iv_camera"
                     android:layout_marginEnd="5dp"
                     android:background="@null"
+                    android:tint="@color/colormain"
                     android:src="@drawable/ic_photo_camera_black_24dp"
                     android:layout_width="40dp"
                     android:layout_height="40dp"/>
@@ -102,16 +97,18 @@
                     android:id="@+id/iv_gallery"
                     android:layout_marginEnd="5dp"
                     android:background="@null"
+                    android:tint="@color/colormain"
                     android:src="@drawable/ic_image_black_24dp"
                     android:layout_width="40dp"
                     android:layout_height="40dp"/>
                 <ImageButton
                     android:id="@+id/iv_sendmessage"
+                    android:tint="@color/colormain"
                     android:src="@drawable/ic_send_black_24dp"
-                    android:layout_width="40dp"
+                    android:layout_width="wrap_content"
                     android:background="@null"
                     android:layout_marginEnd="10dp"
-                    android:layout_height="40dp"/>
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
         </RelativeLayout>
 

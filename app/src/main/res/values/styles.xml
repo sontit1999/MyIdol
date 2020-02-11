@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -6,9 +6,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowFullscreen">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
-    </style>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/colorwhite</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
 
+    </style>
+    <style name="AppTheme.WhiteAccent">
+        <item name="colorAccent">@color/coloryellow</item> <!-- Whatever color you want-->
+    </style>
 </resources>

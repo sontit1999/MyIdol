@@ -12,7 +12,7 @@
     </data>
     <androidx.cardview.widget.CardView
         app:cardElevation="1dp"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">

@@ -10,10 +10,14 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import com.example.myidol.R;
 import com.example.myidol.adapter.PostsAdapter;
 import com.example.myidol.base.BaseFragment;
+import com.example.myidol.callback.PhotoCallback;
 import com.example.myidol.databinding.FragProfileUserBinding;
+import com.example.myidol.model.Photo;
 import com.example.myidol.model.Post;
 import com.example.myidol.model.User;
 import com.example.myidol.ui.comment.CommentActivity;
@@ -37,6 +41,16 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
     PostsAdapter adapter ;
     ArrayList<Post> arrayList;
     public static int PICK_IMAGEGallery = 125;
+
+    public String getUrlProfile() {
+        return urlProfile;
+    }
+
+    public void setUrlProfile(String urlProfile) {
+        this.urlProfile = urlProfile;
+    }
+
+    String urlProfile = "https://i.pinimg.com/originals/82/49/22/824922ef9208b68312a930256116dd5c.jpg";
     @Override
     public Class<ProfileUserViewmodel> getViewmodel() {
         return ProfileUserViewmodel.class;
@@ -78,38 +92,44 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
     }
 
     private void setupRecyclerview() {
+        // set up recyclerview post
         arrayList = new ArrayList<>();
         binding.rvHotidol.setHasFixedSize(true);
         binding.rvHotidol.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
-        adapter = new PostsAdapter(getContext(),arrayList);
+        adapter = new PostsAdapter(getContext(),arrayList,binding.rvHotidol);
         binding.rvHotidol.setAdapter(adapter);
+
+        binding.rvPhotos.setHasFixedSize(true);
+        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+        binding.rvPhotos.setLayoutManager(mLayoutManager);
+        binding.rvPhotos.setAdapter(viewmodel.adapter);
     }
 
     private void init() {
-        binding.btnSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), EditProfileActivity.class));
-            }
-        });
-        binding.containNumberFollowing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CommentActivity.class);
-                intent.putExtra("type","following");
-                intent.putExtra("iduser",FirebaseAuth.getInstance().getCurrentUser().getUid());
-                startActivity(intent);
-            }
-        });
-        binding.containNumberFollow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CommentActivity.class);
-                intent.putExtra("type","follower");
-                intent.putExtra("iduser",FirebaseAuth.getInstance().getCurrentUser().getUid());
-                startActivity(intent);
-            }
-        });
+//        binding.btnSetting.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getActivity(), EditProfileActivity.class));
+//            }
+//        });
+//        binding.containNumberFollowing.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getContext(), CommentActivity.class);
+//                intent.putExtra("type","following");
+//                intent.putExtra("iduser",FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                startActivity(intent);
+//            }
+//        });
+//        binding.containNumberFollow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getContext(), CommentActivity.class);
+//                intent.putExtra("type","follower");
+//                intent.putExtra("iduser",FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                startActivity(intent);
+//            }
+//        });
         binding.btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,10 +139,10 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
                 startActivity(intent);
             }
         });
-        binding.ivAvatar.setOnClickListener(new View.OnClickListener() {
+        binding.templateInfor.ivAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                          choosePhotofromgallery();
+                 viewmodel.gotoImagefull(urlProfile,getContext());
             }
         });
     }
@@ -133,8 +153,22 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
            @Override
            public void onChanged(ArrayList<Post> posts) {
                adapter.setList(posts);
+
            }
        });
+      viewmodel.getArrphoto().observe(this, new Observer<ArrayList<Photo>>() {
+          @Override
+          public void onChanged(ArrayList<Photo> photos) {
+              viewmodel.adapter.setList(photos);
+              viewmodel.adapter.setCallback(new PhotoCallback() {
+                  @Override
+                  public void onPhotoClick(Photo photo) {
+                      viewmodel.gotoImagefull(photo.getLinkImage(),getContext());
+                  }
+              });
+          }
+      });
+      viewmodel.getMoreFeature(binding.templateInfor.tvNumberpost,binding.templateInfor.tvNumberFollower,binding.templateInfor.tvNumberfollowing);
     }
     public void getInfor(){
         final DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -142,9 +176,9 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user1 = dataSnapshot.getValue(User.class);
+                setUrlProfile(user1.getImageUrl());
                 Log.d("user",user1.getUsername());
-                binding.setUser(user1);
-                Picasso.get().load(user1.getImageUrl()).placeholder(R.drawable.ic_launcher_foreground).into(binding.ivAvatar);
+                binding.templateInfor.setUser(user1);
             }
 
             @Override
@@ -152,55 +186,14 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
 
             }
         });
-        DatabaseReference follow = FirebaseDatabase.getInstance().getReference("follows").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("follows");
-        follow.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                binding.tvNumberFollower.setText(dataSnapshot.getChildrenCount()+"");
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        DatabaseReference following = FirebaseDatabase.getInstance().getReference("follows").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("following");
-        following.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                binding.tvNumberfollowing.setText(dataSnapshot.getChildrenCount()+"");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        DatabaseReference post = FirebaseDatabase.getInstance().getReference("post");
-        post.orderByChild("publisher").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                binding.tvNumberpost.setText(dataSnapshot.getChildrenCount()+"");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-    private void choosePhotofromgallery(){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGEGallery);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode== PICK_IMAGEGallery && data!=null){
-            binding.ivAvatar.setImageURI(data.getData());
+           // binding.ivAvatar.setImageURI(data.getData());
             viewmodel.uploadAvatar(data.getData(),getContext());
         }
     }

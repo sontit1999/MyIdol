@@ -60,6 +60,7 @@ public class PostNewActivity extends BaseActivity<ActivityPostNewBinding,PostNew
     public void setBindingViewmodel() {
         postRef = FirebaseDatabase.getInstance().getReference("post");
         checkpermisionns();
+        setupToolbar();
         binding.setViewmodel(viewmodel);
         action();
     }
@@ -133,6 +134,10 @@ public class PostNewActivity extends BaseActivity<ActivityPostNewBinding,PostNew
                }
            }
        });
+    }
+    private void setupToolbar() {
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
     private void choosePhotofromgallery(){
         Intent intent = new Intent();

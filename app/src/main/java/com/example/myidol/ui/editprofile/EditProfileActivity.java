@@ -38,11 +38,5 @@ public class EditProfileActivity extends BaseActivity<ActivityEditProfileBinding
                 finish();
             }
         });
-        binding.ibClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.edtUsername.setText("Maria Ozawa");
-            }
-        });
     }
 }

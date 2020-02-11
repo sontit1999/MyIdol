@@ -2,6 +2,8 @@ package com.example.myidol.fragment.hot;
 
 import android.app.Application;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -67,5 +69,11 @@ public class HotViewmodel extends BaseViewmodel {
                 Log.d("test",t.getMessage().toString());
             }
         });
+    }
+    public void showProgress(ProgressBar pg){
+        pg.setVisibility(View.VISIBLE);
+    }
+    public void hiddenProgress(ProgressBar pg){
+       pg.setVisibility(View.GONE);
     }
 }

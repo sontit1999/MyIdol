@@ -34,7 +34,6 @@ public class FragmentSearch extends BaseFragment<FragSearchBinding,SearchViewmod
     DatabaseReference mdatabase;
     UsersAdapter adapter;
     ArrayList<User> arrayList;
-    int chooseUser = 0,choosePost = 0;
     @Override
     public Class<SearchViewmodel> getViewmodel() {
         return SearchViewmodel.class;
@@ -77,39 +76,6 @@ public class FragmentSearch extends BaseFragment<FragSearchBinding,SearchViewmod
 
             }
         });
-        binding.tvPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(choosePost==1){
-                    choosePost = 0;
-                }else {
-                    choosePost = 1;
-                }
-                if(choosePost == 0){
-                    binding.tvPost.setBackgroundResource(R.drawable.bg_follow);
-                }else {
-                    binding.tvPost.setBackgroundResource(R.drawable.bg_unfollow);
-                }
-                Log.d("choose","choose post : " + choosePost);
-            }
-        });
-        binding.tvUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(chooseUser==1){
-                    chooseUser = 0;
-                }else {
-                    chooseUser = 1;
-                }
-                Log.d("choose","choose user : " + chooseUser);
-                if(chooseUser == 0){
-                    binding.tvUser.setBackgroundResource(R.drawable.bg_follow);
-                }else {
-                    binding.tvUser.setBackgroundResource(R.drawable.bg_unfollow);
-                }
-            }
-        });
-        binding.filter.setVisibility(View.GONE);
     }
 
     private void setuprecycleview() {

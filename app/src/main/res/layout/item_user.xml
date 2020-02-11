@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         bind:cardCornerRadius="10dp"
-        bind:cardElevation="8dp"
+        bind:cardElevation="2dp"
         bind:cardUseCompatPadding="true"
         xmlns:android="http://schemas.android.com/apk/res/android">
         <RelativeLayout

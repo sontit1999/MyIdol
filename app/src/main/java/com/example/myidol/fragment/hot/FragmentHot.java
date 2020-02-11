@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.example.myidol.R;
@@ -19,6 +21,9 @@ import com.example.myidol.ui.image.ImageFullActivity;
 
 import java.util.ArrayList;
 public class FragmentHot extends BaseFragment<FragHotBinding,HotViewmodel> {
+    LinearLayoutManager manager;
+    int totalitem;
+    boolean isloading = false;
     @Override
     public Class<HotViewmodel> getViewmodel() {
         return HotViewmodel.class;
@@ -33,14 +38,33 @@ public class FragmentHot extends BaseFragment<FragHotBinding,HotViewmodel> {
     public void setBindingViewmodel() {
          binding.setViewmodel(viewmodel);
          binding.rvHotidol.setHasFixedSize(true);
-         binding.rvHotidol.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        // binding.rvHotidol.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+         binding.rvHotidol.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
          binding.rvHotidol.setAdapter(viewmodel.adapter);
+
+
+//         binding.rvHotidol.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//             @Override
+//             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                 super.onScrollStateChanged(recyclerView, newState);
+//                 if (!recyclerView.canScrollVertically(1)) {
+//                     Toast.makeText(getContext(), "Hết rùi.Đợi tí đang tải thêm :v", Toast.LENGTH_LONG).show();
+//                     viewmodel.getmoreIdol();
+//                 }
+//             }
+//         });
+
+         manager = (LinearLayoutManager) binding.rvHotidol.getLayoutManager();
+
          binding.rvHotidol.addOnScrollListener(new RecyclerView.OnScrollListener() {
              @Override
-             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                 super.onScrollStateChanged(recyclerView, newState);
-                 if (!recyclerView.canScrollVertically(1)) {
-                     Toast.makeText(getContext(), "Hết rùi.Đợi tí đang tải thêm :v", Toast.LENGTH_LONG).show();
+             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                 super.onScrolled(recyclerView, dx, dy);
+                 Log.d("sontit"," vị trí item cuối cùng nhìn thấy "  + manager.findLastVisibleItemPosition());
+                 if(totalitem-1==manager.findLastVisibleItemPosition() && !isloading ){
+                    // Toast.makeText(getActivity(), "Đã hết", Toast.LENGTH_SHORT).show();
+                     viewmodel.showProgress(binding.progressCircular);
+                     isloading = true;
                      viewmodel.getmoreIdol();
                  }
              }
@@ -53,7 +77,10 @@ public class FragmentHot extends BaseFragment<FragHotBinding,HotViewmodel> {
                @Override
                public void onChanged(ArrayList<IdolHot> idolHots) {
                    viewmodel.adapter.setList(idolHots);
-                   binding.progressCircular.setVisibility(View.INVISIBLE);
+                   totalitem = viewmodel.adapter.getItemCount();
+                   viewmodel.hiddenProgress(binding.progressCircular);
+                   isloading = false;
+                   Log.d("sontit", manager.getItemCount() + "");
                    viewmodel.adapter.setCallback(new IdolCallback() {
                        @Override
                        public void onPhotoClick(IdolHot idolHot) {

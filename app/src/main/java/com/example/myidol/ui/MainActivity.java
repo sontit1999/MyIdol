@@ -89,6 +89,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
 
         binding.setViewmodel(viewmodel);
         // load defaut fragment
+        binding.tvLogo.setText("Newfeed");
         fm.beginTransaction().add(R.id.frame, fragment6, "6").hide(fragment5).commit();
         fm.beginTransaction().add(R.id.frame, fragment5, "5").hide(fragment5).commit();
         fm.beginTransaction().add(R.id.frame, fragment4, "4").hide(fragment4).commit();
@@ -100,10 +101,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
+                        binding.tvLogo.setText("Newfeed");
+                        binding.toolbar.getMenu().findItem(R.id.mess).setVisible(true);
+                        binding.toolbar.getMenu().findItem(R.id.search).setVisible(true);
                         fm.beginTransaction().hide(active).show(fragment1).commit();
                         active = fragment1;
                         break;
                     case R.id.nav_hot:
+                        binding.tvLogo.setText("Hot Idol");
+                        hiddenOptionmenu();
                         fm.beginTransaction().hide(active).show(fragment6).commit();
                         active = fragment6;
                         break;
@@ -111,10 +117,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
                         startActivity(new Intent(MainActivity.this, PostNewActivity.class));
                         break;
                     case R.id.nav_notification:
+                        binding.tvLogo.setText("Notification");
+                        hiddenOptionmenu();
                         fm.beginTransaction().hide(active).show(fragment4).commit();
                         active = fragment4;
                         break;
                     case R.id.nav_user:
+                        binding.tvLogo.setText("Profile");
+                        hiddenOptionmenu();
                         fm.beginTransaction().hide(active).show(fragment5).commit();
                         active = fragment5;
                         break;
@@ -161,7 +171,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
         cmtofPost.child(post.getIdpost()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("sizecmt",dataSnapshot.getChildrenCount() + "");
                 tv_numbercmt.setText(dataSnapshot.getChildrenCount() + " comments");
                 temp.clear();
                 for(DataSnapshot i : dataSnapshot.getChildren()){
@@ -260,5 +269,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+    public void hiddenOptionmenu(){
+        binding.toolbar.getMenu().findItem(R.id.mess).setVisible(false);
+        binding.toolbar.getMenu().findItem(R.id.search).setVisible(false);
     }
 }

@@ -53,7 +53,7 @@
                     android:id="@+id/tv_time"
                     android:text="@{post.timepost}"
                     android:layout_marginStart="10dp"
-                    android:textColor="#448AFF"
+                    android:textColor="@color/colormainGrey"
                     android:layout_below="@id/tv_nameAuthor"
                     android:textSize="14sp"
                     android:layout_toRightOf="@id/iv_avatar"

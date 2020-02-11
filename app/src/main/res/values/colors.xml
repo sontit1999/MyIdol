@@ -13,4 +13,7 @@
     <color name="colorblue2">#29B6F6</color>
     <color name="coloryellow">#FFEB3B</color>
     <color name="colorbg_bottom_nav">#201F1F</color>
+    <color name="colorviewngang">#D5D2D2</color>d0595a
+    <color name="colormain">#d0595a</color>b5b5b5
+    <color name="colormainGrey">#b5b5b5</color>
 </resources>
