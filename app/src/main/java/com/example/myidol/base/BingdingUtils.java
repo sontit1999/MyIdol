@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.myidol.R;
 import com.example.myidol.model.Message;
+import com.example.myidol.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
@@ -72,5 +74,81 @@ public class BingdingUtils {
 
             }
         });
+    }
+    @BindingAdapter({ "imagefromiduser" })
+    public static void setImageview(final ImageView view, String iduser) {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(iduser);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                Glide
+                        .with(view.getContext())
+                        .load(user.getImageUrl())
+                        .placeholder(R.drawable.ic_launcher_foreground)
+                        .override(250,250)
+                        .into(view);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+    @BindingAdapter({ "usernamefromiduser" })
+    public static void usernamefromiduser(final TextView view, String iduser) {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(iduser);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                view.setText(user.getUsername());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+    @BindingAdapter({ "numbercmtfromidpost" })
+    public static void numbercmtfromidpost(final TextView view, String idpost) {
+        // get number comment
+        FirebaseDatabase.getInstance().getReference("comments").
+                child(idpost).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                view.setText(dataSnapshot.getChildrenCount()+"");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+    @BindingAdapter({ "numberlikefromidpost" })
+    public static void numberlikefromidpost(final TextView view, String idpost) {
+        // get number comment
+        FirebaseDatabase.getInstance().getReference("likes").child(idpost).
+                addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Log.d("number like :" ,dataSnapshot.getChildrenCount() + "likes");
+                       view.setText(dataSnapshot.getChildrenCount() + "");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
     }
 }

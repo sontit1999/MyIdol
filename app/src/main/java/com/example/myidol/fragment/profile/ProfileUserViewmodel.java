@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.myidol.adapter.IdolAdapter;
 import com.example.myidol.adapter.PhotoAdapter;
+import com.example.myidol.adapter.PostAdapter;
 import com.example.myidol.base.BaseViewmodel;
 import com.example.myidol.callback.RequestAPI;
 import com.example.myidol.model.APIClient;
@@ -43,6 +44,7 @@ import java.util.List;
 
 public class ProfileUserViewmodel extends BaseViewmodel {
     PhotoAdapter adapter = new PhotoAdapter();
+    PostAdapter postAdapter = new PostAdapter();
     MutableLiveData<ArrayList<Photo>> arrPhoto = new MutableLiveData<>();
     public MutableLiveData<ArrayList<Photo>> getArrphoto(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("post");
@@ -75,6 +77,23 @@ public class ProfileUserViewmodel extends BaseViewmodel {
     }
     MutableLiveData<ArrayList<Post>> arrayPost = new MutableLiveData<>();
     public MutableLiveData<ArrayList<Post>> getArrayPost(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("post");
+        reference.orderByChild("publisher").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<Post> temp = new ArrayList<>();
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    temp.add(ds.getValue(Post.class));
+                }
+                Collections.reverse(temp);
+                arrayPost.postValue(temp);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         return arrayPost;
     }
     public void setPost(ArrayList<Post> arrayList){

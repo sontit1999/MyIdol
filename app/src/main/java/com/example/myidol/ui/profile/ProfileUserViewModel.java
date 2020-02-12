@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.myidol.adapter.PhotoAdapter;
+import com.example.myidol.adapter.PostAdapter;
 import com.example.myidol.adapter.PostsAdapter;
 import com.example.myidol.base.BaseViewmodel;
 import com.example.myidol.model.Photo;
@@ -23,7 +24,7 @@ import java.util.Collections;
 
 public class ProfileUserViewModel extends BaseViewmodel {
     PhotoAdapter adapter = new PhotoAdapter();
-    PostsAdapter adapterPost = new PostsAdapter();
+    PostAdapter adapterPost = new PostAdapter();
     MutableLiveData<ArrayList<Photo>> arrPhoto = new MutableLiveData<>();
     MutableLiveData<ArrayList<Post>> arrPost = new MutableLiveData<>();
     public ProfileUserViewModel(@NonNull Application application) {

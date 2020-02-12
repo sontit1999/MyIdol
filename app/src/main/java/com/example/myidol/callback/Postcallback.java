@@ -10,4 +10,5 @@ public interface Postcallback extends CBAdapter {
     void onCommentClick(Post post);
     void onShareClick(Post post);
     void onAuthorclickClick(Post post);
+    void onLoadmore();
 }

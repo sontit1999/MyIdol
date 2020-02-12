@@ -45,34 +45,18 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    public static int TYPE_POST = 151;
-    public static int TYPE_NULL = 1515;
-    boolean isloading = false;
-    RecyclerView recyclerView;
+    public static final int TYPE_POST = 151;
+    public static final int TYPE_NULL = 1515;
     Context context;
     ArrayList<Post> arrayList;
-    int totalitem;
-    LinearLayoutManager manager;
     Postcallback listener;
-
     public PostsAdapter() {
-        arrayList = new ArrayList<>();
     }
 
-    public PostsAdapter(final Context context, final ArrayList<Post> arrayList, RecyclerView recyclerView) {
+    public PostsAdapter(Context context, ArrayList<Post> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         this.listener = (Postcallback) context;
-        this.recyclerView = recyclerView;
-        manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-        totalitem = manager.getItemCount();
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-            }
-        });
     }
     @NonNull
     @Override
@@ -90,13 +74,6 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             return new LoadingViewHolder(view);
         }
         return null;
-    }
-    public void additemnull(){
-        arrayList.add(null);
-        notifyItemInserted(arrayList.size()-1);
-    }
-    public void setContext(Context context){
-        this.context = context;
     }
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
@@ -333,5 +310,8 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
            }
 
        }
+   }
+   public void setContext(Context context){
+        this.context = context;
    }
 }

@@ -3,6 +3,7 @@ package com.example.myidol.ui;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -236,6 +237,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
         intent.putExtra("iduser",post.getPublisher());
         startActivity(intent);
     }
+
+    @Override
+    public void onLoadmore() {
+
+    }
+
     public void addNotification(Post post){
         FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
         Notification notification = new Notification(post.getIdpost(),currentUer.getUid(),"comment your post","post",System.currentTimeMillis()+"");

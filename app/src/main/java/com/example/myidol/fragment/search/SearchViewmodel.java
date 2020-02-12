@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.myidol.adapter.UserAdapter;
 import com.example.myidol.base.BaseViewmodel;
 import com.example.myidol.model.User;
 

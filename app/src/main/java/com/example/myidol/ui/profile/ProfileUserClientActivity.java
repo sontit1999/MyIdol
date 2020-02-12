@@ -52,7 +52,6 @@ import java.util.Calendar;
 import java.util.Collections;
 
 public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClientUserBinding,ProfileUserViewModel> implements Postcallback {
-
     String iduser;
     ArrayList<Comment> temp = new ArrayList<>();
     @Override
@@ -174,13 +173,10 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
     private void setupRecyclerview() {
         // recyclerview post
         binding.rvPost.setHasFixedSize(true);
-        binding.rvPost.setItemViewCacheSize(10);
-        binding.rvPost.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        binding.rvPost.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
         binding.rvPost.setAdapter(viewmodel.adapterPost);
-        viewmodel.adapterPost.setContext(this);
 
         // recyclerview photo
-
         binding.rvPhotos.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
         binding.rvPhotos.setLayoutManager(mLayoutManager);
@@ -279,6 +275,12 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
     public void onAuthorclickClick(Post post) {
 
     }
+
+    @Override
+    public void onLoadmore() {
+
+    }
+
     private void isFollowing(final String id, final Button tvfollow){
         {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("follows").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
