@@ -39,7 +39,7 @@
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/baumans"
                         android:textColor="@color/colorblack"
-                        android:text="Sơn tít social"
+                        android:text="Tít social"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </RelativeLayout>

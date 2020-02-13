@@ -42,18 +42,6 @@ public class FragmentHot extends BaseFragment<FragHotBinding,HotViewmodel> {
          binding.rvHotidol.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
          binding.rvHotidol.setAdapter(viewmodel.adapter);
 
-
-//         binding.rvHotidol.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//             @Override
-//             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                 super.onScrollStateChanged(recyclerView, newState);
-//                 if (!recyclerView.canScrollVertically(1)) {
-//                     Toast.makeText(getContext(), "Hết rùi.Đợi tí đang tải thêm :v", Toast.LENGTH_LONG).show();
-//                     viewmodel.getmoreIdol();
-//                 }
-//             }
-//         });
-
          manager = (LinearLayoutManager) binding.rvHotidol.getLayoutManager();
 
          binding.rvHotidol.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -61,7 +49,7 @@ public class FragmentHot extends BaseFragment<FragHotBinding,HotViewmodel> {
              public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                  super.onScrolled(recyclerView, dx, dy);
                  Log.d("sontit"," vị trí item cuối cùng nhìn thấy "  + manager.findLastVisibleItemPosition());
-                 if(totalitem-1==manager.findLastVisibleItemPosition() && !isloading ){
+                 if(totalitem-1==manager.findLastVisibleItemPosition() && !isloading && totalitem<=500 ){
                     // Toast.makeText(getActivity(), "Đã hết", Toast.LENGTH_SHORT).show();
                      viewmodel.showProgress(binding.progressCircular);
                      isloading = true;
