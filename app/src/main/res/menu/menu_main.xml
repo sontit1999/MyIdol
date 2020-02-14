@@ -10,7 +10,7 @@
     <item
         android:id="@+id/mess"
         android:title="Xóa trò chuyện"
-        android:icon="@drawable/ic_message_black_24dp"
+        android:icon="@drawable/messengerxxx"
         app:showAsAction="always"
         />
     <item

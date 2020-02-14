@@ -33,7 +33,7 @@ public class BingdingUtils {
     }
     @BindingAdapter({"bind:imageUrl"})
     public static void loadImage(ImageView view, String imageUrl) {
-        if(imageUrl == null){
+        if(imageUrl==null){
             imageUrl = "no";
         }
         if(!imageUrl.equals("no")){
@@ -43,6 +43,17 @@ public class BingdingUtils {
                     .placeholder(R.drawable.ic_launcher_foreground)
                     .override(500,250)
                     .into(view);
+        }else {
+            view.setVisibility(View.GONE);
+        }
+    }
+    @BindingAdapter({"bind:visible"})
+    public static void loadImage(View view, String imageUrl) {
+        if(imageUrl==null){
+            imageUrl = "no";
+        }
+        if(imageUrl.equals("no")){
+            view.setVisibility(View.GONE);
         }
     }
     @BindingAdapter({"bind:iduser"})
@@ -150,6 +161,29 @@ public class BingdingUtils {
 
                     }
                 });
+
+    }
+    @BindingAdapter({ "islike" })
+    public static void islike(final ImageView view, String idpost) {
+        final FirebaseUser curentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("likes").child(idpost);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child(curentUser.getUid()).exists()){
+                    view.setImageResource(R.drawable.icons8liked);
+                    view.setTag("liked");
+                }else {
+                    view.setImageResource(R.drawable.iconsheart);
+                    view.setTag("like");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

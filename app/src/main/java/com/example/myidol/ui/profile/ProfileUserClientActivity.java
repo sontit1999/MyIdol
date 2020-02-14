@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -80,7 +82,7 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
         getInfor();
         isFollowing(iduser,binding.btnFollow);
         action();
-        viewmodel.getArrphoto().observe(this, new Observer<ArrayList<Photo>>() {
+        viewmodel.getArrphoto(iduser).observe(this, new Observer<ArrayList<Photo>>() {
             @Override
             public void onChanged(ArrayList<Photo> photos) {
                 viewmodel.adapter.setList(photos);
@@ -105,7 +107,7 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
                     }
 
                     @Override
-                    public void onLikeClick(Post post) {
+                    public void onLikeClick(Post post,View view) {
 
                     }
 
@@ -312,8 +314,22 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
     }
 
     @Override
-    public void onLikeClick(Post post) {
+    public void onLikeClick(Post post,View view) {
+        ImageView iv = (ImageView) view;
+        if(iv.getTag().equals("liked")){
+            // romove like
+            iv.setImageResource(R.drawable.icons8like);
+            FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
 
+        }else{
+            // add like
+            addNotification(post);
+            Animation rotate = AnimationUtils.loadAnimation(ProfileUserClientActivity.this,R.anim.like);
+            iv.startAnimation(rotate);
+            iv.setImageResource(R.drawable.icons8liked);
+            FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
+
+        }
     }
 
     @Override

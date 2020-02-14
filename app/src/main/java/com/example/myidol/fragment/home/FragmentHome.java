@@ -9,6 +9,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -144,8 +146,22 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
                       }
 
                       @Override
-                      public void onLikeClick(Post post) {
+                      public void onLikeClick(Post post,View view) {
+                          ImageView iv = (ImageView) view;
+                          if(iv.getTag().equals("liked")){
+                              // romove like
+                              iv.setImageResource(R.drawable.icons8like);
+                              FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
 
+                          }else{
+                              // add like
+                              addNotification(post);
+                              Animation rotate = AnimationUtils.loadAnimation(getContext(),R.anim.like);
+                              iv.startAnimation(rotate);
+                              iv.setImageResource(R.drawable.icons8liked);
+                              FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
+
+                          }
                       }
 
                       @Override
@@ -268,6 +284,11 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
     public void addNotification(Post post){
         FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
         Notification notification = new Notification(post.getIdpost(),currentUer.getUid(),"comment your post","post",System.currentTimeMillis()+"");
+        FirebaseDatabase.getInstance().getReference("notification").child(post.getPublisher()).child(System.currentTimeMillis()+"").setValue(notification);
+    }
+    public void addLikeNotification(Post post){
+        FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
+        Notification notification = new Notification(post.getIdpost(),currentUer.getUid(),"like your post","post",System.currentTimeMillis()+"");
         FirebaseDatabase.getInstance().getReference("notification").child(post.getPublisher()).child(System.currentTimeMillis()+"").setValue(notification);
     }
 }

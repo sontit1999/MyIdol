@@ -34,9 +34,9 @@ public class ProfileUserViewModel extends BaseViewmodel {
     public ProfileUserViewModel(@NonNull Application application) {
         super(application);
     }
-    public MutableLiveData<ArrayList<Photo>> getArrphoto(){
+    public MutableLiveData<ArrayList<Photo>> getArrphoto(String iduser){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("post");
-        reference.orderByChild("publisher").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        reference.orderByChild("publisher").equalTo(iduser).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<Photo> temp = new ArrayList<>();

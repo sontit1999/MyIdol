@@ -36,6 +36,8 @@
                         android:layout_height="wrap_content">
                         <ImageView
                             android:id="@+id/iv_hearts"
+                            islike="@{post.idpost}"
+                            android:onClick="@{(view)->callback.onLikeClick(post,view)}"
                             android:src="@drawable/icons8heartoutline"
                             android:layout_width="@dimen/size_ic_tym"
                             android:layout_height="@dimen/size_ic_tym"/>
@@ -123,6 +125,7 @@
                android:id="@+id/cardview"
                app:cardUseCompatPadding="true"
                app:cardElevation="15dp"
+               bind:visible="@{post.linkImage}"
                app:cardCornerRadius="10dp"
                android:layout_below="@id/tv_describe"
                android:layout_width="match_parent"

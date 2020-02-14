@@ -88,6 +88,7 @@
            <Button
                android:id="@+id/btn_follow"
                android:text="follow"
+               android:textColor="@color/colorwhite"
                android:layout_marginTop="10dp"
                android:background="@drawable/bg_item_chat"
                android:layout_width="match_parent"
@@ -96,6 +97,7 @@
                android:id="@+id/btn_chat"
                android:text="Chat"
                android:layout_marginTop="10dp"
+               android:textColor="@color/colorwhite"
                android:background="@drawable/bg_item_chat"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>

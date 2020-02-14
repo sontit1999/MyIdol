@@ -236,34 +236,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                 }
             });
-            // get number like
-            FirebaseDatabase.getInstance().getReference("likes").child(postid).
-            addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Log.d("number like :" ,dataSnapshot.getChildrenCount() + "likes");
-                    tvnumberlike.setText(dataSnapshot.getChildrenCount() + " likes");
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-            // get number comment
-            FirebaseDatabase.getInstance().getReference("comments").
-            child(postid).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Log.d("sizecmt",dataSnapshot.getChildrenCount() + "");
-                    tvnumberComment.setText(dataSnapshot.getChildrenCount() + " comments");
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
 
         }
 

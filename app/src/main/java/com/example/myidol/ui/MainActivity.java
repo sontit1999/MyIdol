@@ -150,7 +150,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
     }
 
     @Override
-    public void onLikeClick(Post post) {
+    public void onLikeClick(Post post,View view) {
 
     }
 
