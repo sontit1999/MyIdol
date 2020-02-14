@@ -151,7 +151,6 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
 
                       }else{
                           // add like
-                          addNotification(post);
                           Animation rotate = AnimationUtils.loadAnimation(getContext(),R.anim.like);
                           iv.startAnimation(rotate);
                           iv.setImageResource(R.drawable.icons8liked);
@@ -215,10 +214,6 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
                                               public void onSuccess(Void aVoid) {
                                                   Toast.makeText(getContext(), "Đã comment", Toast.LENGTH_SHORT).show();
                                                   etContent.setText("");
-                                                  if(!post.getPublisher().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                                                      addNotification(post);
-                                                  }
-
                                               }
                                           })
                                   ;
@@ -281,9 +276,5 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
             viewmodel.uploadAvatar(data.getData(),getContext());
         }
     }
-    public void addNotification(Post post){
-        FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
-        Notification notification = new Notification(post.getIdpost(),currentUer.getUid(),"comment your post","post",System.currentTimeMillis()+"");
-        FirebaseDatabase.getInstance().getReference("notification").child(post.getPublisher()).child(System.currentTimeMillis()+"").setValue(notification);
-    }
+
 }

@@ -63,12 +63,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     Intent intent = new Intent(context, ProfileUserClientActivity.class);
                     intent.putExtra("iduser",notification.getIduser());
                     context.startActivity(intent);
+                }else{
+                    checkPostExist(notification);
                 }
-                if(notification.getType().equals("post")){
-                    Intent intent = new Intent(context, DetailpostActivity.class);
-                    intent.putExtra("idpost",notification.getIdpost());
-                    context.startActivity(intent);
-                }
+
+
             }
         });
     }
@@ -125,5 +124,29 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             }
         });
+    }
+    public void checkPostExist(final Notification notification){
+        FirebaseDatabase.getInstance().getReference("post")
+        .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild(notification.getIdpost())) {
+                    if(notification.getType().equals("post")){
+                        Intent intent = new Intent(context, DetailpostActivity.class);
+                        intent.putExtra("idpost",notification.getIdpost());
+                        context.startActivity(intent);
+                    }
+                }else{
+                    // does not exist
+                    Toast.makeText(context, "Bài viết  không tồn tại !!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }

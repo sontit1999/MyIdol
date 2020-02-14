@@ -42,9 +42,7 @@ import static com.example.myidol.fragment.add.FragmentAdd.GALLERY;
 
 public class PostNewActivity extends BaseActivity<ActivityPostNewBinding,PostNewViewModel>{
     public static int PICK_IMAGE = 54151;
-    ProgressDialog pd;
     Uri imageURL = null;
-    StorageReference storageReference;
     DatabaseReference postRef;
     @Override
     public Class<PostNewViewModel> getViewmodel() {
@@ -66,10 +64,6 @@ public class PostNewActivity extends BaseActivity<ActivityPostNewBinding,PostNew
     }
 
     private void action() {
-        pd = new ProgressDialog(PostNewActivity.this);
-        pd.setCanceledOnTouchOutside(false);
-        pd.setMessage("Đang tải lên.Đợi tý ^^ ");
-
        binding.ivPost.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
@@ -89,27 +83,23 @@ public class PostNewActivity extends BaseActivity<ActivityPostNewBinding,PostNew
                if(TextUtils.isEmpty(caption)){
                    Toast.makeText(PostNewActivity.this, "Caption not empty", Toast.LENGTH_SHORT).show();
                }else if(imageURL == null){
-                   pd.show();
+                   binding.pbLoading.setVisibility(View.VISIBLE);
                    DateFormat df = new SimpleDateFormat("h:mm a");
                    String date = df.format(Calendar.getInstance().getTime());
                    Post post = new Post(System.currentTimeMillis()+"","no",caption, FirebaseAuth.getInstance().getCurrentUser().getUid()+"",date);
                    postRef.child(System.currentTimeMillis() + "").setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                        @Override
                        public void onSuccess(Void aVoid) {
-                           pd.dismiss();
+                           binding.pbLoading.setVisibility(View.GONE);
                            finish();
                        }
                    });
-                   Toast.makeText(PostNewActivity.this, "Chưa chọn ảnh", Toast.LENGTH_SHORT).show();
                }else{
-
-                   pd.show();
+                   binding.pbLoading.setVisibility(View.VISIBLE);
                    final StorageReference ref = FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis()+"");
                    ref.putFile(imageURL).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                        @Override
                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                           Toast.makeText(PostNewActivity.this, "upload succes!", Toast.LENGTH_SHORT).show();
-//
                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                @Override
                                public void onSuccess(Uri uri) {
@@ -120,7 +110,7 @@ public class PostNewActivity extends BaseActivity<ActivityPostNewBinding,PostNew
                                    postRef.child(System.currentTimeMillis() + "").setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                        @Override
                                        public void onSuccess(Void aVoid) {
-                                           pd.dismiss();
+                                           binding.pbLoading.setVisibility(View.GONE);
                                            finish();
                                        }
                                    });
@@ -144,9 +134,6 @@ public class PostNewActivity extends BaseActivity<ActivityPostNewBinding,PostNew
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
-//        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-//                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        startActivityForResult(pickPhoto, PICK_IMAGE);
     }
 
     @Override

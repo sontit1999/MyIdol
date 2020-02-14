@@ -104,8 +104,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
                         binding.tvLogo.setText("Newfeed");
-                        binding.toolbar.getMenu().findItem(R.id.mess).setVisible(true);
-                        binding.toolbar.getMenu().findItem(R.id.search).setVisible(true);
+                        displayOptionmenu();
                         fm.beginTransaction().hide(active).show(fragment1).commit();
                         active = fragment1;
                         break;
@@ -285,5 +284,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
         binding.toolbar.getMenu().findItem(R.id.mess).setVisible(false);
         binding.toolbar.getMenu().findItem(R.id.search).setVisible(false);
         binding.toolbar.getMenu().findItem(R.id.setting).setVisible(false);
+    }
+    public void displayOptionmenu(){
+        binding.toolbar.getMenu().findItem(R.id.mess).setVisible(true);
+        binding.toolbar.getMenu().findItem(R.id.search).setVisible(true);
+        binding.toolbar.getMenu().findItem(R.id.setting).setVisible(true);
     }
 }

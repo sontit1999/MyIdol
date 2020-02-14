@@ -155,11 +155,13 @@ public class FragmentHome extends BaseFragment<FragHomeBinding,HomeViewmodel>{
 
                           }else{
                               // add like
-                              addNotification(post);
                               Animation rotate = AnimationUtils.loadAnimation(getContext(),R.anim.like);
                               iv.startAnimation(rotate);
                               iv.setImageResource(R.drawable.icons8liked);
                               FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
+                              if(!post.getPublisher().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                                  addLikeNotification(post);
+                              }
 
                           }
                       }

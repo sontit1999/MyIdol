@@ -2,12 +2,14 @@ package com.example.myidol.ui.detailpost;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -77,6 +79,15 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
         setUpRecyclerviewComment();
         getPost();
         getComment();
+        viewmodel.getStatusDelete().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    Toast.makeText(DetailpostActivity.this, "Đã xóa bài viết", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        });
         islike(idpost,binding.ivHearts,binding.numberlikepost,binding.numbercommentpost);
     }
 
@@ -104,6 +115,13 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
                 popup.show();//showing popup menu
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        viewmodel.deletePost(idpost);
+                        return true;
+                    }
+                });
             }
         });
        binding.ivHearts.setOnClickListener(new View.OnClickListener() {
@@ -190,13 +208,14 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
 
 
     private void getPost() {
-        FirebaseDatabase.getInstance().getReference("post").child(idpost).addValueEventListener(new ValueEventListener() {
+
+        FirebaseDatabase.getInstance().getReference("post").child(idpost).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 Post mainpost = dataSnapshot.getValue(Post.class);
                 post = dataSnapshot.getValue(Post.class);
                 binding.setPost(mainpost);
-                Log.d("post",post.getPublisher());
                 getInforUser(post.getPublisher());
             }
             @Override

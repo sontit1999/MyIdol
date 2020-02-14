@@ -108,7 +108,22 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
 
                     @Override
                     public void onLikeClick(Post post,View view) {
+                        ImageView iv = (ImageView) view;
+                        if(iv.getTag().equals("liked")){
+                            // romove like
+                            iv.setImageResource(R.drawable.icons8like);
+                            FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
 
+                        }else{
+                            // add like
+                            Animation rotate = AnimationUtils.loadAnimation(ProfileUserClientActivity.this,R.anim.like);
+                            iv.startAnimation(rotate);
+                            iv.setImageResource(R.drawable.icons8liked);
+                            FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
+                            if(!post.getPublisher().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                                addLikeNotification(post);
+                            }
+                        }
                     }
 
                     @Override
@@ -167,7 +182,7 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
                                                     Toast.makeText(ProfileUserClientActivity.this, "Đã comment", Toast.LENGTH_SHORT).show();
                                                     etContent.setText("");
                                                     if(!post.getPublisher().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                                                        addNotification(post);
+                                                        addNotificationComment(post);
                                                     }
 
                                                 }
@@ -245,7 +260,7 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
                             .child("following").child(iduser).setValue(true);
                     FirebaseDatabase.getInstance().getReference("follows").child(iduser)
                             .child("follows").child(curentUser.getUid()).setValue(true);
-                    addNotification();
+                     addNotificationFolloew();
                 }else{
                     FirebaseDatabase.getInstance().getReference("follows").child(curentUser.getUid())
                             .child("following").child(iduser).removeValue();
@@ -256,7 +271,7 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
         });
     }
 
-    public void addNotification(){
+    public void addNotificationFolloew(){
         FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
         Notification notification = new Notification("null",currentUer.getUid(),"start following you","follow",System.currentTimeMillis()+"");
         FirebaseDatabase.getInstance().getReference("notification").child(iduser).child(System.currentTimeMillis()+"").setValue(notification);
@@ -315,21 +330,7 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
 
     @Override
     public void onLikeClick(Post post,View view) {
-        ImageView iv = (ImageView) view;
-        if(iv.getTag().equals("liked")){
-            // romove like
-            iv.setImageResource(R.drawable.icons8like);
-            FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
 
-        }else{
-            // add like
-            addNotification(post);
-            Animation rotate = AnimationUtils.loadAnimation(ProfileUserClientActivity.this,R.anim.like);
-            iv.startAnimation(rotate);
-            iv.setImageResource(R.drawable.icons8liked);
-            FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
-
-        }
     }
 
     @Override
@@ -439,9 +440,14 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
         }
 
     }
-    public void addNotification(Post post){
+    public void addNotificationComment(Post post){
         FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
         Notification notification = new Notification(post.getIdpost(),currentUer.getUid(),"comment your post","post",System.currentTimeMillis()+"");
+        FirebaseDatabase.getInstance().getReference("notification").child(post.getPublisher()).child(System.currentTimeMillis()+"").setValue(notification);
+    }
+    public void addLikeNotification(Post post){
+        FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
+        Notification notification = new Notification(post.getIdpost(),currentUer.getUid(),"like your post","post",System.currentTimeMillis()+"");
         FirebaseDatabase.getInstance().getReference("notification").child(post.getPublisher()).child(System.currentTimeMillis()+"").setValue(notification);
     }
 }

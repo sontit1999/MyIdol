@@ -57,32 +57,6 @@ public class FragmentNotification extends BaseFragment<FragNotificationBinding,N
                   adapter.setList(notifications);
               }
           });
-          getNotification();
     }
 
-    private void getNotification() {
-        FirebaseDatabase.getInstance().getReference("notification").child(user.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Notification> temp = new ArrayList<>();
-                for(DataSnapshot i : dataSnapshot.getChildren()){
-                    Notification notification = i.getValue(Notification.class);
-                    if(temp.size()<15){
-                        temp.add(notification);
-                    }else {
-                        break;
-                    }
-
-                }
-                Log.d("sizenotifi",temp.size()+"");
-                Collections.reverse(temp);
-                viewmodel.setArrNotification(temp);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 }
