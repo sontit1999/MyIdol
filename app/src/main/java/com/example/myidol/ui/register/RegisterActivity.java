@@ -62,22 +62,25 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding,Regis
                 String password = binding.etPassword.getText().toString().trim();
                 String address = binding.etAddress.getText().toString().trim();
                 String sentenceslike = binding.etSentencelike.getText().toString().trim();
-                if(TextUtils.isEmpty(username) || TextUtils.isEmpty(username) || TextUtils.isEmpty(username) || TextUtils.isEmpty(address) || TextUtils.isEmpty(sentenceslike) ){
+                String phone = binding.etPhoneNumber.getText().toString().trim();
+                if(TextUtils.isEmpty(username) || TextUtils.isEmpty(username) || TextUtils.isEmpty(username) || TextUtils.isEmpty(address) || TextUtils.isEmpty(sentenceslike) || TextUtils.isEmpty(phone) ){
                     Toast.makeText(RegisterActivity.this, "Must not empty!!!", Toast.LENGTH_SHORT).show();
                 }else if(username.length()<6 || password.length() < 6){
                     Toast.makeText(RegisterActivity.this, "Username and Password at least 6 character!", Toast.LENGTH_SHORT).show();
                 }else if(email.length()<11){
                     Toast.makeText(RegisterActivity.this, "Email at least 11 character!", Toast.LENGTH_SHORT).show();
+                }else if(phone.length()<10){
+                    Toast.makeText(RegisterActivity.this, "phone number invalid", Toast.LENGTH_SHORT).show();
                 }else{
                     pd.show();
-                    register(username,email,password,address,sentenceslike);
+                    register(username,email,password,address,sentenceslike,phone);
                 }
 
             }
         });
     }
 
-    public void register(final String username, String email, String password, final String address, final String sentencelike){
+    public void register(final String username, String email, String password, final String address, final String sentencelike,final String phone){
         mauth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -92,6 +95,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding,Regis
                     hashMap.put("username",username);
                     hashMap.put("sentenceslike",sentencelike);
                     hashMap.put("address",address);
+                    hashMap.put("phonenumber",phone);
                     hashMap.put("imageUrl","http://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png");
                     mdatabase.child("Users").child(user.getUid()).setValue(hashMap);
                     finish();

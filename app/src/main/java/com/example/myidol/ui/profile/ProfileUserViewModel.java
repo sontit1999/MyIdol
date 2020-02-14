@@ -1,6 +1,8 @@
 package com.example.myidol.ui.profile;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,8 @@ import com.example.myidol.adapter.PostsAdapter;
 import com.example.myidol.base.BaseViewmodel;
 import com.example.myidol.model.Photo;
 import com.example.myidol.model.Post;
+import com.example.myidol.model.User;
+import com.example.myidol.ui.image.ImageFullActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -81,5 +85,25 @@ public class ProfileUserViewModel extends BaseViewmodel {
     }
     public void setListPost(ArrayList<Post> arrayList){
         arrPost.postValue(arrayList);
+    }
+    public void gotoImagefull(String url, Context context){
+        Intent intent = new Intent(context, ImageFullActivity.class);
+        intent.putExtra("photo",new Photo(url));
+        context.startActivity(intent);
+    }
+    public void getUser(){
+        final DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        user.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user1 = dataSnapshot.getValue(User.class);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

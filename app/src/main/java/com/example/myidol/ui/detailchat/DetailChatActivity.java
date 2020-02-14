@@ -141,6 +141,16 @@ public class DetailChatActivity extends BaseActivity<ActivityDetailChatBinding,D
                 }
             });
         }
+
+        viewmodel.getStatusdelete().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    Toast.makeText(DetailChatActivity.this, "Đã xóa cuộc trò truyện", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        });
     }
 
     private void setuprecycleview() {
@@ -209,7 +219,7 @@ public class DetailChatActivity extends BaseActivity<ActivityDetailChatBinding,D
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuchat:
-                Toast.makeText(this, "Đã xóa cuộc trò chuyện", Toast.LENGTH_SHORT).show();
+                viewmodel.deleteNoteChat(nodechat);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

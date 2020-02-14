@@ -67,7 +67,12 @@ public class FragmentNotification extends BaseFragment<FragNotificationBinding,N
                 ArrayList<Notification> temp = new ArrayList<>();
                 for(DataSnapshot i : dataSnapshot.getChildren()){
                     Notification notification = i.getValue(Notification.class);
-                    temp.add(notification);
+                    if(temp.size()<15){
+                        temp.add(notification);
+                    }else {
+                        break;
+                    }
+
                 }
                 Log.d("sizenotifi",temp.size()+"");
                 Collections.reverse(temp);

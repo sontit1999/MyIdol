@@ -53,7 +53,11 @@ import java.util.Collections;
 
 public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClientUserBinding,ProfileUserViewModel> implements Postcallback {
     String iduser;
+    User user;
     ArrayList<Comment> temp = new ArrayList<>();
+    RecyclerView rvcomment;
+    DatabaseReference postRef = FirebaseDatabase.getInstance().getReference("post");
+    ArrayList<String> followinglist;
     @Override
     public Class<ProfileUserViewModel> getViewmodel() {
         return ProfileUserViewModel.class;
@@ -94,6 +98,105 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
             @Override
             public void onChanged(ArrayList<Post> posts) {
                 viewmodel.adapterPost.setList(posts);
+                viewmodel.adapterPost.setCallback(new Postcallback() {
+                    @Override
+                    public void onPhotoClick(Post post) {
+                        viewmodel.gotoImagefull(post.getLinkImage(),ProfileUserClientActivity.this);
+                    }
+
+                    @Override
+                    public void onLikeClick(Post post) {
+
+                    }
+
+                    @Override
+                    public void onCommentClick(final Post post) {
+                        final View view = LayoutInflater.from(ProfileUserClientActivity.this).inflate(R.layout.bottom_sheet_comment_fragment,null);
+                        // ánh xạ
+                        rvcomment = (RecyclerView) view.findViewById(R.id.rv_comment);
+                        final EditText etContent = (EditText) view.findViewById(R.id.et_comment);
+                        ImageView iv_send = (ImageView) view.findViewById(R.id.iv_send);
+                        ImageView iv_close = (ImageView) view.findViewById(R.id.iv_close);
+                        final TextView tv_numbercmt = (TextView) view.findViewById(R.id.numbercomment);
+                        // set uprecyclerview
+                        final CommentAdapter adapter = new CommentAdapter(ProfileUserClientActivity.this,temp);
+                        rvcomment.setHasFixedSize(true);
+                        rvcomment.setLayoutManager(new LinearLayoutManager(ProfileUserClientActivity.this, LinearLayoutManager.VERTICAL, false));
+                        rvcomment.setAdapter(adapter);
+                        // lắng nghe comment của post
+                        final DatabaseReference cmtofPost = FirebaseDatabase.getInstance().getReference("comments");
+                        cmtofPost.child(post.getIdpost()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                tv_numbercmt.setText(dataSnapshot.getChildrenCount() + " comments");
+                                temp.clear();
+                                for(DataSnapshot i : dataSnapshot.getChildren()){
+                                    Comment comment = i.getValue(Comment.class);
+                                    temp.add(comment);
+                                }
+                                Collections.reverse(temp);
+                                adapter.setList(temp);
+                                rvcomment.smoothScrollToPosition(0);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ProfileUserClientActivity.this,R.style.SheetDialog);
+                        bottomSheetDialog.setContentView(view);
+                        bottomSheetDialog.show();
+                        // set actiom
+                        iv_send.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String content = etContent.getText().toString();
+                                if(TextUtils.isEmpty(content)){
+                                    Toast.makeText(ProfileUserClientActivity.this, "Comment not empty!", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    String date = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+                                    Comment comment = new Comment(FirebaseAuth.getInstance().getCurrentUser().getUid(),content,date);
+                                    DatabaseReference cmt = FirebaseDatabase.getInstance().getReference("comments");
+                                    cmt.child(post.getIdpost()).child(System.currentTimeMillis()+"").setValue(comment)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(ProfileUserClientActivity.this, "Đã comment", Toast.LENGTH_SHORT).show();
+                                                    etContent.setText("");
+                                                    if(!post.getPublisher().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                                                        addNotification(post);
+                                                    }
+
+                                                }
+                                            })
+                                    ;
+                                }
+                            }
+                        });
+                        iv_close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                bottomSheetDialog.dismiss();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onShareClick(final Post post) {
+
+                    }
+
+                    @Override
+                    public void onAuthorclickClick(Post post) {
+
+                    }
+
+                    @Override
+                    public void onLoadmore() {
+
+                    }
+                });
             }
         });
     }
@@ -108,6 +211,12 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
     }
 
     private void action() {
+        binding.ivImageAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewmodel.gotoImagefull(user.getImageUrl(),ProfileUserClientActivity.this);
+            }
+        });
         binding.containFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,7 +263,7 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
         FirebaseDatabase.getInstance().getReference("Users").child(iduser).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
+                user = dataSnapshot.getValue(User.class);
                 binding.setUser(user);
             }
 
@@ -163,7 +272,18 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
 
             }
         });
+        DatabaseReference follow = FirebaseDatabase.getInstance().getReference("follows").child(iduser).child("follows");
+        follow.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                binding.numberFollow.setText(dataSnapshot.getChildrenCount()+"");
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         if(iduser.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
             binding.btnChat.setVisibility(View.GONE);
             binding.btnFollow.setVisibility(View.GONE);
@@ -302,5 +422,10 @@ public class ProfileUserClientActivity extends BaseActivity<ActivityProfileClien
             });
         }
 
+    }
+    public void addNotification(Post post){
+        FirebaseUser currentUer = FirebaseAuth.getInstance().getCurrentUser();
+        Notification notification = new Notification(post.getIdpost(),currentUer.getUid(),"comment your post","post",System.currentTimeMillis()+"");
+        FirebaseDatabase.getInstance().getReference("notification").child(post.getPublisher()).child(System.currentTimeMillis()+"").setValue(notification);
     }
 }

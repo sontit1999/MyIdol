@@ -89,14 +89,14 @@
                android:id="@+id/btn_follow"
                android:text="follow"
                android:layout_marginTop="10dp"
-               android:background="#08bcbb"
+               android:background="@drawable/bg_item_chat"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>
            <Button
                android:id="@+id/btn_chat"
                android:text="Chat"
                android:layout_marginTop="10dp"
-               android:background="#08bcbb"
+               android:background="@drawable/bg_item_chat"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>
            <View

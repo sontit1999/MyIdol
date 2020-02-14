@@ -33,7 +33,6 @@ public class BingdingUtils {
     }
     @BindingAdapter({"bind:imageUrl"})
     public static void loadImage(ImageView view, String imageUrl) {
-        Log.d("sondz","bind image");
         if(imageUrl == null){
             imageUrl = "no";
         }
@@ -45,8 +44,6 @@ public class BingdingUtils {
                     .override(500,250)
                     .into(view);
         }
-
-
     }
     @BindingAdapter({"bind:iduser"})
     public static void loadRecentChat(final TextView view, String iduser) {
@@ -66,7 +63,10 @@ public class BingdingUtils {
                     Message message = i.getValue(Message.class);
                     temp.add(message);
                 }
-                view.setText(temp.get(temp.size()-1).getContent());
+                if(temp.size()>0){
+                    view.setText(temp.get(temp.size()-1).getContent());
+                }
+
             }
 
             @Override
@@ -83,12 +83,13 @@ public class BingdingUtils {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                Glide
-                        .with(view.getContext())
-                        .load(user.getImageUrl())
-                        .placeholder(R.drawable.ic_launcher_foreground)
-                        .override(250,250)
-                        .into(view);
+                Picasso.get().load(user.getImageUrl()).placeholder(R.drawable.ic_launcher_foreground).into(view);
+//                Glide
+//                        .with(view.getContext())
+//                        .load(user.getImageUrl())
+//                        .placeholder(R.drawable.ic_launcher_foreground)
+//                        .override(250,250)
+//                        .into(view);
             }
 
             @Override
@@ -151,4 +152,5 @@ public class BingdingUtils {
                 });
 
     }
+
 }

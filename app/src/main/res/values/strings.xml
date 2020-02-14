@@ -13,6 +13,7 @@
     <string name="signup">Sign up</string>
     <string name="noaccount">Don"t have account ?</string>
     <string name="haveaccount">Already have account ?</string>
+    <string name="lisence">By signing up you agree with our term of user and privacy policy</string>
     <string name="edit">Edit Profile</string>
     <string name="sentencelike">Quotations</string>
     <string name="address">Address</string>

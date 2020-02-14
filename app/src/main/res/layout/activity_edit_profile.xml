@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
     <data>
           <variable
               name="viewmodel"
               type="com.example.myidol.ui.editprofile.EditProfileViewModel" />
+        <variable
+            name="user"
+            type="com.example.myidol.model.User" />
     </data>
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll"
@@ -33,6 +37,7 @@
                         android:layout_height="wrap_content"/>
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/iv_avatar"
+                        bind:imageUrl="@{user.imageUrl}"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="120dp"
                         android:src="@drawable/sondz5"
@@ -90,7 +95,7 @@
                         android:inputType="text"
                         android:maxLines="1"
                         android:padding="10dp"
-                        android:text="@string/samplesenten" />
+                        android:text="@{user.sentenceslike}" />
 
                    <LinearLayout
                        android:orientation="horizontal"
@@ -113,7 +118,7 @@
                                android:layout_height="wrap_content"/>
                            <EditText
                                android:id="@+id/edt_Address"
-                               android:text="@string/sampleAddress"
+                               android:text="@{user.username}"
                                android:textSize="@dimen/content_size_main"
                                android:inputType="text"
                                android:fontFamily="@font/baumans"
@@ -139,7 +144,7 @@
                                android:layout_height="wrap_content"/>
                            <EditText
                                android:id="@+id/edt_Username"
-                               android:text="@string/sampleAddress"
+                               android:text="@{user.address}"
                                android:inputType="text"
                                android:textSize="@dimen/content_size_main"
                                android:fontFamily="@font/baumans"
@@ -161,9 +166,9 @@
                         android:layout_height="wrap_content"/>
                     <EditText
                         android:id="@+id/edt_Phone"
-                        android:text="@string/samplephone"
+                        android:text="@{user.phonenumber}"
                         android:padding="10dp"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:textSize="@dimen/content_size_main"
                         android:fontFamily="@font/baumans"
                         android:textColor="@color/colorblack"

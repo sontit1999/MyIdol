@@ -45,6 +45,7 @@ import com.example.myidol.model.Notification;
 import com.example.myidol.model.Photo;
 import com.example.myidol.model.Post;
 import com.example.myidol.ui.chat.ChatActivity;
+import com.example.myidol.ui.editprofile.EditProfileActivity;
 import com.example.myidol.ui.image.ImageFullActivity;
 import com.example.myidol.ui.postnew.PostNewActivity;
 import com.example.myidol.ui.profile.ProfileUserClientActivity;
@@ -126,6 +127,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
                     case R.id.nav_user:
                         binding.tvLogo.setText("Profile");
                         hiddenOptionmenu();
+                        binding.toolbar.getMenu().findItem(R.id.setting).setVisible(true);
                         fm.beginTransaction().hide(active).show(fragment5).commit();
                         active = fragment5;
                         break;
@@ -272,6 +274,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
                 fm.beginTransaction().hide(active).show(fragment2).commit();
                 active = fragment2;
                 return true;
+            case R.id.setting:
+                startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -280,5 +284,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
     public void hiddenOptionmenu(){
         binding.toolbar.getMenu().findItem(R.id.mess).setVisible(false);
         binding.toolbar.getMenu().findItem(R.id.search).setVisible(false);
+        binding.toolbar.getMenu().findItem(R.id.setting).setVisible(false);
     }
 }

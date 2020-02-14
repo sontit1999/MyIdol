@@ -15,14 +15,23 @@ public class User {
     String username;
     String sentenceslike;
     String address;
+    String phonenumber;
 
+    public String getPhonenumber() {
+        return phonenumber;
+    }
 
-    public User(String id, String imageUrl, String username,String sentenceslike,String address) {
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public User(String id, String imageUrl, String username, String sentenceslike, String address,String phone) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.username = username;
         this.sentenceslike = sentenceslike;
         this.address = address;
+        this.phonenumber = phone;
     }
 
     public User() {

@@ -13,4 +13,10 @@
         android:icon="@drawable/ic_message_black_24dp"
         app:showAsAction="always"
         />
+    <item
+        android:id="@+id/setting"
+        android:title="Cài đặt"
+        android:icon="@drawable/ic_settings_black_24dp"
+        app:showAsAction="always"
+        />
 </menu>
