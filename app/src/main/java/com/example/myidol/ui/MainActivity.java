@@ -289,5 +289,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewmode
         binding.toolbar.getMenu().findItem(R.id.mess).setVisible(true);
         binding.toolbar.getMenu().findItem(R.id.search).setVisible(true);
         binding.toolbar.getMenu().findItem(R.id.setting).setVisible(true);
+        // hihi
     }
 }
