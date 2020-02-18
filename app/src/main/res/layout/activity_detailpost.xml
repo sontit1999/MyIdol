@@ -50,7 +50,7 @@
                                 android:layout_height="wrap_content"/>
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/iv_avatar"
-                                android:src="@drawable/ic_launcher_foreground"
+                                android:src="@drawable/ic_launcher_background"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"/>
                             <TextView
@@ -147,7 +147,6 @@
                                 android:layout_height="wrap_content">
                                 <ImageView
                                     android:id="@+id/iv_hearts"
-                                    android:src="@drawable/iconsheart"
                                     android:layout_width="@dimen/size_ic_tym"
                                     android:layout_height="@dimen/size_ic_tym"/>
                                 <TextView
@@ -165,7 +164,6 @@
                                 android:layout_height="wrap_content">
                                 <ImageView
                                     android:id="@+id/iv_comments"
-                                    android:src="@drawable/icons8comment"
                                     android:layout_width="@dimen/size_ic_tym"
                                     android:layout_height="@dimen/size_ic_tym"/>
                                 <TextView
@@ -183,7 +181,6 @@
                                 android:layout_height="wrap_content">
                                 <ImageView
                                     android:id="@+id/iv_shares"
-                                    android:src="@drawable/icons8share"
                                     android:layout_width="@dimen/size_ic_tym"
                                     android:layout_height="@dimen/size_ic_tym"/>
                                 <TextView
@@ -233,7 +230,6 @@
                 android:layout_height="wrap_content"/>
             <ImageView
                 android:id="@+id/iv_send"
-                android:src="@drawable/ic_send"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"/>
         </LinearLayout>

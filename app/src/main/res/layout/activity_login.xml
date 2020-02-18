@@ -112,7 +112,7 @@
                     android:id="@+id/imageView"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/fb" />
+                    />
                 <Button
                     android:id="@+id/btn_facebook"
                     android:text="facebook"
@@ -135,7 +135,7 @@
                     android:id="@+id/imagetwiter"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/twiter" />
+                     />
                 <Button
                     android:id="@+id/btn_twiter"
                     android:text="twitter"

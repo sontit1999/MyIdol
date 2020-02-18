@@ -16,7 +16,7 @@
             android:id="@+id/ivFullscreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/ic_launcher_background"
             app:zoomage_restrictBounds="false"
             app:zoomage_animateOnReset="true"
             app:zoomage_autoResetMode="UNDER"
@@ -42,7 +42,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:src="@drawable/ic_down"
+
                         android:layout_width="@dimen/size_icon_small"
                         android:layout_height="@dimen/size_icon_small"/>
                     <TextView

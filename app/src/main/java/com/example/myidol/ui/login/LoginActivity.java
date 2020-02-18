@@ -67,16 +67,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding,LoginViewMo
                     String password = binding.etPassword.getText().toString().trim();
                     if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
                         Toast.makeText(LoginActivity.this, "Must not empty", Toast.LENGTH_SHORT).show();
-                    }else if(email.length()<11){
-                        Toast.makeText(LoginActivity.this, "Email at least 11 character!", Toast.LENGTH_SHORT).show();
-                    }else if(password.length() < 6){
-                        Toast.makeText(LoginActivity.this, "Password at least 6 character!", Toast.LENGTH_SHORT).show();
                     }else {
-                        pd = new ProgressDialog(LoginActivity.this);
-                        pd.setCanceledOnTouchOutside(false);
-                        pd.setMessage("Đang login ^^ ");
-                        pd.show();
-                        login(email,password);
+                        viewmodel.login(email,password,LoginActivity.this);
                     }
             }
         });

@@ -32,7 +32,6 @@ import com.squareup.picasso.Picasso;
 public class EditProfileActivity extends BaseActivity<ActivityEditProfileBinding,EditProfileViewModel> {
     public static int PICK_IMAGE = 54151;
     User users ;
-    ProgressDialog pd;
     Uri imageURL = null;
     @Override
     public Class<EditProfileViewModel> getViewmodel() {
