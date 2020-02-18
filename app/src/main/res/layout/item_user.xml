@@ -29,7 +29,7 @@
                     android:onClick="@{()->callback.onAvatarClick(user)}"
                     android:layout_alignParentLeft="true"
                     bind:imageUrl="@{user.imageUrl}"
-                    android:src="@drawable/ic_launcher_foreground"
+                    android:src="@drawable/ic_launcher_background"
                     android:layout_width="65dp"
                     android:layout_height="65dp"/>
                 <LinearLayout

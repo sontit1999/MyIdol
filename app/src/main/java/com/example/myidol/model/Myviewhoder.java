@@ -46,7 +46,7 @@ public class Myviewhoder extends RecyclerView.ViewHolder{
             Glide
                     .with(context)
                     .load(post.getLinkImage())
-                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .placeholder(R.drawable.ic_launcher_background)
                     .override(500,250)
                     .into(ivpost);
         }

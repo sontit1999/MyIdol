@@ -103,7 +103,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Myviewho
                 Glide
                         .with(context)
                         .load(user.getImageUrl())
-                        .placeholder(R.drawable.ic_launcher_foreground)
+                        .placeholder(R.drawable.ic_launcher_background)
                         .into(ivavatar);
                 tvNameAuthor.setText(user.getUsername());
             }

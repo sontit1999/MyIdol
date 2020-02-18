@@ -40,7 +40,7 @@ public class BingdingUtils {
             Glide
                     .with(view.getContext())
                     .load(imageUrl)
-                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .placeholder(R.drawable.ic_launcher_background)
                     .override(500,250)
                     .into(view);
         }
@@ -92,7 +92,7 @@ public class BingdingUtils {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                Picasso.get().load(user.getImageUrl()).placeholder(R.drawable.ic_launcher_foreground).into(view);
+                Picasso.get().load(user.getImageUrl()).placeholder(R.drawable.ic_launcher_background).into(view);
 //                Glide
 //                        .with(view.getContext())
 //                        .load(user.getImageUrl())
@@ -169,10 +169,10 @@ public class BingdingUtils {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.child(curentUser.getUid()).exists()){
-                    view.setImageResource(R.drawable.icons8liked);
+                    view.setImageResource(R.drawable.ic_launcher_background);
                     view.setTag("liked");
                 }else {
-                    view.setImageResource(R.drawable.iconsheart);
+                    view.setImageResource(R.drawable.ic_launcher_background);
                     view.setTag("like");
                 }
             }

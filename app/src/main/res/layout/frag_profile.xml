@@ -27,7 +27,7 @@
                     android:id="@+id/iv_cover"
                     android:scaleType="centerCrop"
                     android:fitsSystemWindows="true"
-                    android:src="@drawable/sondz5"
+
                     bind:imageUrl="https://1.bp.blogspot.com/-e-BJfJKtYaA/XJpBMPJC03I/AAAAAAAAA3o/9SrsYC4nGcg-EhHcv2XaWQZkAYiHE_k5wCLcBGAs/s1600/EmXinh2k__anh-hot-girl-gai-xinh-sexy-nong-bong-khoe-vong-1%2B%25282%2529.jpg"
                     app:layout_collapseMode="parallax"
                     android:layout_width="match_parent"
@@ -61,7 +61,6 @@
                         android:layout_height="wrap_content">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/iv_avatar"
-                            android:src="@drawable/sondz5"
                             android:layout_width="@dimen/size_avatar"
                             android:layout_height="@dimen/size_avatar"/>
                     </LinearLayout>
@@ -159,7 +158,6 @@
                                 android:layout_height="wrap_content"/>
                             <ImageView
                                 android:id="@+id/iv_addfriend"
-                                android:src="@drawable/ic_add_friend"
                                 android:padding="5dp"
                                 android:layout_weight="0.2"
                                 android:background="@drawable/boder_image"

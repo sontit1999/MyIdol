@@ -113,7 +113,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.myViewHoder>
             tvLocation = ( TextView) itemView.findViewById(R.id.tv_location);
         }
         public void bindview(User user){
-            Picasso.get().load(user.getImageUrl()).placeholder(R.drawable.ic_launcher_foreground).resize(65,65).into(iv_avatar);
+            Picasso.get().load(user.getImageUrl()).placeholder(R.drawable.ic_launcher_background).resize(65,65).into(iv_avatar);
             tv_name.setText(user.getUsername());
             isFollowing(user.getId(),tvfollow);
             tvLocation.setText(user.getAddress());

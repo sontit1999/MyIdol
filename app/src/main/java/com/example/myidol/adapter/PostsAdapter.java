@@ -143,7 +143,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         Toast.makeText(context, "like click", Toast.LENGTH_SHORT).show();
                         if(myhoder.ivlike.getTag().equals("liked")){
                             // romove like
-                            myhoder.ivlike.setImageResource(R.drawable.icons8like);
+                            myhoder.ivlike.setImageResource(R.drawable.ic_launcher_background);
                             FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
 
                         }else{
@@ -151,7 +151,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             addNotification(post);
                             Animation rotate = AnimationUtils.loadAnimation(context,R.anim.like);
                             myhoder.ivlike.startAnimation(rotate);
-                            myhoder.ivlike.setImageResource(R.drawable.icons8liked);
+                            myhoder.ivlike.setImageResource(R.drawable.ic_launcher_background);
                             FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
 
                         }
@@ -203,7 +203,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 Glide
                         .with(context)
                         .load(user.getImageUrl())
-                        .placeholder(R.drawable.ic_launcher_foreground)
+                        .placeholder(R.drawable.ic_launcher_background)
                         .override(250,250)
                         .into(ivavatar);
                 tvname.setText(user.getUsername());
@@ -223,10 +223,10 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                       if(dataSnapshot.child(curentUser.getUid()).exists()){
-                          ivlike.setImageResource(R.drawable.icons8liked);
+                          ivlike.setImageResource(R.drawable.ic_launcher_background);
                           ivlike.setTag("liked");
                       }else {
-                          ivlike.setImageResource(R.drawable.iconsheart);
+                          ivlike.setImageResource(R.drawable.ic_launcher_background);
                           ivlike.setTag("like");
                       }
                 }
@@ -277,7 +277,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                Glide
                        .with(context)
                        .load(post.getLinkImage())
-                       .placeholder(R.drawable.ic_launcher_foreground)
+                       .placeholder(R.drawable.ic_launcher_background)
                        .override(500,250)
                        .into(ivpost);
            }

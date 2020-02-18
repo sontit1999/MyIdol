@@ -113,7 +113,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 Glide
                         .with(context)
                         .load(user.getImageUrl())
-                        .placeholder(R.drawable.ic_launcher_foreground)
+                        .placeholder(R.drawable.ic_launcher_background)
                         .override(100,100)
                         .into(ivavatar);
                 tvname.setText(user.getUsername());

@@ -146,14 +146,14 @@ public class FragmentProfileUser extends BaseFragment<FragProfileUserBinding,Pro
                       ImageView iv = (ImageView) view;
                       if(iv.getTag().equals("liked")){
                           // romove like
-                          iv.setImageResource(R.drawable.icons8like);
+                          iv.setImageResource(R.drawable.ic_launcher_background);
                           FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
 
                       }else{
                           // add like
                           Animation rotate = AnimationUtils.loadAnimation(getContext(),R.anim.like);
                           iv.startAnimation(rotate);
-                          iv.setImageResource(R.drawable.icons8liked);
+                          iv.setImageResource(R.drawable.ic_launcher_background);
                           FirebaseDatabase.getInstance().getReference().child("likes").child(post.getIdpost()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
 
                       }

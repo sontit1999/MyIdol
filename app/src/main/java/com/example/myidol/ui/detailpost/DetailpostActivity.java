@@ -129,14 +129,14 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
            public void onClick(View view) {
                if(binding.ivHearts.getTag().equals("liked")){
                    // romove like
-                   binding.ivHearts.setImageResource(R.drawable.icons8like);
+                   binding.ivHearts.setImageResource(R.drawable.ic_launcher_background);
                    FirebaseDatabase.getInstance().getReference().child("likes").child(idpost).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
 
                }else{
                    // add like
                    Animation rotate = AnimationUtils.loadAnimation(DetailpostActivity.this,R.anim.like);
                    binding.ivHearts.startAnimation(rotate);
-                   binding.ivHearts.setImageResource(R.drawable.icons8liked);
+                   binding.ivHearts.setImageResource(R.drawable.ic_launcher_background);
                    FirebaseDatabase.getInstance().getReference().child("likes").child(idpost).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
                }
            }
@@ -232,10 +232,10 @@ public class DetailpostActivity extends BaseActivity<ActivityDetailpostBinding,D
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.child(curentUser.getUid()).exists()){
-                        ivlike.setImageResource(R.drawable.icons8liked);
+                        ivlike.setImageResource(R.drawable.ic_launcher_background);
                         ivlike.setTag("liked");
                     }else {
-                        ivlike.setImageResource(R.drawable.iconsheart);
+                        ivlike.setImageResource(R.drawable.ic_launcher_background);
                         ivlike.setTag("like");
                     }
                 }
